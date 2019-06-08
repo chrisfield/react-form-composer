@@ -1,5 +1,5 @@
 {
-  "name": "redux-form-composer-monorepo",
+  "name": "react-form-composer-monorepo",
   "private": true,
   "workspaces": [
     "packages/*",

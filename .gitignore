@@ -6,7 +6,7 @@
 /coverage
 
 # production
-/packages/redux-formkit/lib
+/packages/react-form-composer/lib
 /packages/redux-formkit-redux-state-provider/lib
 /storybook-static
 yarn-error.log

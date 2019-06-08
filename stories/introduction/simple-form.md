@@ -53,7 +53,7 @@ Ui-components like `Checkbox`, `RadioButton`, `TextInput` and  `NumberInput` mak
 
 Form frameworks typically come with these built-in. Many also include component specific code like `if (type === "checkbox") {/* do checkbox stuff */}`
 
-`redux formkit` takes an alternative approach: it provides just one ui-component - `Field` together with an api that aims to make it easy for you to define any other ones you want.
+`react-form-composer` takes an alternative approach: it provides just one ui-component - `Field` together with an api that aims to make it easy for you to define any other ones you want.
 
 This makes for a smaller, cleaner codebase, it leaves you in control over your own ui-components and, with example ui-components, it is still quick and easy to get started.
 
