@@ -1,16 +1,16 @@
 import { configure , addDecorator, addParameters } from '@storybook/react';
 import { addReadme } from 'storybook-readme';
 
+addDecorator(addReadme);
 addParameters({
-  name: 'react-form-composer',
-  url: 'https://chrisfield.github.io/react-form-composer',
   options: {
+    name: 'react-form-composer',
+    url: 'https://www.npmjs.com/package/react-form-composer',
     showPanel: false,
     panelPosition: 'right'
   }
 });
 
-addDecorator(addReadme);
 
 // automatically import all files ending in *.stories.js
 const req = require.context('../stories', true, /\.stories\.js$/);

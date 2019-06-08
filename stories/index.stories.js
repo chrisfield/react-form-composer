@@ -4,12 +4,12 @@ import introduction from './introduction';
 import simpleForm from './introduction/simple-form';
 
 import arrayForm from './forms/array-form';
-import renderingForms from './forms/rendering';
+import renderProps from './forms/render-props';
 
-storiesOf('Overview', module)
+storiesOf('Introduction', module)
 .add('Getting Started', introduction)
 .add('Simple Form', simpleForm);
 
 storiesOf('Forms', module)
 .add('Array Form', arrayForm)
-.add('Rendering', renderingForms);
+.add('Render Props', renderProps);
