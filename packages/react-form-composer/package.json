@@ -1,0 +1,46 @@
+{
+  "name": "react-form-composer",
+  "version": "0.0.1",
+  "description": "Form state management for react, react-native and isomorphic apps.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chrisfield/react-form-composer"
+  },
+  "homepage": "https://github.com/chrisfield/react-form-composer/blob/master/packages/react-form-composer/",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack --mode production",
+    "build:dev": "webpack --mode development"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "form",
+    "validation",
+    "isomorphic",
+    "hooks"
+  ],
+  "author": "Chris Field",
+  "license": "ISC",
+  "files": [
+    "README.md",
+    "lib/"
+  ],
+  "peerDependencies": {
+    "react": "^16.8.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "jest": "^24.1.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
+  },
+  "dependencies": {
+    "es6-error": "^4.1.1",
+    "is-promise": "^2.1.0",
+    "lodash.topath": "^4.5.2"
+  }
+}

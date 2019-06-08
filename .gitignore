@@ -1,0 +1,15 @@
+# dependencies
+**/node_modules
+**/package-lock.json
+
+# testing
+/coverage
+
+# production
+/packages/redux-formkit/lib
+/packages/redux-formkit-redux-state-provider/lib
+/storybook-static
+yarn-error.log
+
+# next examples
+examples/**/.next
