@@ -28,8 +28,8 @@
   ],
   "peerDependencies": {
     "react": "^16.8.0",
-    "react-redux": "^6.0.0",
-    "react-form-composer": "^0.0.1"
+    "react-form-composer": "^0.0.1",
+    "react-redux": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
