@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, memo } from 'react';
-import { pushToFieldArray, removeFromFieldArray } from './actions';
-import { useForm } from './form';
-import useFieldArray from './use-field-array';
+import { pushToFieldArray, removeFromFieldArray } from './actions.ts';
+import { useForm } from './form.tsx';
+import useFieldArray from './use-field-array.ts';
 
-const FieldArrayComponent = (props) => {
+const FieldArrayComponent = (props: any) => {
   const fields = {
-    map: (callback) => (
-      (props.fields || []).map((item, index) =>
+    map: (callback: Function) => (
+      (props.fields || []).map((_item: any, index: number) =>
         callback(`${props.name}[${index}]`, index),
       )
     ),
@@ -22,7 +22,7 @@ const FieldArrayComponent = (props) => {
   return <Component {...rest} fields={fields} />;
 }
 
-const FieldArray = ({name, ...props}) => {
+const FieldArray = ({name, ...props}: any) => {
   const connectionProps = useFieldArray(name);
   return (
     <FieldArrayBase
@@ -40,9 +40,9 @@ const FieldArrayBase = memo(({
   status, 
   formState,
   ...props
-}) => {
+}: any) => {
   
-  const fieldArrayApiRef = useRef({
+  const fieldArrayApiRef: any = useRef({
     name
   });
 
@@ -59,10 +59,10 @@ const FieldArrayBase = memo(({
   }, []);
 
   const push = () => {
-    dispatch(pushToFieldArray()); 
+    dispatch(pushToFieldArray({})); 
   };
 
-  const remove = (index) => {
+  const remove = (index: number) => {
     dispatch(removeFromFieldArray(index));
   }
 

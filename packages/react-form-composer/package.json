@@ -2,6 +2,7 @@
   "name": "react-form-composer",
   "version": "0.0.1",
   "description": "Form state management for react, react-native and isomorphic apps.",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/chrisfield/react-form-composer"
@@ -33,6 +34,8 @@
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
+    "@types/is-promise": "^2.1.0",
+    "@types/lodash.topath": "^4.5.6",
     "babel-loader": "^8.0.5",
     "jest": "^24.1.0",
     "webpack": "^4.29.6",

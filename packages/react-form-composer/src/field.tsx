@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, memo } from 'react';
-import {deregisterField, updateField, setFieldError, setFieldTouched } from './actions';
-import { useForm } from './form';
-import useField from './use-field';
+import {deregisterField, updateField, setFieldError, setFieldTouched } from './actions.ts';
+import { useForm } from './form.tsx';
+import useField from './use-field.ts';
 
-function usePrevious(value) {
+function usePrevious(value: any) {
   const ref = useRef({});
   useEffect(() => {
     ref.current = value;
@@ -11,11 +11,11 @@ function usePrevious(value) {
   return ref.current;
 }
 
-function twoInvalidNumbers(x, y) {
+function twoInvalidNumbers(x: any, y: any) {
   return typeof x === "number" && isNaN(x) && isNaN(y);
 }
 
-const FieldComponent = ({render, children, component, ...props}) => {
+const FieldComponent = ({render, children, component, ...props}: any) => {
   if (render) {
     return render(props);
   }
@@ -39,7 +39,7 @@ const FieldComponent = ({render, children, component, ...props}) => {
   return <Component {...props}/>;
 }
 
-const Field = ({name, ...props}) => {
+const Field = ({name, ...props}: any) => {
   const connectionProps = useField(name);
   return (
     <FieldBase
@@ -66,12 +66,12 @@ const FieldBase = memo(({
   customProps,
   isResetFieldsDue,
   ...props
-}) => {
+}: any) => {
   const elementRef = useRef();
   const fieldRef = useRef({
     name,
     error,
-    setTouched: touched => dispatch(setFieldTouched(touched)),
+    setTouched: (touched: boolean) => dispatch(setFieldTouched(touched)),
     getInterface: () => fieldInterfaceRef.current
   });
 
@@ -84,15 +84,15 @@ const FieldBase = memo(({
     }
   }, []);
 
-  const fieldInterfaceRef = useRef(); 
+  const fieldInterfaceRef: any = useRef(); 
   useEffect(() => {
     fieldInterfaceRef.current = {
       name,
-      getField: name => formApi.getField(name),
+      getField: (name: string) => formApi.getField(name),
       element: elementRef.current,
       validate: () => {validateValue(value)},
       setTouched: fieldRef.current.setTouched,
-      setValue: value => dispatch(updateField(value)),
+      setValue: (value: any) => dispatch(updateField(value)),
       value,
       error,
       touched,
@@ -101,7 +101,7 @@ const FieldBase = memo(({
   });
 
   const isMountedRef = useRef(false);
-  const previous = usePrevious({value, customProps});
+  const previous: any = usePrevious({value, customProps});
   useEffect(() => {
     if (!isMountedRef.current) {
       isMountedRef.current = true;
@@ -126,7 +126,7 @@ const FieldBase = memo(({
     }
   });
   
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     const nextValueToStore = formatToStore(getTargetValue(event.target, event));
     const nextCustomProps = beforeUpdate(
       fieldInterfaceRef.current,
@@ -136,7 +136,7 @@ const FieldBase = memo(({
     dispatch(updateField(nextValueToStore, nextCustomProps));
   };
 
-  const validateValue = (value) => {
+  const validateValue = (value: any) => {
     let validateError;
     if (validate) {
       const fieldValues = formApi.formReducerRef.current[0].fieldValues;
@@ -151,7 +151,7 @@ const FieldBase = memo(({
     dispatch(setFieldError(validateError, value));
   };
 
-  const showAnyErrors = (event) => {
+  const showAnyErrors = (event: any) => {
     if (!touched) {
       if (error) {
         event.preventDefault();
@@ -179,8 +179,8 @@ Field.defaultProps = {
   afterUpdate: noop,
   beforeUpdate: noop,
   formatFromStore: (value = "") => value,
-  formatToStore: (value) => value,
-  getTargetValue: (target, value) => {
+  formatToStore: (value: any) => value,
+  getTargetValue: (target: any, value: any) => {
     if (target) {
       return target.value;
     } else {

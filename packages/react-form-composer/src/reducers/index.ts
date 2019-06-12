@@ -1,11 +1,11 @@
-import {actionTypes} from "../actions";
-import fieldValues from "./field-values";
-import formErrors from "./form-errors";
-import formStatusAndFieldStatus from "./form-status-and-field-status";
+import {actionTypes, Action} from "../actions.ts";
+import fieldValues from "./field-values.ts";
+import formErrors from "./form-errors.ts";
+import formStatusAndFieldStatus from "./form-status-and-field-status.ts";
 
-export const initialState = {};
+export const initialState: any = {};
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = initialState, action: Action) => {
   if (action && actionTypes[action.type] && action.form) {
     const formState = state[action.form] || {};
     const {formStatus, fieldStatus} = formStatusAndFieldStatus(formState.formStatus, formState.fieldStatus, action);

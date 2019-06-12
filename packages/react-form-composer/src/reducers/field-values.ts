@@ -1,13 +1,13 @@
-import {actionTypes} from "../actions";
-import getField from "../state-utils/get-field";
-import setField from "../state-utils/set-field";
+import {actionTypes, Action} from "../actions.ts";
+import getField from "../state-utils/get-field.ts";
+import setField from "../state-utils/set-field.ts";
 
 export const initialState = {};
 
-const valuesReducer = (state = initialState, action) => {
+const valuesReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case actionTypes.INIT_FORM_STATE:
-      return action.fieldValues || {};
+      return action.fieldValues;
     case actionTypes.UPDATE_FIELDS:
       return action.fieldValues;
     case actionTypes.UPDATE_FIELD:
@@ -20,7 +20,7 @@ const valuesReducer = (state = initialState, action) => {
     }
     case actionTypes.REMOVE_FROM_FIELD_ARRAY: {
       const originalArray = getField(state, action.fieldArray) || [];
-      const nextArray = originalArray.filter((item, index) => (index !== action.index));
+      const nextArray = originalArray.filter((_item: any, index: number) => (index !== action.index));
       return setField(state, action.fieldArray, nextArray);
     }
     case actionTypes.SET_FIELD_ERROR: {

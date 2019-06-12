@@ -69,7 +69,7 @@ export const setCursorPosition = ({element}, cursorPosition) => {
   }  
 }
 
-const NumberInput = ({required, ...props}) => {
+const NumberInput = ({required = false, ...props}) => {
   return <Field
     component={NumberInputComponent}
     validate={required? required: undefined}

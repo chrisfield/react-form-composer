@@ -1,6 +1,6 @@
 import toPath from "lodash.topath";
 
-const setFieldWithPath = (state, value, path, pathIndex) => {
+const setFieldWithPath = (state: any, value: any, path: any, pathIndex: number): any => {
   if (pathIndex >= path.length) {
     return value;
   }
@@ -30,7 +30,7 @@ const setFieldWithPath = (state, value, path, pathIndex) => {
   };
 };
 
-const setField = (state, field, value) =>
+const setField = (state: any, field: string, value: any) =>
   setFieldWithPath(state, value, toPath(field), 0);
 
 export default setField;

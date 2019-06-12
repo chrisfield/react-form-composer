@@ -1,6 +1,6 @@
 import toPath from "lodash.topath";
 
-const isField = (state, field) => {
+const isField = (state: any, field: string) => {
   const path = toPath(field);
   const length = path.length;
   if (!length) {

@@ -5,6 +5,8 @@
 # testing
 /coverage
 
+/examples/**/dist
+
 # production
 /packages/react-form-composer/lib
 /packages/react-form-composer-redux-provider/lib

@@ -1,10 +1,10 @@
-import {actionTypes} from "../actions";
-import setField from "../state-utils/set-field";
-import isField from "../state-utils/is-field";
+import {actionTypes, Action} from "../actions.ts";
+import setField from "../state-utils/set-field.ts";
+import isField from "../state-utils/is-field.ts";
 
 export const initialState = {};
 
-const errorsReducer = (state = initialState, action) => {
+const errorsReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case actionTypes.INIT_FORM_STATE:
       return action.formErrors || {};

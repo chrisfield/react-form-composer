@@ -1,12 +1,12 @@
-import React, { createContext, useContext, useRef, useEffect, useState } from 'react';
+import React, { createContext, useContext, useRef, useEffect, useState, ReactNode } from 'react';
 import isPromise from "is-promise";
-import SubmissionError from "./submission-error";
-import { startSubmit, stopSubmit, updateFields, resetFieldsIsDone } from './actions';
-import useFormReducer from './use-form-reducer';
+import SubmissionError from "./submission-error.ts";
+import { startSubmit, stopSubmit, updateFields, resetFieldsIsDone } from './actions.ts';
+import useFormReducer from './use-form-reducer.ts';
 
 export const Context = createContext({});
 
-export const Provider = ({ children, ...props }) => {
+export const Provider = ({ children, ...props }: any) => {
   return (
     <Context.Provider value={props}>
       {children}
@@ -17,18 +17,33 @@ export const Provider = ({ children, ...props }) => {
 export const Consumer = Context.Consumer;
 
 export const useForm = () => {
-  const { formApi } = useContext(Context);
+  const { formApi }: any = useContext(Context);
   return formApi;
 };
 
 const noop = () => (undefined);
 
 
-const FormReducerRef = ({formReducerRef}) => {
+const FormReducerRef = ({formReducerRef}: any) => {
   const formReducer = useFormReducer(useForm().name);
   formReducerRef.current = formReducer;
   return null;
 };
+
+export type FormProps = {
+  name: string,
+  initialValues?: object,
+  onSubmit?: Function,
+  onSubmitSuccess?: Function,
+  children: ReactNode | ((api: renderFunctionApi) => ReactNode),
+  render? : (api: renderFunctionApi) => ReactNode
+  component: string | ReactNode
+};
+
+type renderFunctionApi = {
+  handleSubmit: Function,
+  elementRef: any
+}
 
 export const Form = ({
   name,
@@ -39,48 +54,51 @@ export const Form = ({
   render,
   component = 'form',
   ...props
-}) => {
+}: FormProps) => {
 
-  const initFields = [];
+  const initFields: any = [];
   const fieldsRef = useRef(initFields);
-  const initFieldArrays = [];
+  const initFieldArrays: any = [];
   const fieldArraysRef = useRef(initFieldArrays);
   const formReducerRef = useRef([]);
   const formRef = useRef();
   const [initialized, setInitialized] = useState(!initialValues);
 
   useEffect(() => {
-    const dispatch = formReducerRef.current[1];
+    const [state, dispatch]: any = formReducerRef.current;
     if (!initialized) {
       setInitialized(true);
       dispatch(updateFields(initialValues));
-    } else if (formReducerRef.current[0].formStatus.isResetFieldsDue) {
-      formReducerRef.current[1](resetFieldsIsDone());
+    } else if (state.formStatus.isResetFieldsDue) {
+      dispatch(resetFieldsIsDone());
     }
   });
 
   const formApiRef = useRef({
-    deregisterField: (field) => {
+    deregisterField: (field: any) => {
       const index = fieldsRef.current.indexOf(field);
       if (index > -1) {
         fieldsRef.current.splice(index, 1);
       }
     },
-    deregisterFieldArray: (fieldArray) => {
+    deregisterFieldArray: (fieldArray: any) => {
       const index = fieldArraysRef.current.indexOf(fieldArray);
       if (index > -1) {
         fieldArraysRef.current.splice(index, 1);
       }
     },
     name,
-    registerField: (field) => {
+    registerField: (field: any) => {
       fieldsRef.current.push(field);
     },
-    registerFieldArray: (fieldArray) => {
+    registerFieldArray: (fieldArray: any) => {
       fieldArraysRef.current.push(fieldArray);
     },
-    updateFields: fieldValues => {formReducerRef.current[1](updateFields(fieldValues))},
-    getField: fieldName => {
+    updateFields: (fieldValues: any) => {
+      const dispatch: Function = formReducerRef.current[1];
+      dispatch(updateFields(fieldValues))
+    },
+    getField: (fieldName: string) => {
       for (const field of fieldsRef.current) {
         if (field.name === fieldName) {
           return field.getInterface();
@@ -90,8 +108,8 @@ export const Form = ({
     formReducerRef
   });
 
-  const markAllFieldsAsTouched = (touched= true) => {
-    fieldsRef.current.forEach((field) => {
+  const markAllFieldsAsTouched = (touched = true) => {
+    fieldsRef.current.forEach((field: any) => {
       field.setTouched(touched);
     });
   };
@@ -112,16 +130,17 @@ export const Form = ({
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: any) => {
     markAllFieldsAsTouched();
-    const [formState, dispatch] = formReducerRef.current;
+    const [formState, dispatch]: any = formReducerRef.current;
     if (!formState.formStatus.isValid) {
       event.preventDefault();
       focusOnFieldWithError();
       return;
     }
     if (onSubmit === noop && formRef.current) {
-      formRef.current.submit();
+      const theForm: any = formRef.current;
+      theForm.submit();
       return;
     }
     event.preventDefault();
@@ -173,7 +192,7 @@ export const Form = ({
         {children, onSubmit: handleSubmit, ref: formRef, ...props}
       );
     }
-    const Component = component;
+    const Component: any = component;
     return <Component {...props} children={children} onSubmit={handleSubmit} elementRef={formRef}/>;
   }
 

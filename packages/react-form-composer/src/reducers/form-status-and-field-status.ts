@@ -1,6 +1,6 @@
-import {actionTypes} from "../actions";
-import getField from "../state-utils/get-field";
-import setField from "../state-utils/set-field";
+import {actionTypes, Action} from "../actions.ts";
+import getField from "../state-utils/get-field.ts";
+import setField from "../state-utils/set-field.ts";
 
 export const initialFormStatus = {
   errorCount: 0,
@@ -10,7 +10,7 @@ export const initialFormStatus = {
 
 export const initialFieldStatus = {};
 
-const formStatusAndFieldStatusReducer = (formStatus = initialFormStatus, fieldStatus = initialFieldStatus, action) => {
+const formStatusAndFieldStatusReducer = (formStatus = initialFormStatus, fieldStatus = initialFieldStatus, action: Action) => {
   const errorCount = formStatus.errorCount;
   switch (action.type) {
     case actionTypes.INIT_FORM_STATE: {
