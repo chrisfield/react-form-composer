@@ -23,7 +23,6 @@ export const useForm = () => {
 
 const noop = () => (undefined);
 
-
 const FormReducerRef = ({formReducerRef}) => {
   const formReducer = useFormReducer(useForm().name);
   formReducerRef.current = formReducer;
@@ -43,8 +42,6 @@ export const Form = ({
 
   const initFields = [];
   const fieldsRef = useRef(initFields);
-  const initFieldArrays = [];
-  const fieldArraysRef = useRef(initFieldArrays);
   const formReducerRef = useRef([]);
   const formRef = useRef();
   const [initialized, setInitialized] = useState(!initialValues);
@@ -66,18 +63,9 @@ export const Form = ({
         fieldsRef.current.splice(index, 1);
       }
     },
-    deregisterFieldArray: (fieldArray) => {
-      const index = fieldArraysRef.current.indexOf(fieldArray);
-      if (index > -1) {
-        fieldArraysRef.current.splice(index, 1);
-      }
-    },
     name,
     registerField: (field) => {
       fieldsRef.current.push(field);
-    },
-    registerFieldArray: (fieldArray) => {
-      fieldArraysRef.current.push(fieldArray);
     },
     updateFields: fieldValues => {formReducerRef.current[1](updateFields(fieldValues))},
     getField: fieldName => {

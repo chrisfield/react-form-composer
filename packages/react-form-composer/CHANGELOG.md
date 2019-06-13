@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No pending (unreleased changes) to mention
 
+## [1.0.1] - 2019-06-13
+### Fixed
+- Tidy up code for field-array.
+
 ## [1.0.0] - 2019-06-13
 ### Added
 - Initial release. This is a rename/rebrand of [redux-formkit](https://www.npmjs.com/package/redux-formkit).
