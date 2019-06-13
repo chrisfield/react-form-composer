@@ -1,6 +1,6 @@
 {
   "name": "react-form-composer-redux-provider",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Connect react-form-composer to react-redux to store form state.",
   "main": "lib/index.js",
   "repository": {
