@@ -11916,6 +11916,20 @@ react-focus-lock@^1.18.3:
     prop-types "^15.6.2"
     react-clientside-effect "^1.2.0"
 
+react-form-composer-redux-provider@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/react-form-composer-redux-provider/-/react-form-composer-redux-provider-0.0.1.tgz#227f55682bb697deed686ec391ad3b8482bc0985"
+  integrity sha512-+CQA7gQP6O1yQFUWphkq84soHp0ReRVHH+B5zZyO3nNPFX5lodnCIxKePoHz5tDldj7wwCKgmsOZiAvnIPEmmA==
+
+react-form-composer@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/react-form-composer/-/react-form-composer-0.0.1.tgz#ee4054d1f5fe00732145d750dd17786c12f3d58e"
+  integrity sha512-cslSQ/4m/yNbPq2ty4DdpcfoLe2KtwJf5c2buWG5W6m0+1AwM0FmiMmVzWKCrhgAbpR4gIr5hGAjvbv/hjtr8A==
+  dependencies:
+    es6-error "^4.1.1"
+    is-promise "^2.1.0"
+    lodash.topath "^4.5.2"
+
 react-helmet-async@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-helmet-async/-/react-helmet-async-1.0.2.tgz#bb55dd8268f7b15aac69c6b22e2f950abda8cc44"
