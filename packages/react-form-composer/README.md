@@ -7,7 +7,7 @@
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/react-form-composer.svg)
 
 ## Introduction
-React-form-composer is a lightweight, simple, and efficient solution for creating forms in react. As you would expect it makes it easy it to get and set field values, to validate and format fields, to create custom inputs and to access an error count. It works well for web, react-native and server-rendered applications and it gives you control to choose or change where to store form state.
+React-form-composer is a lightweight, simple, and efficient solution for creating forms in react. It makes it easy it to get and set field values, to validate and format fields, to create custom inputs and to access an error count. It works well for web, react-native and server-rendered applications and it gives you control to choose or change where to store form state.
 
 If you do want to access form state through Redux it's easy to add it using [react-form-composer-redux-provider](https://www.npmjs.com/package/react-form-composer-redux-provider).
 

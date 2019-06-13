@@ -9,4 +9,4 @@ No pending (unreleased changes) to mention
 
 ## [1.0.0] - 2019-06-13
 ### Added
-- Initial release. This is a rename/rebrand of [redux-formkit](https://www.npmjs.com/package/redux-formkit).
+- Initial release. This is a rename/rebrand of [redux-formkit-redux-state-provider](https://www.npmjs.com/package/redux-formkit-redux-state-provider).
