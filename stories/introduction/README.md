@@ -89,11 +89,9 @@ This simple form shows two ways that `Field` can be used to render an input:
 * firstName passes "input" to a prop called component 
 * lastName provides a child render function
 
-The `FormStateProvider` provides the a standard React state and dispach to its children. Often, like in this example, you will wrap each separate form in its own `FormStateProvider` but you are in control and it is easy to do things like  pull state up to an application level or swap to/from Redux. 
+The `FormStateProvider` provides standard React state and dispach to its children. Often, like in this example, you will wrap each form in its own `FormStateProvider` but you are in control and it is easy to do things like  pull state up to an application level or swap to/from Redux. 
 
-`Form` uses an `onSubmit` function to mark the fields as touched, to check if the form is valid and, if it is, to call your `submitValues` function passing in the form values from state.
-
-`Field` uses `onChange`, `onBlur` functions to maintain the field value in state. It renders the *component* ("input" in the above example) passing in the state.
+The `onSubmit` function you passed to `Form` will only be called if the `Form` is valid.
 
 `useForm` is a hook you can use to access the `Form`. The example above simply uses it to get the form name (to avoid hardcoding "myForm" again).
 

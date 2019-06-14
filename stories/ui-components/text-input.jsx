@@ -27,10 +27,9 @@ const TextInputComponent = ({
     </InputWrapper>
 );
 
-const requiredStr = value => {
-  return value && value.trim && value.trim().length > 0 ? undefined: 'Required Field'
+const requiredStr = (value, _values, {label}) => {
+  return value && value.trim && value.trim().length > 0 ? undefined: `Please enter a value for ${label.toLowerCase()}`
 };
-
 
 function combineValidation(validate1, validate2) {
   if (!validate1) {

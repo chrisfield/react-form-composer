@@ -78,7 +78,7 @@ export default InputWrapper;
 
 
 #### TextInput
-You have already seen `Field` used with 'input' passed to the component prop. Here I've defined a `TextInputComponent` and passed this as thr component. I've written this example `TextInput` so you can pass a `required` prop plus any additional validation. Note I have not passed the `required` prop on to the underlying input for HTML5 validation and ,as a writter of a lightweight framework, I'm glad to leave you in control of these decisions.
+You have already seen `Field` used with 'input' passed to the component prop. Here I've defined a `TextInputComponent` and passed this as the component. I've written this example `TextInput` so you can pass a `required` prop plus any additional validation. Note I have not passed the `required` prop on to the underlying input for HTML5 validation and ,as a writter of a lightweight framework, I'm glad to leave you in control of these decisions.
 
 ```jsx
 import React from 'react';
@@ -110,10 +110,9 @@ const TextInputComponent = ({
     </InputWrapper>
 );
 
-const requiredStr = value => {
-  return value && value.trim && value.trim().length > 0 ? undefined: 'Required Field'
+const requiredStr = (value, _values, {label}) => {
+  return value && value.trim && value.trim().length > 0 ? undefined: `Please enter a value for ${label.toLowerCase()}`
 };
-
 
 function combineValidation(validate1, validate2) {
   if (!validate1) {
