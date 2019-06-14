@@ -13,28 +13,28 @@ const TextInputComponent = ({
   error,
   ...props}) => 
 (
-    <InputWrapper {...{name, label, touched, error}}>
-      <input
-        id={name}
-        ref={elementRef}
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        {...props}
-      />
-    </InputWrapper>
+  <InputWrapper {...{name, label, touched, error}}>
+    <input
+      id={name}
+      ref={elementRef}
+      value={value}
+      onChange={handleChange}
+      onBlur={handleBlur}
+      {...props}
+    />
+  </InputWrapper>
 );
 
 const requiredStr = (value, _values, {label}) => {
   return value && value.trim && value.trim().length > 0 ? undefined: `Please enter a value for ${label.toLowerCase()}`
 };
 
-export const TextInput = ({required, ...props}) => {
-  return <Field
+export const TextInput = ({required, ...props}) => (
+  <Field
     component={TextInputComponent}
     validate={required? requiredStr: undefined}
     {...props}
   />
-}
+);
 
 export default TextInput;

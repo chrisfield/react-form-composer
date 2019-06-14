@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No pending (unreleased changes) to mention
 
+## [1.1.0] - 2019-06-14
+### Added
+- New Scope component that can be used to group the state of related fields.
+
 ## [1.0.1] - 2019-06-13
 ### Fixed
 - Tidy up code for field-array.

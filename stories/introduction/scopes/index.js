@@ -1,16 +1,14 @@
 import { withDocs } from 'storybook-readme';
-import readme from './array-form.md'
+import readme from './index.md'
 import React from 'react';
-import {TextInput} from '../ui-components';
+import {TextInput} from '../../ui-components';
 import { 
   FormStateProvider,
   Form,
   Scope,
-  Field,
-  FieldArray,
   useForm,
   useFormReducer
-} from '../../packages/react-form-composer/src';
+} from '../../../packages/react-form-composer/src';
 
 const TheFormState = () => {
   const [state] = useFormReducer(useForm().name);
@@ -36,40 +34,19 @@ const clearValues = (form) => {
   form.updateFields({});
 };
 
-const RenderHobbies = ({fields}) => (
-  <fieldset>
-    <legend className="example-form_title">
-      Hobbies
-    </legend>
-    {fields.map((hobby, index) => (
-      <Scope key={hobby} name={hobby}>
-        <TextInput
-          name="nameOfHobby"
-          required
-          label="Hobby name"
-        />
-        <TextInput
-          name={`notes`}
-          required
-          label="notes"
-          size="60"
-        />
-        <button type="button" title="Remove Hobby" onClick={() => fields.remove(index)}>-</button>
-        <hr/>
-      </Scope>
-    ))}
-    <button type="button" onClick={() => fields.push()}>Add Hobby</button>
-  </fieldset>
-);
-
 const MyForm = () => {  
   return (
     <FormStateProvider>
       <Form name="myForm" initialValues={{hobbies:[{}]}} onSubmit={submitValues} onSubmitSuccess={clearValues} className="my-form">
-        <FieldArray
-          name="hobbies"
-          component={RenderHobbies}
-        />
+        <TextInput name="fullName" label="Full Name"/>
+        <Scope name="address">
+          <label>Address:</label><br/>
+          <TextInput name="line1" label=""/>
+          <TextInput name="line2" label=""/>
+          <TextInput name="line3" label=""/>
+          <TextInput name="postalCode" label="Postcode"/>
+          <TextInput name="country" label="Country"/>
+        </Scope>
         <Button/>
         <TheFormState />
       </Form>

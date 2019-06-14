@@ -2,6 +2,7 @@ import { storiesOf } from '@storybook/react';
 
 import introduction from './introduction';
 import simpleForm from './introduction/simple-form';
+import scopes from './introduction/scopes';
 
 import arrayForm from './forms/array-form';
 import renderProps from './forms/render-props';
@@ -15,7 +16,8 @@ import apiForHooks from './api/hooks';
 
 storiesOf('Introduction', module)
 .add('Getting Started', introduction)
-.add('Simple Form', simpleForm);
+.add('Simple Form', simpleForm)
+.add('Scopes', scopes);
 
 storiesOf('Forms', module)
 .add('Array Form', arrayForm)

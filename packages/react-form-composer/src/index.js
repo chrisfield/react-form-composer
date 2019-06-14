@@ -10,6 +10,8 @@ export {
   updateFields as updateFieldsAction
 } from "./actions";
 
+export { Scope, useScope } from "./scope";
+
 export {default as FormStateContext} from "./form-state-context";
 export {default as FormStateProvider} from "./form-state-provider";
 export {default as formReducer} from "./reducers";
