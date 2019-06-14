@@ -1,7 +1,7 @@
 import { storiesOf } from '@storybook/react';
 
 import introduction from './introduction';
-import simpleForm from './introduction/simple-form';
+import uiComponents from './introduction/ui-components';
 import scopes from './introduction/scopes';
 
 import arrayForm from './forms/array-form';
@@ -11,12 +11,13 @@ import reactNative from './forms/react-native';
 
 import apiForFormStateProvider from './api/form-state-provider';
 import apiForForm from './api/form';
+import apiForScope from './api/scope';
 import apiForField from './api/field';
 import apiForHooks from './api/hooks';
 
 storiesOf('Introduction', module)
 .add('Getting Started', introduction)
-.add('Simple Form', simpleForm)
+.add('UI Components', uiComponents)
 .add('Scopes', scopes);
 
 storiesOf('Forms', module)
@@ -28,5 +29,6 @@ storiesOf('Forms', module)
 storiesOf('Api', module)
 .add('FormStateProvider', apiForFormStateProvider)
 .add('Form', apiForForm)
+.add('Scope', apiForScope)
 .add('Field', apiForField)
 .add('Hooks', apiForHooks);

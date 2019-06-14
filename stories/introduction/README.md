@@ -32,18 +32,41 @@ const TheFormState = () => {
   );
 };
 
+const requiredStr = (value, _values, {label}) => {
+  return value && value.trim && value.trim().length > 0 ? undefined: `Please enter a value for ${label.toLowerCase()}`
+};
+
 const MyForm = () => {  
   return (
     <FormStateProvider>
       <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
-        <div>
-          <label>First name: <Field name="firstName" component="input"/></label>
-        </div>
-        <button>Submit</button>
-        <div>
-          <label>Values:</label>
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          <div style={{ flex: 1, marginRight: '2rem' }}>
+            <div>
+              <label>First name: <Field name="firstName" component="input"/></label>
+            </div>
+            <div>
+              <Field name="lastName" validate={requiredStr} label="Last Name:">
+                {({name, value, error, touched, handleChange, handleBlur, label}) => (
+                  <div>
+                    <label htmlFor={name}>{label}</label>
+                    <input id={name} value={value} onChange={handleChange} onBlur={handleBlur}/>
+                    {touched && error && <p>{error}</p>}
+                  </div>
+                )}
+              </Field>
+            </div>            
+            <button>Submit</button>
+          </div>
+          <div style={{
+            flex: 2,
+            flexDirection: 'column',
+            display: 'flex',
+            minWidth: '300px'
+          }}>
             <TheFormState/> 
-        </div>        
+          </div>
+        </div>
       </Form>
     </FormStateProvider>
   );
@@ -62,7 +85,11 @@ export default MyForm;
 ---
 
 #### Explanation
-`FormStateProvider` links `Form` components to React state. To switch to using Redux simply `import FormStateProvider from "react-form-composer-redux-provider"`
+This simple form shows two ways that `Field` can be used to render an input:
+* firstName passes "input" to a prop called component 
+* lastName provides a child render function
+
+The `FormStateProvider` provides the a standard React state and dispach to its children. Often, like in this example, you will wrap each separate form in its own `FormStateProvider` but you are in control and it is easy to do things like  pull state up to an application level or swap to/from Redux. 
 
 `Form` uses an `onSubmit` function to mark the fields as touched, to check if the form is valid and, if it is, to call your `submitValues` function passing in the form values from state.
 
