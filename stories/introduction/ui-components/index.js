@@ -1,9 +1,9 @@
 import { withDocs } from 'storybook-readme';
-import readme from './ui-components.md'
+import readme from './index.md'
 
 import React from 'react';
-import {FormStateProvider, Form, useForm, useFormReducer} from '../../packages/react-form-composer/src';
-import {TextInput, NumberInput, Checkbox, RadioButton} from '../ui-components';
+import {FormStateProvider, Form, useForm, useFormReducer} from '../../../packages/react-form-composer/src';
+import {TextInput, NumberInput, Checkbox, RadioButton} from '../../ui-components';
 
 const TheFormState = () => {
   const [state] = useFormReducer(useForm().name);

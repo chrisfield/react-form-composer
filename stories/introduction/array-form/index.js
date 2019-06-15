@@ -1,7 +1,7 @@
 import { withDocs } from 'storybook-readme';
-import readme from './array-form.md'
+import readme from './index.md'
 import React from 'react';
-import {TextInput} from '../ui-components';
+import {TextInput} from '../../ui-components';
 import { 
   FormStateProvider,
   Form,
@@ -10,7 +10,7 @@ import {
   FieldArray,
   useForm,
   useFormReducer
-} from '../../packages/react-form-composer/src';
+} from '../../../packages/react-form-composer/src';
 
 const TheFormState = () => {
   const [state] = useFormReducer(useForm().name);

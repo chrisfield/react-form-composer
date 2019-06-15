@@ -1,4 +1,4 @@
-# Render Prop / Child Function 
+# Forms with Render Prop / Child Function 
 The simple form in the introduction rendered normal jsx nodes including `Fields` as children of a `Form` node. This section shows two other ways you can use to render forms: Render prop and Child render functions.
 
 #### Render prop
