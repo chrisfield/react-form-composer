@@ -1,4 +1,4 @@
-import toPath from "lodash.topath";
+import toPath from "./to-path";
 
 const setFieldWithPath = (state, value, path, pathIndex) => {
   if (pathIndex >= path.length) {

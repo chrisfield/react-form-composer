@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useRef, useEffect, useState } from 'react';
-import isPromise from "is-promise";
+import isPromise from "./is-promise";
 import SubmissionError from "./submission-error";
 import { startSubmit, stopSubmit, updateFields, resetFieldsIsDone } from './actions';
 import useFormReducer from './use-form-reducer';

@@ -1,4 +1,4 @@
-import toPath from "lodash.topath";
+import toPath from "./to-path";
 
 const isField = (state, field) => {
   const path = toPath(field);
