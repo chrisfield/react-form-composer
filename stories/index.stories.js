@@ -7,6 +7,7 @@ import scopes from './introduction/scopes';
 import arrayForm from './forms/array-form';
 import renderProps from './forms/render-props';
 import nextServerRendering from './forms/next-server-rendering';
+import universalValidation from './forms/universal-validation';
 import reactNative from './forms/react-native';
 
 import apiForFormStateProvider from './api/form-state-provider';
@@ -24,6 +25,7 @@ storiesOf('Forms', module)
 .add('Array Form', arrayForm)
 .add('Render Props', renderProps)
 .add('Next Server Rendering', nextServerRendering)
+.add('Universal Validation', universalValidation)
 .add('React Native', reactNative);
 
 storiesOf('Api', module)
