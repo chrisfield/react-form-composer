@@ -257,7 +257,7 @@ export default Checkbox;
 
 ---
 #### RadioButton
-The `RadioButton` component is similar to Checkbox. The `useTargetCondition` tells `react-form-composer` to get the targetValue if and only if the button is checked.
+The `RadioButton` component is similar to Checkbox. The `ignoreTargetValueUnless` tells `react-form-composer` to get the targetValue if and only if the button is checked.
 
 ```jsx
 import React from 'react';
@@ -280,7 +280,7 @@ const RadioButton = props => (
     component={RadioButtonComponent}
     name={props.name}
     radioValue={props.value}
-    useTargetCondition={isChecked}
+    ignoreTargetValueUnless={isChecked}
     label={props.label}
   />
 );

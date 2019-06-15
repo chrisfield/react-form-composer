@@ -26,10 +26,10 @@ const Input = ({
   </View>
 );
 
-const useTargetCondition = () => false;
+const ignoreTargetValueUnless = () => false;
   
 const TextField = props => (
-  <Field useTargetCondition={useTargetCondition} component={Input} {...props} />
+  <Field ignoreTargetValueUnless={ignoreTargetValueUnless} component={Input} {...props} />
 );
 
 const styles = StyleSheet.create({

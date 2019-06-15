@@ -5,11 +5,11 @@ import {createFormDataHandler, getFieldDefinitionsByName} from '../form-data-han
 import {TextInput, NumberInput, RadioButton, Checkbox} from './form-controls'; 
 import { 
   Form,
+  Scope,
   FieldArray,
   useForm,
   useField,
-  useFormReducer,
-  SubmissionError
+  useFormReducer
 } from 'react-form-composer';
 
 import {
@@ -179,23 +179,21 @@ const RenderHobbies = ({fields}) => (
       Hobbies
     </legend>
     {fields.map((hobby, index) => (
-      <div key={hobby}>
+      <Scope key={hobby} name={hobby}>
         <TextInput
           {...fieldDefinitions.hobbies.name}
-          name={`${hobby}[name]`}
+          name="name"
           label={`Name #${index + 1}`}
         /> 
         <TextInput
-          key={hobby}
           {...fieldDefinitions.hobbies.description}
-          name={`${hobby}[description]`}
+          name="description"
           label={`desc #${index + 1}`}
-        >
-          <button type="button" title="Remove Hobby" onClick={() => fields.remove(index)}>-</button>
-        </TextInput>
-      </div>
+        />
+        <button type="button" title="Remove Hobby" onClick={() => fields.remove(index)}>-</button>
+      </Scope>
     ))}
-    <button type="button" onClick={() => fields.push()}>Add Hobby</button>
+    <br/><button type="button" onClick={() => fields.push()}>Add Hobby</button>
   </fieldset>
 );
 
@@ -210,7 +208,7 @@ async function submitValues(values) {
   });
   const result = await response.json();
   if (!result.isValid) {
-    throw new SubmissionError(result.errors);
+    return result.errors;
   }
   window.alert(`${result.successMessage}: ${JSON.stringify(result, null, 2)}`);
   Router.push(result.nextPage);

@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useRef, useEffect, useState } from 'react';
 import isPromise from "./is-promise";
-import SubmissionError from "./submission-error";
 import { startSubmit, stopSubmit, updateFields, resetFieldsIsDone } from './actions';
 import useFormReducer from './use-form-reducer';
 
@@ -25,6 +24,11 @@ const noop = () => (undefined);
 
 const FormReducerRef = ({formReducerRef}) => {
   const formReducer = useFormReducer(useForm().name);
+  useEffect(() => {
+    if (formReducer[0].formStatus.isResetFieldsDue) {
+      formReducer[1](resetFieldsIsDone());
+    }
+  });
   formReducerRef.current = formReducer;
   return null;
 };
@@ -51,8 +55,6 @@ export const Form = ({
     if (!initialized) {
       setInitialized(true);
       dispatch(updateFields(initialValues));
-    } else if (formReducerRef.current[0].formStatus.isResetFieldsDue) {
-      formReducerRef.current[1](resetFieldsIsDone());
     }
   });
 
@@ -115,34 +117,29 @@ export const Form = ({
     event.preventDefault();
     let submitResult;
     dispatch(startSubmit());
-    try {
-      submitResult = onSubmit(formState.fieldValues);
-    } catch (submitError) {
-      dispatch(stopSubmit(submitError.errors));
-      if (submitError instanceof SubmissionError) {
+    submitResult = onSubmit(formState.fieldValues);
+
+    if (!isPromise(submitResult)) {
+      dispatch(stopSubmit(submitResult));
+      if (submitResult) { // must have returned a form error
         focusOnFieldWithError();
         return;
       }
-      throw submitError;
-    }
-
-    if (!isPromise(submitResult)) {
-      dispatch(stopSubmit());
       onSubmitSuccess(formApiRef.current);
       return;
     }
     return submitResult.then(
-      () => {
-        dispatch(stopSubmit());
+      (submitError) => {
+        dispatch(stopSubmit(submitError));
+        if (submitError) {
+          focusOnFieldWithError();
+          return;  
+        }
         onSubmitSuccess(formApiRef.current);
         return;
       },
       (asyncError) => {
-        dispatch(stopSubmit(asyncError.errors));
-        if (asyncError instanceof SubmissionError) {
-          focusOnFieldWithError();
-          return;
-        }
+        dispatch(stopSubmit());
         throw asyncError;
       }
     );

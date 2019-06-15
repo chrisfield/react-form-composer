@@ -18,7 +18,7 @@ const RadioButton = props => (
     component={RadioButtonComponent}
     name={props.name}
     radioValue={props.value}
-    useTargetCondition={isChecked}
+    ignoreTargetValueUnless={isChecked}
     label={props.label}
   />
 );

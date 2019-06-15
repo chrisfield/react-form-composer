@@ -5,7 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-No pending (unreleased changes) to mention
+No unreleased changes for you to be aware of.
+
+## [2.0.0] - 2019-06-16
+### Changed
+- Form onSubmit prop functions should now return an errors object rather than than throwing a submission-error.
+- Rename the Field useTargetCondition prop to ignoreTargetValueUnless
+
 
 ## [1.1.1] - 2019-06-15
 ### Fixed
