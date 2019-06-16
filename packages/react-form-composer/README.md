@@ -5,6 +5,7 @@
 [![NPM Version](https://img.shields.io/npm/v/react-form-composer.svg?style=flat)](https://www.npmjs.com/package/react-form-composer)
 [![NPM Downloads](https://img.shields.io/npm/dm/react-form-composer.svg?style=flat)](https://npmcharts.com/compare/react-form-composer?minimal=true)
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/react-form-composer.svg)
+[![Build Status](https://travis-ci.com/chrisfield/react-form-composer.svg?branch=master)](https://travis-ci.com/chrisfield/react-form-composer)
 
 ## Introduction
 React-form-composer is a lightweight, simple, and efficient solution for creating forms in react. It makes it easy it to get and set field values, to validate and format fields, to create custom inputs and to access an error count. It works well for web, react-native and server-rendered applications and it gives you control to choose or change where to store form state.
