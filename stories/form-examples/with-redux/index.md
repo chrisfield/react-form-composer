@@ -1,5 +1,5 @@
 # With Redux
-Redux-form-composer normally uses standard react state. The [with_redux example](https://github.com/chrisfield/react-form-composer/tree/master/examples/with_redux). shows how you can switch to use Redux by adding [react-form-composer-redux-provider](https://www.npmjs.com/package/redux-form-composer-redux-provider)
+Redux-form-composer normally uses standard react state. The [with-redux example](https://github.com/chrisfield/react-form-composer/tree/master/examples/with-redux). shows how you can switch to use Redux by adding [react-form-composer-redux-provider](https://www.npmjs.com/package/redux-form-composer-redux-provider)
 
 ---
 ``` jsx

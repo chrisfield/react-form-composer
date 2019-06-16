@@ -1,5 +1,32 @@
-# Forms with Render Prop / Child Function 
-The simple form in the introduction rendered normal jsx nodes including `Fields` as children of a `Form` node. This section shows two other ways you can use to render forms: Render prop and Child render functions.
+# Forms with Render Prop / Child Function
+The `Form` component, like `Field`, can also render a component, a render prop or a render function as child.
+
+#### Component prop
+This will render a div rather than a form.
+```jsx
+const MyForm = () => {  
+  return (
+    <FormStateProvider>
+      <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues} component="div">
+        <div>
+          <label>First name: <Field name="firstName" component="input"/></label>
+        </div>
+        <Field name="lastName" validate={requiredStr} label="Last Name:">
+          {({name, value, error, touched, handleChange, handleBlur, label}) => (
+            <div>
+              <label htmlFor={name}>{label}</label>
+              <input id={name} value={value} onChange={handleChange} onBlur={handleBlur}/>
+              {touched && error && <p>{error}</p>}
+            </div>
+          )}
+        </Field>
+        <button>Submit</button>
+        <TheFormState/>
+      </Form>
+    </FormStateProvider>
+  );
+};
+```
 
 #### Render prop
 ```jsx

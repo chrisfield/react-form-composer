@@ -9,7 +9,3 @@ A secondary point is that the example has been written to allow data to be poste
 - form-urlencoded content - eg when client JS is disabled or using 'Standard Submit (no client JS) button' 
 
 Whichever way data is sent it will be validated/formatted consistently because the same code has been used.
-
-Try tuning javascript off: Messages for errors that would have been caught on the client are now displayed when the form is redisplayed after submission to the server.
-
-Run the example and in the chrome dev-tools network tab choose the slow-3g option. While the javascript is downloading you will be able to use the server rendered html-form.
