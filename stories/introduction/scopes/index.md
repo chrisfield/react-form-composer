@@ -15,7 +15,7 @@ import {
   Scope,
   useForm,
   useFormReducer
-} from 'react-form-composer;
+} from 'react-form-composer';
 
 const TheFormState = () => {
   const [state] = useFormReducer(useForm().name);
@@ -44,13 +44,13 @@ const clearValues = (form) => {
 const MyForm = () => {  
   return (
     <FormStateProvider>
-      <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues} className="my-form">
+      <Form name="myForm" initialValues={{fullName: 'Mr J Smith'}} onSubmit={submitValues} onSubmitSuccess={clearValues} className="my-form">
         <TextInput name="fullName" label="Full Name" required/>
         <Scope name="address">
           <label>Address:</label><br/>
-          <TextInput name="line1" required/>
-          <TextInput name="line2" required/>
-          <TextInput name="line3"/>
+          <TextInput name="line1" label="line1" required/>
+          <TextInput name="line2" label="line2" required/>
+          <TextInput name="line3" label="line3"/>
           <TextInput name="postalCode" label="Postcode"/>
           <TextInput name="country" label="Country"/>
         </Scope>
@@ -60,6 +60,7 @@ const MyForm = () => {
     </FormStateProvider>
   );
 };
+
 
 export default myForm;
 ```
