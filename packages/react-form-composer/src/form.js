@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useRef, useEffect, useState } from 'react';
+import React, { createContext, useContext, useRef, useEffect, useState} from 'react';
 import isPromise from "./is-promise";
 import { startSubmit, stopSubmit, updateFields, resetFieldsIsDone } from './actions';
 import useFormReducer from './use-form-reducer';
@@ -47,8 +47,8 @@ export const Form = ({
   const initFields = [];
   const fieldsRef = useRef(initFields);
   const formReducerRef = useRef([]);
-  const formRef = useRef();
   const [initialized, setInitialized] = useState(!initialValues);
+  const formRef = useRef();
 
   useEffect(() => {
     const dispatch = formReducerRef.current[1];
@@ -73,7 +73,7 @@ export const Form = ({
     getField: fieldName => {
       for (const field of fieldsRef.current) {
         if (field.name === fieldName) {
-          return field.getInterface();
+          return field;
         }
       }
     },
@@ -88,9 +88,8 @@ export const Form = ({
 
   const focusOnFieldWithError = () => {
     for (const field of fieldsRef.current) {
-      const fieldApi = field.getInterface();
-      if (fieldApi.error && fieldApi.element) {
-        const element = fieldApi.element;
+      if (field.error && field.element) {
+        const element = field.element;
         if (element.focus) {
           element.focus();
         }

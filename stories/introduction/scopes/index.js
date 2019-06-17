@@ -41,9 +41,9 @@ const MyForm = () => {
         <TextInput name="fullName" label="Full Name"/>
         <Scope name="address">
           <label>Address:</label><br/>
-          <TextInput name="line1" label=""/>
-          <TextInput name="line2" label=""/>
-          <TextInput name="line3" label=""/>
+          <TextInput name="line1" label="line1" required/>
+          <TextInput name="line2" label="line2" required/>
+          <TextInput name="line3" label="line3"/>
           <TextInput name="postalCode" label="Postcode"/>
           <TextInput name="country" label="Country"/>
         </Scope>

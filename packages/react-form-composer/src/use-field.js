@@ -22,7 +22,7 @@ const useField = (fieldName) => {
     formDispatch({field: fullFieldName, ...action });
   });
     
-  return {value, touched, error, dispatch: dispatchRef.current, customProps, isResetFieldsDue: formState.formStatus.isResetFieldsDue};
+  return {value, touched, error, dispatch: dispatchRef.current, customProps};
 };
 
 export default useField;

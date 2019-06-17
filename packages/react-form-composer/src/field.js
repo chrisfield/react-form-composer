@@ -64,41 +64,36 @@ const FieldBase = memo(({
   error,
   touched,
   customProps,
-  isResetFieldsDue,
   ...props
 }) => {
-  const elementRef = useRef();
-  const fieldRef = useRef({
+  
+  const elementRef = useRef();  
+  const fieldInterfaceRef = useRef({
     name,
-    error,
+    getField: name => formApi.getField(name),
     setTouched: touched => dispatch(setFieldTouched(touched)),
-    getInterface: () => fieldInterfaceRef.current
+    setValue: value => dispatch(updateField(value)),
+  });
+  Object.assign(fieldInterfaceRef.current, {
+    validate: () => {validateValue(value)},
+    value,
+    error,
+    touched,
+    customProps
+  }); 
+  useEffect(() => {
+    fieldInterfaceRef.current.element = elementRef.current;
   });
 
   const formApi = useForm();
   useEffect(() => {
-    formApi.registerField(fieldRef.current);
+    formApi.registerField(fieldInterfaceRef.current);
     return () => {
       dispatch(deregisterField());
-      formApi.deregisterField(fieldRef.current);
+      formApi.deregisterField(fieldInterfaceRef.current);
     }
   }, []);
 
-  const fieldInterfaceRef = useRef(); 
-  useEffect(() => {
-    fieldInterfaceRef.current = {
-      name,
-      getField: name => formApi.getField(name),
-      element: elementRef.current,
-      validate: () => {validateValue(value)},
-      setTouched: fieldRef.current.setTouched,
-      setValue: value => dispatch(updateField(value)),
-      value,
-      error,
-      touched,
-      customProps
-    }
-  });
 
   const isMountedRef = useRef(false);
   const previous = usePrevious({value, customProps});
@@ -116,7 +111,7 @@ const FieldBase = memo(({
       return;
     }
 
-    if (isResetFieldsDue || (value !== previous.value && !twoInvalidNumbers(value, previous.value))) {
+    if (value !== previous.value && !twoInvalidNumbers(value, previous.value)) {
       validateValue(value);
     }
 
