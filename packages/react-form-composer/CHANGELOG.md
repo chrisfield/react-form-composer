@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [2.0.3] - 2019-06-18
+### Fixed
+- Add getForm() to fieldInterface and getState, getDispatch to formApi.
+
 ## [2.0.2] - 2019-06-17
 ### Fixed
 - Refactor to simplify internal details of field.getInterface()

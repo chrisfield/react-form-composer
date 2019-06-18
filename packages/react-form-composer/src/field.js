@@ -66,10 +66,11 @@ const FieldBase = memo(({
   customProps,
   ...props
 }) => {
-  
-  const elementRef = useRef();  
+  const formApi = useForm();
+  const elementRef = useRef();
   const fieldInterfaceRef = useRef({
     name,
+    getForm: () => formApi,
     getField: name => formApi.getField(name),
     setTouched: touched => dispatch(setFieldTouched(touched)),
     setValue: value => dispatch(updateField(value)),
@@ -85,7 +86,6 @@ const FieldBase = memo(({
     fieldInterfaceRef.current.element = elementRef.current;
   });
 
-  const formApi = useForm();
   useEffect(() => {
     formApi.registerField(fieldInterfaceRef.current);
     return () => {
@@ -134,7 +134,7 @@ const FieldBase = memo(({
   const validateValue = (value) => {
     let validateError;
     if (validate) {
-      const fieldValues = formApi.formReducerRef.current[0].fieldValues;
+      const fieldValues = formApi.getState().fieldValues;
       if (Array.isArray(validate)) {
         for (let i = 0; i < validate.length && !validateError; i++) {
           validateError = validate[i](value, fieldValues, {...fieldInterfaceRef.current, ...props});

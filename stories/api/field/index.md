@@ -24,16 +24,18 @@ You can see how it can be used to define ui-components in the 'Example ui-compon
 | children                |          | Node or function. A function that will be called with props. Or normal JSX children                                                                                                                                                                                                                                                                                                                     |
 
 
-
 The `fieldInterface` object (passed to beforeUpdate, afterUpdate and validate functions) includes any extra props passed to `Field` plus these standard props: 
 * `name` of this field
 * `element` defined if you pass `ref={elementRef}` to the html element
 * `value`
 * `error`
 * `touched`
+* `customProps` any props set by the result returned from beforeUpdate
 * `validate: function` no params taken
-* `setTouched:` pass a boolean value
-* `setValue`: pass the value
+* `setTouched: function` pass a boolean value
+* `setValue: function` pass a value
+* `getField: function` pass the fieldName of another field to access its fieldApi
+* `getForm: function`: the formApi
 
 `Field` will pass these props to the rendered component:
 * `handleChange` function to call onChange

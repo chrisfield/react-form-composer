@@ -1,17 +1,9 @@
-import {Form, useForm as useFormInternal } from "./form";
-export {Form}
-export const useForm = () => {
-  const { name } = useFormInternal();
-  return {name};
-};
-
+export { Form, useForm } from "./form";
 export {
   initFormState as initFormStateAction,
   updateFields as updateFieldsAction
 } from "./actions";
-
 export { Scope, useScope } from "./scope";
-
 export {default as FormStateContext} from "./form-state-context";
 export {default as FormStateProvider} from "./form-state-provider";
 export {default as formReducer} from "./reducers";

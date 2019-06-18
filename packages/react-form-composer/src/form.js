@@ -77,7 +77,8 @@ export const Form = ({
         }
       }
     },
-    formReducerRef
+    getState: () => (formReducerRef.current[0]),
+    getDispatch: () => (formReducerRef.current[1])
   });
 
   const markAllFieldsAsTouched = (touched= true) => {

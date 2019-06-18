@@ -1,5 +1,7 @@
-# Validation
-The form below shows field, inter-field and submit validation. Usernames starting with "a" or "A" will trigger a submit error also the form checks the two passwords are equal.
+# Async Submission
+The form below .
+
+Like the last form this one has field, inter-field and submit validation. Usernames starting with "a" or "A" will trigger a submit error also the form checks the two passwords are equal.
 <!-- STORY -->
 
 ---
@@ -67,12 +69,26 @@ const MyForm = () => {
   );
 };
 
-function submitValues(values) {
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+async function simulatePostingData(values) {
+  console.log('starting to post data', values);
+  await sleep(2000);
+  let results = {};
   if (values.username.toUpperCase().startsWith('A')) {
-    return {
+    results.errors = {
       username: 'Sorry all usernames staring with "a" or "A" are taken',
       generalMessage: 'Just one error. Please correct and re submit'
-    }
+    };
+  }
+  console.log('finished posting data. Results:', results);
+  return results;
+}
+
+async function submitValues(values) {
+  const result = await simulatePostingData(values);
+  if (result.errors) {
+    return result.errors;
   }
   window.alert(`You submitted:${JSON.stringify(values, null, 2)}`)
 }
