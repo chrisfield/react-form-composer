@@ -1,5 +1,5 @@
 # Async Submission
-The form below .
+The form below submits asyncronously. It uses sleep to simulate the latency of waiting for a server response. To see a submit for real check out the universal-validation form example.
 
 Like the last form this one has field, inter-field and submit validation. Usernames starting with "a" or "A" will trigger a submit error also the form checks the two passwords are equal.
 <!-- STORY -->
