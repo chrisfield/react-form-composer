@@ -1,8 +1,12 @@
 # Hooks
 
 ## useForm
-`useForm()` can be called by any children/decsendants of a `Form`. It returns an object with one property: 
-* `name`: the name of the form.
+`useForm()` can be called by any children/decsendants of a `Form`. It returns an object with the following property: 
+
+| Property Name   | Type     | Description                                                              |
+|-----------------|----------|--------------------------------------------------------------------------|
+| name            | String   | Name of the Form                                                        |
+
 
 ## useField
 `useField('myFieldOne')` can be called by any children/decsendants of a `Form`. It takes a field-name as a parameter and returns an object with field properties about the field.

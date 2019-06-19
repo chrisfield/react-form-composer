@@ -70,8 +70,8 @@ const FieldBase = memo(({
   const elementRef = useRef();
   const fieldInterfaceRef = useRef({
     name,
-    getForm: () => formApi,
-    getField: name => formApi.getField(name),
+    getForm: formApi.getPublicFormApi,
+    getField: formApi.getField,
     setTouched: touched => dispatch(setFieldTouched(touched)),
     setValue: value => dispatch(updateField(value)),
   });

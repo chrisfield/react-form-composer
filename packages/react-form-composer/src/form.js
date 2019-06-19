@@ -58,6 +58,17 @@ export const Form = ({
     }
   });
 
+  const getPublicFormApi = () => {
+    const { name, getField, updateFields, dispatch, getState} = formApiRef.current;
+    return {
+      name,
+      getField,
+      updateFields,
+      dispatch,
+      state: getState()
+    }
+  };
+
   const formApiRef = useRef({
     deregisterField: (field) => {
       const index = fieldsRef.current.indexOf(field);
@@ -77,8 +88,9 @@ export const Form = ({
         }
       }
     },
+    getPublicFormApi,
     getState: () => (formReducerRef.current[0]),
-    getDispatch: () => (formReducerRef.current[1])
+    dispatch: (action) => {formReducerRef.current[1](action)}
   });
 
   const markAllFieldsAsTouched = (touched= true) => {
@@ -125,7 +137,7 @@ export const Form = ({
         focusOnFieldWithError();
         return;
       }
-      onSubmitSuccess(formApiRef.current);
+      onSubmitSuccess(getPublicFormApi());
       return;
     }
     return submitResult.then(
@@ -135,7 +147,7 @@ export const Form = ({
           focusOnFieldWithError();
           return;  
         }
-        onSubmitSuccess(formApiRef.current);
+        onSubmitSuccess(getPublicFormApi());
         return;
       },
       (asyncError) => {

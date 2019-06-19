@@ -35,7 +35,7 @@ The `fieldInterface` object (passed to beforeUpdate, afterUpdate and validate fu
 * `setTouched: function` pass a boolean value
 * `setValue: function` pass a value
 * `getField: function` pass the fieldName of another field to access its fieldApi
-* `getForm: function`: the formApi
+* `getForm: function`: the formApi (see form Api/Form)
 
 `Field` will pass these props to the rendered component:
 * `handleChange` function to call onChange
