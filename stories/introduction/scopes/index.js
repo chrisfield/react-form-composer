@@ -38,17 +38,28 @@ const MyForm = () => {
   return (
     <FormStateProvider>
       <Form name="myForm" initialValues={{fullName: 'Mr J Smith'}} onSubmit={submitValues} onSubmitSuccess={clearValues} className="my-form">
-        <TextInput name="fullName" label="Full Name" required/>
-        <Scope name="address">
-          <label>Address:</label><br/>
-          <TextInput name="line1" label="line1" required/>
-          <TextInput name="line2" label="line2" required/>
-          <TextInput name="line3" label="line3"/>
-          <TextInput name="postalCode" label="Postcode"/>
-          <TextInput name="country" label="Country"/>
-        </Scope>
-        <Button/>
-        <TheFormState />
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          <div style={{ flex: 1, marginRight: '2rem' }}>
+            <TextInput name="fullName" label="Full Name" required/>
+            <Scope name="address">
+              <label>Address:</label><br/>
+              <TextInput name="line1" label="line1" required/>
+              <TextInput name="line2" label="line2" required/>
+              <TextInput name="line3" label="line3"/>
+              <TextInput name="postalCode" label="Postcode"/>
+              <TextInput name="country" label="Country"/>
+            </Scope>
+            <Button/>
+          </div>
+          <div style={{
+            flex: 2,
+            flexDirection: 'column',
+            display: 'flex',
+            minWidth: '300px'
+          }}>
+            <TheFormState/> 
+          </div>
+        </div>
       </Form>
     </FormStateProvider>
   );
