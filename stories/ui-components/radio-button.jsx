@@ -13,13 +13,12 @@ const RadioButtonComponent = props => {
   );
 };
 
-const RadioButton = props => (
+const RadioButton = ({value, ...props}) => (
   <Field
     component={RadioButtonComponent}
-    name={props.name}
-    radioValue={props.value}
+    radioValue={value}
     ignoreTargetValueUnless={isChecked}
-    label={props.label}
+    {...props}
   />
 );
 

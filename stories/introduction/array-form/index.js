@@ -50,7 +50,6 @@ const RenderHobbies = ({fields}) => (
         />
         <TextInput
           name={`notes`}
-          required
           label="notes"
           size="60"
         />
@@ -62,6 +61,26 @@ const RenderHobbies = ({fields}) => (
   </fieldset>
 );
 
+const RenderShoppingList = ({fields}) => (
+  <fieldset>
+    <legend className="example-form_title">
+      Shopping List
+    </legend>
+    {fields.map((item, index) => (
+      <>
+        <TextInput
+          name={item}
+          required
+          label="Item"
+        />
+        <button type="button" title="Remove Item" onClick={() => fields.remove(index)}>-</button>
+        <hr/>
+      </>
+    ))}
+    <button type="button" onClick={() => fields.push()}>Add Item</button>
+  </fieldset>
+);
+
 const MyForm = () => {  
   return (
     <FormStateProvider>
@@ -69,6 +88,10 @@ const MyForm = () => {
         <FieldArray
           name="hobbies"
           component={RenderHobbies}
+        />
+        <FieldArray
+          name="shoppingList"
+          component={RenderShoppingList}
         />
         <Button/>
         <TheFormState />

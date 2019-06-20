@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [2.1.0] - 2019-06-20
+### Added
+- Additional logic to useField to allow the Field name prop to be omitted for Fields in a Scope. This allows a Scope to be used as a way to create a set of radio-buttons which all have the same name.
+
 ## [2.0.4] - 2019-06-19
 ### Fixed
 - Tidy up the public interface for formApi improve docs for it.

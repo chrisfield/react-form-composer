@@ -1,5 +1,7 @@
-# Array Form
-
+# Field Arrays
+The Form below renders: 
+- A FieldArray called hobbies where each field is a Scope containing two TextFields.
+- A FieldArray called shoppingList where each field is a TextField
 <!-- STORY -->
 
 ---

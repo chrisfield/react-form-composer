@@ -6,10 +6,11 @@ import getField from './state-utils/get-field';
 
 
 const defaultStatus = {};
-const useField = (fieldName) => {
+const useField = (fieldName = '') => {
   const { name: formName } = useForm();
-  const { name: scopeName } = useScope();
-  const fullFieldName = scopeName ? `${scopeName}.${fieldName}`: fieldName;
+  const { name: scopeName = ''} = useScope();
+  const dot = (scopeName && fieldName) ? '.': '';
+  const fullFieldName = `${scopeName}${dot}${fieldName}`;
   const [formState, formDispatch] = useFormReducer(formName);
 
   const value = getField(formState.fieldValues, fullFieldName);

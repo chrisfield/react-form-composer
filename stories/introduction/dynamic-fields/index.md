@@ -1,12 +1,12 @@
 # Dynamic Fields
-This section shows one way to render parts of a form conditionally. Notice that the when the PartnerField renders its validation is automatically activated.
+This section shows one way to render parts of a form conditionally. When the PartnerField renders its validation is automatically activated. Also note that since the RadioButtons have the same name I have used a Scope to save writing it twice.
 <!-- STORY -->
 
 ---
 #### Code
 ```jsx
 import React from 'react';
-import {FormStateProvider, Form, useForm, useFormReducer, useField} from '../../../packages/react-form-composer/src';
+import {FormStateProvider, Form, Scope, useForm, useFormReducer, useField} from 'react-form-composer';
 import {TextInput, RadioButton} from '../../ui-components';
 
 const TheFormState = () => {
@@ -42,11 +42,11 @@ const MyForm = () => {
     <FormStateProvider>
       <Form name="myForm" initialValues={initialValues} onSubmit={submitValues} onSubmitSuccess={clearValues}>
         <TextInput name="firstName" label="First Name" required/>
-        <div>
+        <Scope name="relationshipStatus">
           Are You Single?
-          <RadioButton name="relationshipStatus" value="SINGLE" label="Yes"/>
-          <RadioButton name="relationshipStatus" value="NOT-SINGLE" label="No"/>
-        </div>
+          <RadioButton value="SINGLE" label="Yes"/>
+          <RadioButton value="NOT-SINGLE" label="No"/>
+        </Scope>
         <PartnerName label="Partner Name"/>
         <Button/>
         <TheFormState/> 

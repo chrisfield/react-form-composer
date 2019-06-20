@@ -2,7 +2,7 @@ import { withDocs } from 'storybook-readme';
 import readme from './index.md'
 
 import React from 'react';
-import {FormStateProvider, Form, useForm, useFormReducer, useField} from '../../../packages/react-form-composer/src';
+import {FormStateProvider, Form, Scope, useForm, useFormReducer, useField} from '../../../packages/react-form-composer/src';
 import {TextInput, RadioButton} from '../../ui-components';
 
 const TheFormState = () => {
@@ -40,11 +40,11 @@ const MyForm = () => {
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           <div style={{ flex: 1, marginRight: '2rem' }}>
             <TextInput name="firstName" label="First Name" required/>
-            <div>
+            <Scope name="relationshipStatus">
               Are You Single?
-              <RadioButton name="relationshipStatus" value="SINGLE" label="Yes"/>
-              <RadioButton name="relationshipStatus" value="NOT-SINGLE" label="No"/>
-            </div>
+              <RadioButton value="SINGLE" label="Yes"/>
+              <RadioButton value="NOT-SINGLE" label="No"/>
+            </Scope>
             <PartnerName label="Partner Name"/>
             <Button/>
           </div>
