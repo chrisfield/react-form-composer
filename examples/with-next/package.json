@@ -16,6 +16,6 @@
     "next": "^8.0.3",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "react-form-composer": "^2.0.4"
+    "react-form-composer": "^2.1.0"
   }
 }
