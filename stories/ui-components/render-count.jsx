@@ -8,7 +8,7 @@ const RenderCount = ({name, children}) => {
   return (
     <div>
       {children}
-      {name && <><br/>Renders: {name}</>}{countRef.current + ''}
+      {name && <><br/>{name} renders:</>}{countRef.current + ''}
     </div>
   )
 };

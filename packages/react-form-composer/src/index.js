@@ -16,7 +16,7 @@ export {default as Field} from "./field";
 export {default as FieldArray} from "./field-array";
 export {default as useFormReducer}  from './use-form-reducer';
 export {default as useField} from './use-field';
-export {default as useFieldArray} from './use-field-array';
+export {default as FormSpy} from './form-spy';
 
 import {updateField} from "./actions";
 

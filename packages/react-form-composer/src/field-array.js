@@ -1,15 +1,26 @@
 import React, { memo } from 'react';
 import { pushToFieldArray, removeFromFieldArray } from './actions';
-import useFieldArray from './use-field-array';
+import FormSpy from './form-spy';
+import { useForm } from './form';
+import getField from './state-utils/get-field';
 
 const FieldArray = ({name, ...props}) => {
-  const connectionProps = useFieldArray(name);
+  const { dispatch: formDispatch } = useForm();
+  const dispatch = (action) => {
+    formDispatch({fieldArray: name, ...action });
+  };
+  const fieldArraySelector = state => getField(state.fieldValues, name);
   return (
-    <FieldArrayBase
-      name={name}
-      {...props}
-      {...connectionProps}
-    />
+    <FormSpy selector={fieldArraySelector}>
+      {(fields) => (
+        <FieldArrayBase
+          name={name}
+          {...props}
+          dispatch={dispatch}
+          fields={fields}
+        />)
+      }
+    </FormSpy>
   );
 };
 

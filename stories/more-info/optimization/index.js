@@ -2,18 +2,20 @@ import { withDocs } from 'storybook-readme';
 import readme from './index.md'
 
 import React from 'react';
-import {FormStateProvider, Form, Field, FieldArray, useForm, useFormReducer, useField} from '../../../packages/react-form-composer/src';
-import TextInput from '../../ui-components/text-input';
-import RenderCount from '../../ui-components/render-count';
+import {FormStateProvider, Form, Field, FieldArray, FormSpy} from '../../../packages/react-form-composer/src';
+import {RenderCount} from '../../ui-components';
 
-const Button = (props) => {
-  const [state] = useFormReducer(useForm().name);
-  return (
-    <RenderCount>
-      <button {...props} style={{backgroundColor: state.formStatus.isValid? 'green': 'cyan'}} >Submit</button>
-    </RenderCount>
-  );
-};
+const isValidSelector = state => state.formStatus.isValid;
+
+const Button = (props) => (
+  <FormSpy selector={isValidSelector}>
+    {(isValid) => (
+      <RenderCount>
+        <button {...props} style={{backgroundColor: isValid? 'green': 'cyan'}} >Submit</button>
+      </RenderCount>
+    )}
+  </FormSpy>
+);
 
 const requiredStr = (value) => {
   return value && value.trim && value.trim().length > 0 ? undefined: 'Please enter a value'

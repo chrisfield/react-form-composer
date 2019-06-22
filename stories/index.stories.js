@@ -43,7 +43,7 @@ storiesOf('Api', module)
 .add('Form', apiForForm)
 .add('Scope', apiForScope)
 .add('Field', apiForField)
-.add('Hooks', apiForHooks);
+.add('Hooks and Spy', apiForHooks);
 
 storiesOf('More Info', module)
 .add('Form Render Props', moreInfoFormRenderProps)
