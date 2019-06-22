@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [2.2.1] - 2019-06-22
+### Fixed
+- Optimize FieldArray to eliminate unnecessary rendering. Before this every Field in a FieldArray wound rerender when any Field in the FieldArray changed.
+
 ## [2.2.0] - 2019-06-22
 ### Added
 - Add FormSpy component for more efficient rendering of components using state. Use it to make ArrayField more efficient.

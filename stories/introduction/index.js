@@ -2,7 +2,7 @@ import { withDocs } from 'storybook-readme';
 import readme from './README.md'
 
 import React from 'react';
-import {FormStateProvider, Form, useForm, useFormReducer, Field} from '../../packages/react-form-composer/src';
+import {FormStateProvider, Form, useForm, useFormReducer, Field, FormSpy} from '../../packages/react-form-composer/src';
 
 const TheFormState = () => {
   const [state] = useFormReducer(useForm().name);
@@ -12,6 +12,16 @@ const TheFormState = () => {
     </pre>
   );
 };
+
+const isValidSelector = state => state.formStatus.isValid;
+
+const Button = (props) => (
+  <FormSpy selector={isValidSelector}>
+    {(isValid) => (
+      <button {...props} style={{backgroundColor: isValid? 'green': 'cyan'}} >Submit</button>
+    )}
+  </FormSpy>
+);
 
 const requiredStr = (value, _values, {label}) => {
   return value && value.trim && value.trim().length > 0 ? undefined: `Please enter a value for ${label.toLowerCase()}`
@@ -28,16 +38,16 @@ const MyForm = () => {
             </div>
             <div>
               <Field name="lastName" validate={requiredStr} label="Last Name:">
-                {({name, value, error, touched, handleChange, handleBlur, label}) => (
+                {({name, value, error, touched, handleChange, handleBlur, elementRef, label}) => (
                   <div>
                     <label htmlFor={name}>{label}</label>
-                    <input id={name} value={value} onChange={handleChange} onBlur={handleBlur}/>
+                    <input id={name} value={value} onChange={handleChange} onBlur={handleBlur} ref={elementRef}/>
                     {touched && error && <p>{error}</p>}
                   </div>
                 )}
               </Field>
             </div>            
-            <button>Submit</button>
+            <Button/>
           </div>
           <div style={{
             flex: 2,

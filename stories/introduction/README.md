@@ -13,7 +13,7 @@ Redux-form-composer has been written with hooks. Check out the [Github repo](htt
 
 ## Try out this minimal form
 
-Go ahead and play around with the form below then take a look at the code snippet and explanation.
+I have written the form below in a way that includes a few key concepts. Try it out then take a look at the code snippet and explanation.
 
 <!-- STORY -->
 
@@ -21,7 +21,7 @@ Go ahead and play around with the form below then take a look at the code snippe
 #### Code
 ```jsx
 import React from 'react';
-import {FormStateProvider, Form, useForm, useFormReducer, Field} from 'react-form-composer';
+import {FormStateProvider, Form, useForm, useFormReducer, Field, FormSpy} from 'react-form-composer';
 
 const TheFormState = () => {
   const [state] = useFormReducer(useForm().name);
@@ -31,6 +31,16 @@ const TheFormState = () => {
     </pre>
   );
 };
+
+const isValidSelector = state => state.formStatus.isValid;
+
+const Button = (props) => (
+  <FormSpy selector={isValidSelector}>
+    {(isValid) => (
+      <button {...props} style={{backgroundColor: isValid? 'green': 'cyan'}} >Submit</button>
+    )}
+  </FormSpy>
+);
 
 const requiredStr = (value, _values, {label}) => {
   return value && value.trim && value.trim().length > 0 ? undefined: `Please enter a value for ${label.toLowerCase()}`
@@ -45,15 +55,15 @@ const MyForm = () => {
             <label>First name: <Field name="firstName" component="input"/></label>
           </div>
           <Field name="lastName" validate={requiredStr} label="Last Name:">
-            {({name, value, error, touched, handleChange, handleBlur, label}) => (
+            {({name, value, error, touched, handleChange, handleBlur, elementRef, label}) => (
               <div>
                 <label htmlFor={name}>{label}</label>
-                <input id={name} value={value} onChange={handleChange} onBlur={handleBlur}/>
+                <input id={name} value={value} onChange={handleChange} onBlur={handleBlur} ref={elementRef}/>
                 {touched && error && <p>{error}</p>}
               </div>
             )}
           </Field>
-          <button>Submit</button>
+          <Button/>
           <TheFormState/> 
         </div>
       </Form>
@@ -74,17 +84,25 @@ export default MyForm;
 ---
 
 #### Explanation
-This simple form shows two of the ways that `Field` can be used to render an input:
-* firstName passes "input" to a prop called component 
-* lastName provides a child render function
-
 The `FormStateProvider` provides standard React state and dispach to its children. Often, like in this example, you will wrap each form in its own `FormStateProvider` but you are in control and it is easy to do things like  pull state up to an application level or swap to/from Redux. 
 
-The `onSubmit` function passed to `Form` will only be called if the `Form` is valid.
+The `Form` component has been given an `onSubmit` function. This will only be called if the `Form` is valid.
+
+
+The example shows two of the ways that `Field` can be used to render an input:
+* firstName passes "input" to a prop called component
+* lastName provides a child render function
+
+It also shows two alternative ways to 'manually' access parts of the form-state:
+* `TheFormState` custom component has been written with `useFormReducer`
+* `Button` has been written with `FormSpy`.
+
+`FormSpy` is an optimized component that takes a selector prop - in this case a function that returns the isValid status of the form which is then used to toggle the green background-color.
 
 `useForm` is a hook you can use to access the `Form`. The example above simply uses it to get the form name (to avoid hardcoding "myForm" again).
 
 `useFormReducer` is a hook that takes a form-name as a parameter and returns state and dispatch in a two element array. The returned array is like the one that would be returned from the standard [React useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer) hook. This simularity is no accident because, when you are not using redux, useFormReducer just passes the work on to useReducer.
+
 
 #### Next Steps
 The next section shows a form with a wider range of ui-components. Writing ui-components is fairly easy and will simplify your forms.

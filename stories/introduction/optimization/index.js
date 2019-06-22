@@ -29,12 +29,12 @@ const RenderShoppingList = ({fields}) => (
     {fields.map((item, index) => (
       <>
         <Field name={item} validate={requiredStr} render={
-          ({name, value, handleChange, handleBlur, error, touched}) => (
+          ({name, value, handleChange, handleBlur, error, touched, elementRef}) => (
             <>
               <label>
                 <RenderCount>
                     Item
-                    <input value={value} name={name} onChange={handleChange} onBlur={handleBlur}/>
+                    <input value={value} name={name} onChange={handleChange} onBlur={handleBlur} ref={elementRef}/>
                 </RenderCount>
               </label>
               {touched && error && <div>{error}</div>}
@@ -77,12 +77,12 @@ const MyForm = () => {
                 )
               }/>
               <Field name="lastName"  validate={requiredStr} render={
-                ({name, value, handleChange, handleBlur, error, touched}) => (
+                ({name, value, handleChange, handleBlur, error, touched, elementRef}) => (
                   <>
                   <label>
                     <RenderCount>
                         Last Name
-                        <input value={value} name={name} onChange={handleChange} onBlur={handleBlur}/>
+                        <input value={value} name={name} onChange={handleChange} onBlur={handleBlur} ref={elementRef}/>
                       </RenderCount>
                     </label>
                     {touched && error && <div>{error}</div>}

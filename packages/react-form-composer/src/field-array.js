@@ -24,6 +24,13 @@ const FieldArray = ({name, ...props}) => {
   );
 };
 
+const fieldArrayPropsAreEqual = (
+  {fields: lastFields, ...lastProps}, {fields: nextFields, ...nextProps}
+) => (lastFields && nextFields 
+  && (lastFields.length === nextFields.length)
+  && lastProps.name === nextProps.name
+);
+
 const FieldArrayBase = memo(({
   dispatch,
   fields,
@@ -55,6 +62,6 @@ const FieldArrayBase = memo(({
 
   const Component = component;
   return <Component {...props} fields={augmentedFields} />;
-});
+}, fieldArrayPropsAreEqual);
 
 export default FieldArray;
