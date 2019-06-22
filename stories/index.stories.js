@@ -21,6 +21,7 @@ import apiForHooks from './api/hooks';
 
 import moreInfoFaq from './more-info/faq';
 import moreInfoFormRenderProps from './more-info/form-render-props';
+import moreInfoOptimization from './more-info/optimization';
 
 storiesOf('Introduction', module)
 .add('A Simple Form', introduction)
@@ -46,4 +47,5 @@ storiesOf('Api', module)
 
 storiesOf('More Info', module)
 .add('Form Render Props', moreInfoFormRenderProps)
+.add('Optimization', moreInfoOptimization)
 .add('FAQs (changelog)', moreInfoFaq)
