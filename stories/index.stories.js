@@ -7,6 +7,8 @@ import arrayForm from './introduction/array-form';
 import validation from './introduction/validation';
 import asyncSubmission from './introduction/async-submission';
 import dynamicFields from './introduction/dynamic-fields';
+import optimization from './introduction/optimization';
+
 
 import withRedux from './form-examples/with-redux';
 import nextServerRendering from './form-examples/next-server-rendering';
@@ -21,7 +23,6 @@ import apiForHooks from './api/hooks';
 
 import moreInfoFaq from './more-info/faq';
 import moreInfoFormRenderProps from './more-info/form-render-props';
-import moreInfoOptimization from './more-info/optimization';
 
 storiesOf('Introduction', module)
 .add('A Simple Form', introduction)
@@ -30,7 +31,8 @@ storiesOf('Introduction', module)
 .add('Field Arrays', arrayForm)
 .add('Dynamic Fields', dynamicFields)
 .add('Validation', validation)
-.add('Async Submission', asyncSubmission);
+.add('Async Submission', asyncSubmission)
+.add('Optimization', optimization);
 
 storiesOf('Form Examples', module)
 .add('With Redux', withRedux)
@@ -47,5 +49,4 @@ storiesOf('Api', module)
 
 storiesOf('More Info', module)
 .add('Form Render Props', moreInfoFormRenderProps)
-.add('Optimization', moreInfoOptimization)
 .add('FAQs (changelog)', moreInfoFaq)

@@ -1,7 +1,11 @@
 # Optimization
-React-form-composer has designed to limit rendering. This page shows the various render counts so you can see when components are being rendered.
+Only the components that need updating are re-rendered as the form's state changes. This page shows the various render counts so you can see this in practice.
 
-Note that the submit button makes use of the FormSpy component to access the isValid value from form state.
+Note that the submit button makes use of the FormSpy component to access the isValid value from form state - this is more efficient than useFormReducer.
+
+Fields with initial validation errors will render twice: once to display and once to recieve the error message.
+
+Just now all array fields rerender when one is updated - I will look to see if this can be optimized.
 <!-- STORY -->
 
 ---
