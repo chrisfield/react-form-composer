@@ -21,29 +21,33 @@ const requiredStr = (value) => {
   return value && value.trim && value.trim().length > 0 ? undefined: 'Please enter a value'
 };
 
+const TextInput = ({name, validate, label}) => (
+  <Field name={name} validate={validate} render={
+    ({name, value, handleChange, handleBlur, error, touched, elementRef}) => {
+      return <>
+        <label>
+          <RenderCount>
+              {label}
+              <input value={value} name={name} onChange={handleChange} onBlur={handleBlur} ref={elementRef}/>
+          </RenderCount>
+        </label>
+        {touched && error && <div>{error}</div>}
+      </>
+    }
+  }/>
+);
+
 const RenderShoppingList = ({fields}) => (
   <fieldset>
     <legend className="example-form_title">
       Shopping List
     </legend>
     {fields.map((item, index) => (
-      <>
-        <Field name={item} validate={requiredStr} render={
-          ({name, value, handleChange, handleBlur, error, touched, elementRef}) => (
-            <>
-              <label>
-                <RenderCount>
-                    Item
-                    <input value={value} name={name} onChange={handleChange} onBlur={handleBlur} ref={elementRef}/>
-                </RenderCount>
-              </label>
-              {touched && error && <div>{error}</div>}
-            </>
-          )
-        }/>
+      <div key={index}>
+        <TextInput label="Item" name={item} validate={requiredStr}/>
         <button type="button" title="Remove Item" onClick={() => fields.remove(index)}>-</button>
         <hr/>
-      </>
+      </div>
     ))}
     <button type="button" onClick={() => fields.push()}>Add Item</button>
   </fieldset>
@@ -52,47 +56,13 @@ const RenderShoppingList = ({fields}) => (
 const MyForm = () => {
   return (
     <FormStateProvider>
-      <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
+      <Form name="myForm" initialValues={{shoppingList:['Bread']}} onSubmit={submitValues} onSubmitSuccess={clearValues}>
         <RenderCount name="Whole form">
-          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            <div style={{ flex: 1, marginRight: '2rem' }}>
-              <Field name="firstName"  render={
-                ({name, value, handleChange, handleBlur}) => (
-                  <label>
-                    <RenderCount>
-                      First Name
-                      <input value={value} name={name} onChange={handleChange} onBlur={handleBlur}/>
-                    </RenderCount>
-                  </label>
-                )
-              }/>
-              <Field name="middleName"  render={
-                ({name, value, handleChange, handleBlur}) => (
-                  <label>
-                    <RenderCount>
-                      Middle Name
-                      <input value={value} name={name} onChange={handleChange} onBlur={handleBlur}/>
-                    </RenderCount>
-                  </label>
-                )
-              }/>
-              <Field name="lastName"  validate={requiredStr} render={
-                ({name, value, handleChange, handleBlur, error, touched, elementRef}) => (
-                  <>
-                  <label>
-                    <RenderCount>
-                        Last Name
-                        <input value={value} name={name} onChange={handleChange} onBlur={handleBlur} ref={elementRef}/>
-                      </RenderCount>
-                    </label>
-                    {touched && error && <div>{error}</div>}
-                  </>
-                )
-              }/>
-              <FieldArray name="shoppingList" component={RenderShoppingList}/>
-              <Button/>
-            </div>
-          </div>
+          <TextInput name="firstName" label="First Name"/>
+          <TextInput name="middleName" label="Middle Name"/>
+          <TextInput name="lastName" label="Last Name" validate={requiredStr}/>
+          <FieldArray name="shoppingList" component={RenderShoppingList}/>
+          <Button/>
         </RenderCount>
       </Form>
     </FormStateProvider>

@@ -1,5 +1,5 @@
-# UI-Components
-Ui-components like `Checkbox`, `RadioButton`, `TextInput` and  `NumberInput` make it quick and easy to write reliable, consistent forms.
+# Ui-Components
+Ui-components like `Checkbox`, `RadioButton`, `TextInput`, `NumberInput` etc make it quick and easy to write reliable, consistent forms.
 
 Form frameworks typically come with these built-in. Many also include component specific code like `if (type === "checkbox") {/* do checkbox stuff */}`
 
@@ -7,12 +7,17 @@ Form frameworks typically come with these built-in. Many also include component 
 
 This makes for a smaller, cleaner codebase, it leaves you in control over your own ui-components and, with example ui-components, it is still quick and easy to get started.
 
-Take a look at some example ui-components. It is easy to copy or adapt these to meet your exact requirements. You can learn more about how ui-components are defined by looking at the `Field` api.
+Take a look at some ui-components. It is easy to copy and adapt these to meet your exact requirements (the docs on `Field` api should help). You can download the [source code for these example ui-components](https://github.com/chrisfield/react-form-composer/tree/master/stories/ui-components) with:
+
+```bash
+curl https://codeload.github.com/chrisfield/react-form-composer/tar.gz/master | tar -xz --strip=2 "react-form-composer"-master/stories/ui-components
+```
+
+## Example Ui-Components (for reference)
 
 <!-- STORY -->
 
 ---
-#### Code
 ```jsx
 import React from 'react';
 import {FormStateProvider, Form, useForm, useFormReducer} from 'react-form-composer';
@@ -57,8 +62,6 @@ export default MyForm;
 ```
 ---
 
-## Example UI-Components (for reference)
-
 #### InputWrapper
 This is more of a helper for other UI components. Most likely you will want change things (add class-names for styling etc). Note that Field and Form props that react-form-composer does not know about are passed through - label is an example of this.
 
@@ -76,7 +79,7 @@ const InputWrapper = ({label, name, touched, error, children}) => (
 export default InputWrapper;
 ```
 
-
+---
 #### TextInput
 You have already seen `Field` used with 'input' passed to the component prop. Here I've defined a `TextInputComponent` and passed this as the component. I've written this example `TextInput` so you can pass a `required` prop plus any additional validation. Note I have not passed the `required` prop on to the underlying input for HTML5 validation and ,as a writter of a lightweight framework, I'm glad to leave you in control of these decisions.
 
