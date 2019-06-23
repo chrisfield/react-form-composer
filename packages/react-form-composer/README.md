@@ -8,10 +8,7 @@
 [![Build Status](https://travis-ci.com/chrisfield/react-form-composer.svg?branch=master)](https://travis-ci.com/chrisfield/react-form-composer)
 
 ## Introduction
-React-form-composer is a lightweight, simple, and efficient solution for creating forms in react. It makes it easy it to get and set field values, to validate and format fields, to create custom inputs and to access an error count. It works well for web, react-native and server-rendered applications and it gives you control to choose or change where to store form state.
-
-If you do want to access form state through Redux it's easy to add it using [react-form-composer-redux-provider](https://www.npmjs.com/package/react-form-composer-redux-provider).
-
+React-form-composer is a lightweight, simple, and efficient solution for creating forms in web, react-native and server-rendered applications. It is written with hooks, is optimized for lightening fast rendering and gives you control to choose or change where to store form state.
 
 ## Getting Started
 
@@ -45,17 +42,16 @@ export default MyForm;
 
 ## Features
 - Small bundle size ([see bundlephobia](https://bundlephobia.com/result?p=react-form-composer))
-- React-native support
-- Simple to use with next js
-- Isomophic support to enter values before js downloads
+- Optimized for lightening fast rendering ([See live example](https://chrisfield.github.io/react-form-composer/?path=/story/introduction--optimization))  
+- React-native support ([See example](https://github.com/chrisfield/react-form-composer/tree/master/examples/with_react_native))
+- Perfect for server-rendering ([See example](https://github.com/chrisfield/react-form-composer/tree/master/examples/with-next))
 - Easy to add (or remove) Redux. See [`react-form-composer-redux-provider`](https://www.npmjs.com/package/react-form-composer-redux-provider) ([See example](https://github.com/chrisfield/react-form-composer/tree/master/examples/with-redux))
 - Stores values as semantic types, eg number fields will store numbers
 - Format values, eg to put commas in numbers
 - Field-arrays for repeated rows with add/remove
 - Keeps a running error-count and valid/not valid status
-- Synchronous validation including flexible support for inter-field valiation
-- Asynchronous submit validation
-
+- Synchronous and asynchronous validation 
+- Easy inter-field valiation
 
 ## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/chrisfield/react-form-composer/issues)
 I'm keen to get feedback please let me know about any issues [here](https://github.com/chrisfield/react-form-composer/issues/new)

@@ -86,10 +86,9 @@ export default MyForm;
 ---
 
 #### Explanation
-The `FormStateProvider` provides standard React state and dispach to its children. Often, like in this example, you will wrap each form in its own `FormStateProvider` but you are in control and it is easy to do things like  pull state up to an application level or swap to/from Redux. 
+`FormStateProvider` decouples getting and setting form-state from the rest of the framework. It makes it is easy to do things like  pull state up to an application level or swap to/from Redux. Often, like here, you will just wrap each `Form` in a `FormStateProvider`.
 
-The `Form` component has been given an `onSubmit` function. This will only be called if the `Form` is valid.
-
+The `Form` components default behaviour is to render it's children in a form. The `onSubmit` and `onSubmitSuccess` props do what their names suggest.
 
 The example shows two of the ways that `Field` can be used to render an input:
 * firstName passes "input" to a prop called component

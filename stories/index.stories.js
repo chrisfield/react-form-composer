@@ -19,7 +19,7 @@ import apiForFormStateProvider from './api/form-state-provider';
 import apiForForm from './api/form';
 import apiForScope from './api/scope';
 import apiForField from './api/field';
-import apiForHooks from './api/hooks';
+import apiForSpyAndHooks from './api/spy-and-hooks';
 
 import moreInfoFaq from './more-info/faq';
 import moreInfoFormRenderProps from './more-info/form-render-props';
@@ -45,7 +45,7 @@ storiesOf('Api', module)
 .add('Form', apiForForm)
 .add('Scope', apiForScope)
 .add('Field', apiForField)
-.add('Hooks and Spy', apiForHooks);
+.add('Spy and Hooks', apiForSpyAndHooks);
 
 storiesOf('More Info', module)
 .add('Form Render Props', moreInfoFormRenderProps)

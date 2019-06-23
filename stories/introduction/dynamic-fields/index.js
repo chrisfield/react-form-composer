@@ -2,7 +2,7 @@ import { withDocs } from 'storybook-readme';
 import readme from './index.md'
 
 import React from 'react';
-import {FormStateProvider, Form, Scope, useForm, useFormReducer, useField} from '../../../packages/react-form-composer/src';
+import {FormStateProvider, Form, Scope, useForm, useFormReducer, FormSpy} from '../../../packages/react-form-composer/src';
 import {TextInput, RadioButton} from '../../ui-components';
 
 const TheFormState = () => {
@@ -21,13 +21,21 @@ const Button = (props) => {
   );
 };
 
+const relationshipStatusSelector = state=>state.fieldValues.relationshipStatus;
+
 const PartnerName = (props) => {
-  const relationshipStatus = useField('relationshipStatus').value;
-  if (relationshipStatus === "NOT-SINGLE") {
-    return <TextInput name="partnerName" required {...props}/>
-  }
-  return null;
-}
+  return (
+    <FormSpy selector={relationshipStatusSelector}>
+      {relationshipStatus => {
+        if (relationshipStatus === "NOT-SINGLE") {
+          return (
+            <TextInput name="partnerName" required {...props}/>
+          );
+        }
+      }}
+    </FormSpy>
+  )
+};
 
 const initialValues = {
   relationshipStatus: 'SINGLE'

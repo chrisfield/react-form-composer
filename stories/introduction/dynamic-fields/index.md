@@ -6,7 +6,7 @@ This section shows one way to render parts of a form conditionally. When the Par
 #### Code
 ```jsx
 import React from 'react';
-import {FormStateProvider, Form, Scope, useForm, useFormReducer, useField} from 'react-form-composer';
+import {FormStateProvider, Form, Scope, useForm, useFormReducer, FormSpy} from 'react-form-composer';
 import {TextInput, RadioButton} from '../../ui-components';
 
 const TheFormState = () => {
@@ -25,13 +25,21 @@ const Button = (props) => {
   );
 };
 
+const relationshipStatusSelector = state=>state.fieldValues.relationshipStatus;
+
 const PartnerName = (props) => {
-  const relationshipStatus = useField('relationshipStatus').value;
-  if (relationshipStatus === "NOT-SINGLE") {
-    return <TextInput name="partnerName" required {...props}/>
-  }
-  return null;
-}
+  return (
+    <FormSpy selector={relationshipStatusSelector}>
+      {relationshipStatus => {
+        if (relationshipStatus === "NOT-SINGLE") {
+          return (
+            <TextInput name="partnerName" required {...props}/>
+          );
+        }
+      }}
+    </FormSpy>
+  )
+};
 
 const initialValues = {
   relationshipStatus: 'SINGLE'
@@ -49,7 +57,7 @@ const MyForm = () => {
         </Scope>
         <PartnerName label="Partner Name"/>
         <Button/>
-        <TheFormState/> 
+        <TheFormState/>
       </Form>
     </FormStateProvider>
   );

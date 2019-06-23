@@ -1,4 +1,23 @@
-# Hooks and FormSpy
+# FormSpy and Hooks
+
+## FormSpy
+FormSpy retrieves specified parts of the form state in an optimized way: it calls a child render function only when the selected state changes. To specify what part of the state you want simply pass in a selector function.
+
+FormSpy is usually a more efficient way to access state values than useFormReducer or useField.
+
+```
+const isValidSelector = state => state.formStatus.isValid;
+
+const Button = (props) => (
+  <FormSpy selector={isValidSelector}>
+    {(isValid) => (
+      <RenderCount>
+        <button {...props} style={{backgroundColor: isValid? 'green': 'cyan'}} >Submit</button>
+      </RenderCount>
+    )}
+  </FormSpy>
+);
+```
 
 ## useForm
 `useForm()` can be called by any children/decsendants of a `Form`. It returns an object with the following property: 
@@ -42,21 +61,3 @@ const TheFormState = () => {
 };
 ```
 Note that components that make use of useFormReducer will re-render for every state change. In many situations `FormSpy` can be used instead.
-
-
-## FormSpy
-FormSpy provides specified parts of the form state in an optimized way. To specify what part of the state you want simply pass in a selector funcion. FormSpy is usually a more efficient way to access state values than useFormReducer because it calls the child render function only when the selected state changes.
-
-```
-const isValidSelector = state => state.formStatus.isValid;
-
-const Button = (props) => (
-  <FormSpy selector={isValidSelector}>
-    {(isValid) => (
-      <RenderCount>
-        <button {...props} style={{backgroundColor: isValid? 'green': 'cyan'}} >Submit</button>
-      </RenderCount>
-    )}
-  </FormSpy>
-);
-```

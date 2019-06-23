@@ -2,11 +2,21 @@ import { withDocs } from 'storybook-readme';
 import readme from './index.md'
 
 import React from 'react';
-import {FormStateProvider, Form, Field, FieldArray, FormSpy} from '../../../packages/react-form-composer/src';
+import {FormStateProvider, Form, Field, FieldArray, FormSpy, Scope, useFormReducer, useForm} from '../../../packages/react-form-composer/src';
 import {RenderCount} from '../../ui-components';
 
-const isValidSelector = state => state.formStatus.isValid;
+const TheFormState = () => {
+  const [state] = useFormReducer(useForm().name);
+  return (
+    <RenderCount name="TheFormState">
+      <pre>
+        <code>{JSON.stringify(state, null, 2)}</code>
+      </pre>
+    </RenderCount>
+  );
+};
 
+const isValidSelector = state => state.formStatus.isValid;
 const Button = (props) => (
   <FormSpy selector={isValidSelector}>
     {(isValid) => (
@@ -53,17 +63,64 @@ const RenderShoppingList = ({fields}) => (
   </fieldset>
 );
 
+const relationshipStatusSelector = state=>state.fieldValues.relationshipStatus;
+const PartnerName = (props) => {
+  return (
+    <FormSpy selector={relationshipStatusSelector}>
+      {relationshipStatus => {
+        if (relationshipStatus === "NOT-SINGLE") {
+          return (
+            <TextInput name="partnerName" validate={requiredStr} {...props}/>
+          );
+        }
+      }}
+    </FormSpy>
+  )
+};
+
+const isChecked = target => target.checked;
+const RadioButton = ({value, ...props}) => (
+  <Field
+    radioValue={value}
+    ignoreTargetValueUnless={isChecked}
+    {...props}
+  >
+    {props => {
+      const id = `${props.name}-${props.radioValue}`;
+      return (
+        <RenderCount>
+          <input id={id} type="radio" ref={props.elementRef} name={props.name} value={props.radioValue} checked={props.radioValue===props.value} onChange={props.handleChange}/>
+          <label htmlFor={id}>{props.label}</label>
+        </RenderCount>
+      );
+    }}
+  </Field>
+);
+
 const MyForm = () => {
   return (
     <FormStateProvider>
-      <Form name="myForm" initialValues={{shoppingList:['Bread']}} onSubmit={submitValues} onSubmitSuccess={clearValues}>
-        <RenderCount name="Whole form">
-          <TextInput name="firstName" label="First Name"/>
-          <TextInput name="middleName" label="Middle Name"/>
-          <TextInput name="lastName" label="Last Name" validate={requiredStr}/>
-          <FieldArray name="shoppingList" component={RenderShoppingList}/>
-          <Button/>
-        </RenderCount>
+      <Form name="myForm" initialValues={{relationshipStatus: 'SINGLE', shoppingList:['Bread']}} onSubmit={submitValues} onSubmitSuccess={clearValues}>
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          <div style={{ flex: 1, marginRight: '2rem' }}>
+            <RenderCount name="Whole form">
+              <TextInput name="firstName" label="First Name"/>
+              <TextInput name="middleName" label="Middle Name"/>
+              <TextInput name="lastName" label="Last Name" validate={requiredStr}/>
+              <Scope name="relationshipStatus">
+                  Are You Single?
+                  <RadioButton value="SINGLE" label="Yes"/>
+                  <RadioButton value="NOT-SINGLE" label="No"/>
+                </Scope>
+                <PartnerName label="Partner Name"/>          
+              <FieldArray name="shoppingList" component={RenderShoppingList}/>
+              <Button/>
+            </RenderCount>
+          </div>
+          <div style={{flex: 2, flexDirection: 'column', display: 'flex', minWidth: '300px'}}>
+            <TheFormState/> 
+          </div>
+        </div>
       </Form>
     </FormStateProvider>
   );
