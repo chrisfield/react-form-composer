@@ -8,11 +8,9 @@ import {RenderCount} from '../../ui-components';
 const TheFormState = () => {
   const [state] = useFormReducer(useForm().name);
   return (
-    <RenderCount name="TheFormState">
-      <pre>
-        <code>{JSON.stringify(state, null, 2)}</code>
-      </pre>
-    </RenderCount>
+    <pre>
+      <code>{JSON.stringify(state, null, 2)}</code>
+    </pre>
   );
 };
 
