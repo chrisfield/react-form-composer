@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [2.2.3] - 2019-06-24
+### Fixed
+- Optimize Field so it dispatches a setFieldError only when the error (or valueToValidate) change
+
 ## [2.2.2] - 2019-06-24
 ### Fixed
 - Updated docs/README. No code changes.

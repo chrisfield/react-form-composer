@@ -131,19 +131,21 @@ const FieldBase = memo(({
     dispatch(updateField(nextValueToStore, nextCustomProps));
   };
 
-  const validateValue = (value) => {
+  const validateValue = (valueToValidate) => {
     let validateError;
     if (validate) {
       const fieldValues = formApi.getState().fieldValues;
       if (Array.isArray(validate)) {
         for (let i = 0; i < validate.length && !validateError; i++) {
-          validateError = validate[i](value, fieldValues, {...fieldInterfaceRef.current, ...props});
+          validateError = validate[i](valueToValidate, fieldValues, {...fieldInterfaceRef.current, ...props});
         }
       } else {
-        validateError = validate(value, fieldValues, {...fieldInterfaceRef.current, ...props});
+        validateError = validate(valueToValidate, fieldValues, {...fieldInterfaceRef.current, ...props});
       }
     }
-    dispatch(setFieldError(validateError, value));
+    if (error !== validateError || value !== valueToValidate) {
+      dispatch(setFieldError(validateError, value));
+    }
   };
 
   const showAnyErrors = (event) => {
