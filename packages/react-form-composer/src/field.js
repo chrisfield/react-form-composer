@@ -144,7 +144,7 @@ const FieldBase = memo(({
       }
     }
     if (error !== validateError || value !== valueToValidate) {
-      dispatch(setFieldError(validateError, value));
+      dispatch(setFieldError(validateError, valueToValidate));
     }
   };
 

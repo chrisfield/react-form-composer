@@ -9,6 +9,10 @@ No unreleased changes for you to be aware of.
 
 ## [2.2.3] - 2019-06-24
 ### Fixed
+- Fix bug in Field (from v2.2.3) that stopped server rendered forms refreshing the store value from the page on initial load.
+
+## [2.2.3] - 2019-06-24
+### Fixed
 - Optimize Field so it dispatches a setFieldError only when the error (or valueToValidate) change
 
 ## [2.2.2] - 2019-06-24
