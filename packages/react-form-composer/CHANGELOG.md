@@ -21,7 +21,7 @@ No unreleased changes for you to be aware of.
 
 ## [2.2.1] - 2019-06-22
 ### Fixed
-- Optimize FieldArray to eliminate unnecessary rendering. Before this every Field in a FieldArray wound rerender when any Field in the FieldArray changed.
+- Optimize FieldArray to eliminate unnecessary rendering. Before this every Field in a FieldArray would rerender when any Field in the FieldArray changed.
 
 ## [2.2.0] - 2019-06-22
 ### Added

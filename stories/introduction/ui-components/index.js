@@ -3,7 +3,7 @@ import readme from './index.md'
 
 import React from 'react';
 import {FormStateProvider, Form, useForm, useFormReducer} from '../../../packages/react-form-composer/src';
-import {TextInput, NumberInput, Checkbox, RadioButton} from '../../ui-components';
+import {TextInput, NumberInput, Select, Checkbox, RadioButton} from '../../ui-components';
 
 const TheFormState = () => {
   const [state] = useFormReducer(useForm().name);
@@ -30,6 +30,20 @@ const MyForm = () => {
             <div>
               <TextInput name="fieldOne" label="Field One" required/>
               <NumberInput name="age" label="Age"/>
+              <Select label="Frequency" name="frequency" required>
+                <option value="" disabled>
+                  Select One...
+                </option>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+              </Select>
+              <Select label="Exercise" name="exercice" multiple>
+                <option value="Walk">walk</option>
+                <option value="Run">run</option>
+                <option value="Cycle">cycle</option>
+                <option value="Swim">swim</option>
+              </Select>
               <Checkbox name="isAgreed" label="Do you agree?"/>
             </div>
             <div>
