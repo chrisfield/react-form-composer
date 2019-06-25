@@ -7,6 +7,8 @@ The `Scope` component takes a prop called `name`. The name provided will automat
 ---
 #### Code
 ```jsx
+import { withDocs } from 'storybook-readme';
+import readme from './index.md'
 import React from 'react';
 import {TextInput} from '../../ui-components';
 import { 
@@ -41,26 +43,45 @@ const clearValues = (form) => {
   form.updateFields({});
 };
 
+const Address = () => (
+  <>
+    <TextInput name="line1" label="line1" required/>
+    <TextInput name="line2" label="line2" required/>
+    <TextInput name="line3" label="line3"/>
+    <TextInput name="postalCode" label="Postcode"/>
+    <TextInput name="country" label="Country"/>
+  </>
+);
+
 const MyForm = () => {  
   return (
     <FormStateProvider>
-      <Form name="myForm" initialValues={{fullName: 'Mr J Smith'}} onSubmit={submitValues} onSubmitSuccess={clearValues} className="my-form">
+      <Form 
+        name="myForm"
+        initialValues={{fullName: 'Mr J Smith'}}
+        onSubmit={submitValues}
+        onSubmitSuccess={clearValues}
+        className="my-form"
+      >
         <TextInput name="fullName" label="Full Name" required/>
-        <Scope name="address">
-          <label>Address:</label><br/>
-          <TextInput name="line1" label="line1" required/>
-          <TextInput name="line2" label="line2" required/>
-          <TextInput name="line3" label="line3"/>
-          <TextInput name="postalCode" label="Postcode"/>
-          <TextInput name="country" label="Country"/>
+        <Scope name="addresses">
+          <label>Addresses:</label><br/>
+          <Scope name="Home">
+            <label>Home:</label><br/>
+            <Address/>
+          </Scope>
+          <br/>
+          <Scope name="work">
+            <label>Work:</label><br/>
+            <Address/>
+          </Scope>
         </Scope>
         <Button/>
-        <TheFormState />
+        <TheFormState/> 
       </Form>
     </FormStateProvider>
   );
 };
-
 
 export default myForm;
 ```

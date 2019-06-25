@@ -34,6 +34,16 @@ const clearValues = (form) => {
   form.updateFields({});
 };
 
+const Address = () => (
+  <>
+    <TextInput name="line1" label="line1" required/>
+    <TextInput name="line2" label="line2" required/>
+    <TextInput name="line3" label="line3"/>
+    <TextInput name="postalCode" label="Postcode"/>
+    <TextInput name="country" label="Country"/>
+  </>
+);
+
 const MyForm = () => {  
   return (
     <FormStateProvider>
@@ -45,20 +55,12 @@ const MyForm = () => {
               <label>Addresses:</label><br/>
               <Scope name="Home">
                 <label>Home:</label><br/>
-                <TextInput name="line1" label="line1" required/>
-                <TextInput name="line2" label="line2" required/>
-                <TextInput name="line3" label="line3"/>
-                <TextInput name="postalCode" label="Postcode"/>
-                <TextInput name="country" label="Country"/>
+                <Address/>
               </Scope>
               <br/>
               <Scope name="work">
                 <label>Work:</label><br/>
-                <TextInput name="line1" label="line1" required/>
-                <TextInput name="line2" label="line2" required/>
-                <TextInput name="line3" label="line3"/>
-                <TextInput name="postalCode" label="Postcode"/>
-                <TextInput name="country" label="Country"/>
+                <Address/>
               </Scope>
             </Scope>
             <Button/>
