@@ -67,7 +67,7 @@ const RenderShoppingList = ({fields}) => (
       Shopping List
     </legend>
     {fields.map((item, index) => (
-      <>
+      <div key={index}>
         <TextInput
           name={item}
           required
@@ -75,7 +75,7 @@ const RenderShoppingList = ({fields}) => (
         />
         <button type="button" title="Remove Item" onClick={() => fields.remove(index)}>-</button>
         <hr/>
-      </>
+      </div>
     ))}
     <button type="button" onClick={() => fields.push()}>Add Item</button>
   </fieldset>

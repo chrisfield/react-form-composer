@@ -1,55 +1,39 @@
 import React from 'react';
 import {Field} from '../../packages/react-form-composer/src';
 import InputWrapper from './input-wrapper.jsx';
-
-const TextInputComponent = ({
-  label,
-  name,
-  value,
-  handleChange,
-  handleBlur,
-  elementRef,
-  touched,
-  error,
-  children,
-  ...props}) => 
-(
-    <InputWrapper {...{name, label, touched, error}}>
-      <input
-        id={name}
-        ref={elementRef}
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        {...props}
-      />
-      {children}
-    </InputWrapper>
-);
-
-const requiredStr = (value, _values, {label}) => {
-  return value && value.trim && value.trim().length > 0 ? undefined: `Please enter a value for ${label.toLowerCase()}`
-};
-
-function combineValidation(validate1, validate2) {
-  if (!validate1) {
-    return validate2;
-  }
-  if (!validate2) {
-    return validate1;
-  }
-  const v1Array = Array.isArray(validate1) ? validate1: [validate1];
-  const v2Array = Array.isArray(validate2) ? validate2: [validate2];
-  return v1Array.concat(v2Array);
-}
+import {requiredStr, combineValidation} from './utils';
 
 export const TextInput = ({required, validate, ...props}) => {
   const combinedValidate = required ? combineValidation(requiredStr, validate): validate;
   return <Field
-    component={TextInputComponent}
     validate={combinedValidate}
     {...props}
-  />
+  >
+    {({
+      label,
+      name,
+      value,
+      handleChange,
+      handleBlur,
+      elementRef,
+      touched,
+      error,
+      children,
+      ...props}) => 
+    (
+      <InputWrapper {...{name, label, touched, error}}>
+        <input
+          id={name}
+          ref={elementRef}
+          value={value}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          {...props}
+        />
+        {children}
+      </InputWrapper>
+    )}
+  </Field>
 }
 
 export default TextInput;

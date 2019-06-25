@@ -21,6 +21,7 @@ import apiForScope from './api/scope';
 import apiForField from './api/field';
 import apiForSpyAndHooks from './api/spy-and-hooks';
 
+import moreInfoRowEditor from './more-info/row-editor';
 import moreInfoFaq from './more-info/faq';
 import moreInfoFormRenderProps from './more-info/form-render-props';
 
@@ -48,5 +49,6 @@ storiesOf('Api', module)
 .add('Spy and Hooks', apiForSpyAndHooks);
 
 storiesOf('More Info', module)
+.add('Row Editor', moreInfoRowEditor)
 .add('Form Render Props', moreInfoFormRenderProps)
 .add('FAQs (changelog)', moreInfoFaq)
