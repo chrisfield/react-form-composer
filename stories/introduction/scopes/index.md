@@ -1,6 +1,6 @@
 # Scopes
 
-The `Scope` component takes a prop called `name`. The name provided will automatically be used to prefix any child `Field` names. The example below uses a `Scope`to group address fields:
+The `Scope` component takes a prop called `name`. The name provided will automatically be used to prefix any child `Field` names. The example below uses Scopes to group address fields:
 
 <!-- STORY -->
 

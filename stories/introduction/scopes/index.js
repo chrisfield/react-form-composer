@@ -41,13 +41,25 @@ const MyForm = () => {
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           <div style={{ flex: 1, marginRight: '2rem' }}>
             <TextInput name="fullName" label="Full Name" required/>
-            <Scope name="address">
-              <label>Address:</label><br/>
-              <TextInput name="line1" label="line1" required/>
-              <TextInput name="line2" label="line2" required/>
-              <TextInput name="line3" label="line3"/>
-              <TextInput name="postalCode" label="Postcode"/>
-              <TextInput name="country" label="Country"/>
+            <Scope name="addresses">
+              <label>Addresses:</label><br/>
+              <Scope name="Home">
+                <label>Home:</label><br/>
+                <TextInput name="line1" label="line1" required/>
+                <TextInput name="line2" label="line2" required/>
+                <TextInput name="line3" label="line3"/>
+                <TextInput name="postalCode" label="Postcode"/>
+                <TextInput name="country" label="Country"/>
+              </Scope>
+              <br/>
+              <Scope name="work">
+                <label>Work:</label><br/>
+                <TextInput name="line1" label="line1" required/>
+                <TextInput name="line2" label="line2" required/>
+                <TextInput name="line3" label="line3"/>
+                <TextInput name="postalCode" label="Postcode"/>
+                <TextInput name="country" label="Country"/>
+              </Scope>
             </Scope>
             <Button/>
           </div>

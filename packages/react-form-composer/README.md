@@ -51,7 +51,7 @@ export default MyForm;
 - Field-arrays for repeated rows with add/remove
 - Keeps a running error-count and valid/not valid status
 - Synchronous and asynchronous validation 
-- Easy inter-field valiation
+- Easy inter-field valiation ([See live example](https://chrisfield.github.io/react-form-composer/?path=/story/introduction--validation))
 
 ## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/chrisfield/react-form-composer/issues)
 I'm keen to get feedback please let me know about any issues [here](https://github.com/chrisfield/react-form-composer/issues/new)

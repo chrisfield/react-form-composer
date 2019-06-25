@@ -18,8 +18,11 @@ export const useScope = () => {
 };
 
 export const Scope = ({name, children}) => {
+  const { name: parentName = ''} = useScope();
+  const dot = (parentName && name) ? '.': '';
+  const fullScopeName = `${parentName}${dot}${name}`;
   return (
-    <Provider name={name}>
+    <Provider name={fullScopeName}>
       {children}
     </Provider>
   );
