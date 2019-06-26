@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
-## [2.2.3] - 2019-06-24
+## [2.2.5] - 2019-06-25
+### Fixed
+- Allow nested Scopes. Scope now prefixes it's name with the name of its parent Scope (if there is one).
+
+## [2.2.4] - 2019-06-24
 ### Fixed
 - Fix bug in Field (from v2.2.3) that stopped server rendered forms refreshing the store value from the page on initial load.
 
