@@ -100,7 +100,7 @@ const RadioButton = ({value, ...props}) => (
 const MyForm = () => {
   return (
     <FormStateProvider>
-      <Form name="myForm" initialValues={{relationshipStatus: 'SINGLE', shoppingList:['Bread']}} onSubmit={submitValues} onSubmitSuccess={clearValues}>
+      <Form name="myForm" initialValues={{firstName: '', middleName:'', relationshipStatus: 'SINGLE', shoppingList:['Bread']}} onSubmit={submitValues} onSubmitSuccess={clearValues}>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           <div style={{ flex: 1, marginRight: '2rem' }}>
             <RenderCount name="Whole form">

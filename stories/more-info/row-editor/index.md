@@ -1,5 +1,5 @@
 # Row Editor
-The form below populates a series of rows with data fetched from https://jsonplaceholder.typicode.com/todos/?userId=2.
+The form below populates a series of rows with data fetched from https://jsonplaceholder.typicode.com/todos/?userId=2. When I get chance I'll expand it to include full CRUD functionality.
 
 <!-- STORY -->
 ---
