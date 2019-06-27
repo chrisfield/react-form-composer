@@ -7,9 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
-## [2.2.6] - 2019-06-27
+## [2.2.7] - 2019-06-27
 ### Fixed
 - Dispatching updateFields action now resets the state.fieldValues using the rendered fields 
+
+## [2.2.6] - 2019-06-27
 ### Added
 - defaultValue prop to Field
 

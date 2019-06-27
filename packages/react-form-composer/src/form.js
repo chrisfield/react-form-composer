@@ -27,6 +27,7 @@ const FormReducerRef = ({formReducerRef, reset}) => {
   useEffect(() => {
     if (formReducer[0].formStatus.isResetFieldsDue) {
       formReducer[1](resetFieldsIsDone());
+      console.log('reset');
       reset();
     }
   });

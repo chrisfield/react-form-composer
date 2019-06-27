@@ -3,9 +3,10 @@ import {Field} from '../../packages/react-form-composer/src';
 import InputWrapper from './input-wrapper.jsx';
 import {requiredStr, combineValidation} from './utils';
 
-export const TextInput = ({required, validate, ...props}) => {
+export const TextInput = ({defaultValue="", required, validate, ...props}) => {
   const combinedValidate = required ? combineValidation(requiredStr, validate): validate;
   return <Field
+    defaultValue={defaultValue}
     validate={combinedValidate}
     {...props}
   >

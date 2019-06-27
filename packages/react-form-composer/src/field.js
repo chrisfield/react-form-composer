@@ -133,18 +133,18 @@ const FieldBase = memo(({
   };
 
   const validateValue = (valueToValidate) => {
-    let validateError;
-    if (validate) {
-      const fieldValues = formApi.getState().fieldValues;
-      if (Array.isArray(validate)) {
-        for (let i = 0; i < validate.length && !validateError; i++) {
-          validateError = validate[i](valueToValidate, fieldValues, {...fieldInterfaceRef.current, ...props});
+    if (!ignoreTargetValueUnless || ignoreTargetValueUnless(elementRef.current)) {
+      let validateError;
+      if (validate) {
+        const fieldValues = formApi.getState().fieldValues;
+        if (Array.isArray(validate)) {
+          for (let i = 0; i < validate.length && !validateError; i++) {
+            validateError = validate[i](valueToValidate, fieldValues, {...fieldInterfaceRef.current, ...props});
+          }
+        } else {
+          validateError = validate(valueToValidate, fieldValues, {...fieldInterfaceRef.current, ...props});
         }
-      } else {
-        validateError = validate(valueToValidate, fieldValues, {...fieldInterfaceRef.current, ...props});
       }
-    }
-    if (error !== validateError || value !== valueToValidate) {
       dispatch(setFieldError(validateError, valueToValidate));
     }
   };

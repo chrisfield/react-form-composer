@@ -31,7 +31,7 @@ export const Select = ({multiple, ...props}) => {
 export const SingleSelect = ({required, validate, children, ...props}) => {
   const combinedValidate = required ? combineValidation(requiredStr, validate): validate;
   return (
-    <Field validate={combinedValidate} {...props}>
+    <Field defaultValue="" validate={combinedValidate} {...props}>
       {({
         label,
         name,

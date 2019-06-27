@@ -38,7 +38,7 @@ const requiredNum = (value, _values, field) => {
 
 const number = str => {
   const num = parseInt(str.replace(/[^\d.-]/g, ""), 10);
-  if (num === null) {
+  if (Number.isNaN(num)) {
     return undefined;
   }
   return num;
@@ -72,6 +72,7 @@ export const setCursorPosition = ({element}, cursorPosition) => {
 export const NumberInput = ({required, ...props}) => {
   return <Field
     component={NumberInputComponent}
+    defaultValue={null}
     validate={required? requiredNum: undefined}
     formatFromStore={addCommas}
     formatToStore={number}
