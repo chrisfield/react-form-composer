@@ -24,7 +24,7 @@ const Button = (props) => {
 const MyForm = () => {
   return (
     <FormStateProvider>
-      <Form name="myForm" initialValues={{rb2: 'G'}} onSubmit={submitValues} onSubmitSuccess={clearValues}>
+      <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           <div style={{ flex: 1, marginRight: '2rem' }}>
             <div>
@@ -49,7 +49,7 @@ const MyForm = () => {
             <div>
               <RadioButton name="rb2" label="Red" value="R" />
               <RadioButton name="rb2" label="Green" value="G" />
-              <RadioButton name="rb2" label="Blue" value="B" />
+              <RadioButton selected name="rb2" label="Blue" value="B" />
             </div>
             <Button/>
           </div>

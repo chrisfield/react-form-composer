@@ -261,32 +261,30 @@ export default Checkbox;
 
 ---
 #### RadioButton
-The `RadioButton` component is similar to Checkbox. The `ignoreTargetValueUnless` tells `react-form-composer` to get the targetValue if and only if the button is checked.
+The `RadioButton` component is similar to Checkbox. The `ignoreTargetValueUnless` tells `react-form-composer` to get the targetValue if and only if the button is checked. You can use defaultValue to provide support for a `selected` prop.
 
 ```jsx
 import React from 'react';
 import {Field} from 'react-form-composer';
 
 const isChecked = target => target.checked;
-  
-const RadioButtonComponent = props => {
-  const id = `${props.name}-${props.radioValue}`;
-  return (
-    <div>
-      <input id={id} type="radio" ref={props.elementRef} name={props.name} value={props.radioValue} checked={props.radioValue===props.value} onChange={props.handleChange}/>
-      <label htmlFor={id}>{props.label}</label>
-    </div>
-  );
-};
-
-const RadioButton = props => (
+const RadioButton = ({selected, value, ...props}) => (
   <Field
-    component={RadioButtonComponent}
-    name={props.name}
-    radioValue={props.value}
+    defaultValue={selected? value: undefined}
+    radioValue={value}
     ignoreTargetValueUnless={isChecked}
-    label={props.label}
-  />
+    {...props}
+  >
+    {props => {
+      const id = `${props.name}-${props.radioValue}`;
+      return (
+        <div>
+          <input id={id} type="radio" ref={props.elementRef} name={props.name} value={props.radioValue} checked={props.radioValue===props.value} onChange={props.handleChange}/>
+          <label htmlFor={id}>{props.label}</label>
+        </div>
+      );
+    }}
+  </Field>
 );
 
 export default RadioButton;

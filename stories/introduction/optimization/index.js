@@ -31,8 +31,8 @@ const requiredStr = (value) => {
   return value && value.trim && value.trim().length > 0 ? undefined: 'Please enter a value'
 };
 
-const TextInput = ({name, validate, label}) => (
-  <Field name={name} validate={validate} render={
+const TextInput = ({name, validate, label, defaultValue=""}) => (
+  <Field name={name} validate={validate} defaultValue={defaultValue} render={
     ({name, value, handleChange, handleBlur, error, touched, elementRef}) => {
       return <>
         <label>
@@ -79,8 +79,9 @@ const PartnerName = (props) => {
 };
 
 const isChecked = target => target.checked;
-const RadioButton = ({value, ...props}) => (
+const RadioButton = ({selected, value, ...props}) => (
   <Field
+    defaultValue={selected? value: undefined}
     radioValue={value}
     ignoreTargetValueUnless={isChecked}
     {...props}
@@ -100,16 +101,16 @@ const RadioButton = ({value, ...props}) => (
 const MyForm = () => {
   return (
     <FormStateProvider>
-      <Form name="myForm" initialValues={{firstName: '', middleName:'', relationshipStatus: 'SINGLE', shoppingList:['Bread']}} onSubmit={submitValues} onSubmitSuccess={clearValues}>
+      <Form name="myForm" initialValues={{shoppingList:['Bread']}} onSubmit={submitValues} onSubmitSuccess={clearValues}>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           <div style={{ flex: 1, marginRight: '2rem' }}>
             <RenderCount name="Whole form">
-              <TextInput name="firstName" label="First Name"/>
+              <TextInput defaultValue="Bob" name="firstName" label="First Name" validate={requiredStr}/>
               <TextInput name="middleName" label="Middle Name"/>
               <TextInput name="lastName" label="Last Name" validate={requiredStr}/>
               <Scope name="relationshipStatus">
                   Are You Single?
-                  <RadioButton value="SINGLE" label="Yes"/>
+                  <RadioButton selected value="SINGLE" label="Yes"/>
                   <RadioButton value="NOT-SINGLE" label="No"/>
                 </Scope>
                 <PartnerName label="Partner Name"/>          

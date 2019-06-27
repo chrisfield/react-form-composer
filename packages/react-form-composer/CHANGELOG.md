@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [2.2.6] - 2019-06-27
+### Fixed
+- Dispatching updateFields action now resets the state.fieldValues using the rendered fields 
+### Added
+- defaultValue prop to Field
+
 ## [2.2.5] - 2019-06-25
 ### Fixed
 - Allow nested Scopes. Scope now prefixes it's name with the name of its parent Scope (if there is one).

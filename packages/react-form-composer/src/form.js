@@ -22,11 +22,12 @@ export const useForm = () => {
 
 const noop = () => (undefined);
 
-const FormReducerRef = ({formReducerRef}) => {
+const FormReducerRef = ({formReducerRef, reset}) => {
   const formReducer = useFormReducer(useForm().name);
   useEffect(() => {
     if (formReducer[0].formStatus.isResetFieldsDue) {
       formReducer[1](resetFieldsIsDone());
+      reset();
     }
   });
   formReducerRef.current = formReducer;
@@ -96,6 +97,12 @@ export const Form = ({
   const markAllFieldsAsTouched = (touched= true) => {
     fieldsRef.current.forEach((field) => {
       field.setTouched(touched);
+    });
+  };
+
+  const validateAllFields = () => {
+    fieldsRef.current.forEach((field) => {
+      field.validate();
     });
   };
 
@@ -178,7 +185,7 @@ export const Form = ({
     <Provider 
       formApi={formApiRef.current}
     >
-      <FormReducerRef formReducerRef={formReducerRef}/>
+      <FormReducerRef formReducerRef={formReducerRef} reset={validateAllFields}/>
       {initialized && getContent()}
     </Provider>
   );

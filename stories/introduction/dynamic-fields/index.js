@@ -37,20 +37,16 @@ const PartnerName = (props) => {
   )
 };
 
-const initialValues = {
-  relationshipStatus: 'SINGLE'
-}
-
 const MyForm = () => {
   return (
     <FormStateProvider>
-      <Form name="myForm" initialValues={initialValues} onSubmit={submitValues} onSubmitSuccess={clearValues}>
+      <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           <div style={{ flex: 1, marginRight: '2rem' }}>
             <TextInput name="firstName" label="First Name" required/>
             <Scope name="relationshipStatus">
               Are You Single?
-              <RadioButton value="SINGLE" label="Yes"/>
+              <RadioButton selected value="SINGLE" label="Yes"/>
               <RadioButton value="NOT-SINGLE" label="No"/>
             </Scope>
             <PartnerName label="Partner Name"/>
@@ -75,7 +71,7 @@ function submitValues(values) {
 }
 
 function clearValues(form) {
-  form.updateFields(initialValues);
+  form.updateFields({});
 }
 
 export default withDocs(readme, () => <MyForm/>);
