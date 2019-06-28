@@ -29,7 +29,7 @@ const MyForm = () => {
           <div style={{ flex: 1, marginRight: '2rem' }}>
             <div>
               <TextInput name="fieldOne" label="Field One" required/>
-              <NumberInput name="age" label="Age"/>
+              <NumberInput name="age" required label="Age"/>
               <Select label="Frequency" name="frequency" required>
                 <option value="" disabled>
                   Select One...

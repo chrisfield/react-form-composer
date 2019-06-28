@@ -11,7 +11,7 @@ const CheckboxComponent = props => (
 );
 
 const Checkbox = props => (
-  <Field component={CheckboxComponent} getTargetValue={isChecked} {...props} />
+  <Field component={CheckboxComponent} getTargetValue={isChecked} defaultValue={false} {...props} />
 );
 
 export default Checkbox;
