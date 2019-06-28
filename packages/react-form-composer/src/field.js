@@ -50,6 +50,16 @@ const Field = ({name, ...props}) => {
   );
 };
 
+const getBestValue = (value, defaultValue, formatFromStore, formatToStore) => {
+  if (value !== undefined) {
+    return value;
+  }
+  if (defaultValue !== defaultValue) {
+    return defaultValue;
+  }
+  return formatToStore(formatFromStore(undefined));
+}
+
 const FieldBase = memo(({
   name,
   afterUpdate,
@@ -132,7 +142,7 @@ const FieldBase = memo(({
     dispatch(updateField(nextValueToStore, nextCustomProps));
   };
 
-  const validateValue = (valueToValidate) => {
+  const validateValue = (valueToValidate = getBestValue(valueToValidate, defaultValue, formatFromStore, formatToStore)) => {
     if (!ignoreTargetValueUnless || ignoreTargetValueUnless(elementRef.current)) {
       let validateError;
       if (validate) {
