@@ -4,13 +4,17 @@ export const useForm = () => {
   const { name } = useFormInternal();
   return {name};
 };
+export {default as Formlet} from "./formlet";
 export {
   initFormState as initFormStateAction,
   updateFields as updateFieldsAction
 } from "./actions";
 export { Scope, useScope } from "./scope";
 export {default as FormStateContext} from "./form-state-context";
-export {default as FormStateProvider} from "./form-state-provider";
+export {
+  default as FormStateProvider,
+  SubFormStateProvider
+} from "./form-state-provider";
 export {default as formReducer} from "./reducers";
 export {default as Field} from "./field";
 export {default as FieldArray} from "./field-array";

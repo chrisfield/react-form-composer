@@ -1,10 +1,11 @@
 import { withDocs } from 'storybook-readme';
 import readme from './index.md'
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TextInput, NumberInput, Checkbox} from '../../ui-components';
 import { 
   FormStateProvider,
   Form,
+  Formlet,
   Scope,
   FieldArray,
   useForm,
@@ -36,6 +37,71 @@ const clearValues = (form) => {
   form.updateFields({});
 };
 
+const Row = ({disabled=false}) => {
+  return (
+    <>
+      <NumberInput
+        disabled={disabled}
+        name="userId"
+        required
+        label="userId"
+      />
+      <NumberInput
+        disabled={disabled}
+        name="id"
+        required
+        label="id"
+      />
+      <TextInput
+        disabled={disabled}
+        name="title"
+        required
+        label="Title"
+      />
+      <Checkbox
+        disabled={disabled}
+        name="completed"
+        label="Completed"
+      />
+    </>
+  );
+}
+
+const EditButton = ({isEditing, setEditing}) =>{
+  const toggleEditing = () => {
+    setEditing(!isEditing);
+  };
+  const text = isEditing? 'Canel': 'Edit';
+  return (
+    <button type="button" onClick={toggleEditing}>{text}</button>
+  );
+} 
+
+const RowEditor = (props) => {
+  const [isActive, setActive] = useState(false);
+
+  if (isActive) {
+    return (
+      <div>
+        <EditButton isEditing={isActive} setEditing={setActive}/>
+        <Formlet {...props}>
+          <Row/>
+          <div>
+            <button>save</button>
+          </div>
+        </Formlet>
+      </div>
+    );    
+  }
+
+  return (
+    <div>
+      <EditButton isEditing={isActive} setEditing={setActive}/>
+      <Row disabled/>
+    </div>
+  );
+} 
+
 const RenderTodoList = ({fields}) => (
   <fieldset>
     <legend>
@@ -43,26 +109,7 @@ const RenderTodoList = ({fields}) => (
     </legend>
     {fields.map((todo, index) => (
       <Scope key={index} name={todo}>
-        <NumberInput
-          name="userId"
-          required
-          label="userId"
-        />
-        <NumberInput
-          name="id"
-          required
-          label="id"
-        />
-        <TextInput
-          name="title"
-          required
-          label="Title"
-        />
-        <Checkbox
-          name="completed"
-          label="Completed"
-        />
-
+        <RowEditor name={todo}/>
         <button type="button" title="Remove Task" onClick={() => fields.remove(index)}>-</button>
         <hr/>
       </Scope>
@@ -95,7 +142,7 @@ const MyForm = () => {
   return (
     <FormStateProvider>
       <Fetcher/>
-      <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues} className="my-form">
+      <Form name="myForm" component="div" onSubmit={submitValues} onSubmitSuccess={clearValues} className="my-form">
         <FieldArray
           name="todoList"
           component={RenderTodoList}

@@ -61,12 +61,13 @@ export const Form = ({
   });
 
   const getPublicFormApi = () => {
-    const { name, getField, updateFields, dispatch, getState} = formApiRef.current;
+    const { name, getField, updateFields, dispatch, getState, dispatchToParent} = formApiRef.current;
     return {
       name,
       getField,
       updateFields,
       dispatch,
+      dispatchToParent,
       state: getState()
     }
   };
@@ -92,7 +93,11 @@ export const Form = ({
     },
     getPublicFormApi,
     getState: () => (formReducerRef.current[0]),
-    dispatch: (action) => {formReducerRef.current[1](action)}
+    dispatch: (action) => {formReducerRef.current[1](action)},
+    dispatchToParent: (action) => {
+      console.log('dispatchToParent', action);
+      formReducerRef.current[3](action)
+    }
   });
 
   const markAllFieldsAsTouched = (touched= true) => {
@@ -135,6 +140,7 @@ export const Form = ({
       return;
     }
     event.preventDefault();
+    event.stopPropagation()
     let submitResult;
     dispatch(startSubmit());
     submitResult = onSubmit(formState.fieldValues);
