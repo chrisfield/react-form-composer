@@ -1,19 +1,25 @@
 # Row Editor
-The form below populates a series of rows with data fetched from https://jsonplaceholder.typicode.com/todos/?userId=2. When I get chance I'll expand it to include full CRUD functionality.
+The form below populates a series of rows with data fetched from https://jsonplaceholder.typicode.com/todos/?userId=2.
+
+It is still a WIP but it does include one-row-at-a-time updates with an edit/cancel functionality like I've seen on several Angular applications. To implement this the Rows are rendered in a FormContextProvider. Only when the user presses 'Edit' for a particular Row are the Rows' Fields are rendered in a Form. 
 
 <!-- STORY -->
 ---
 #### Code
 ```jsx
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TextInput, NumberInput, Checkbox} from '../../ui-components';
-import { 
+import {
+  getStateValueByPath,
   FormStateProvider,
   Form,
+  FormContextProvider,
+  FormSpy,
   Scope,
   FieldArray,
   useForm,
   useFormReducer,
+  updateFieldAction,
   updateFieldsAction
 } from 'react-form-composer';
 
@@ -26,20 +32,113 @@ const TheFormState = () => {
   );
 };
 
-const Button = () => {
-  const [state] = useFormReducer(useForm().name);
+const Row = ({disabled=false}) => {
   return (
-    <button style={{backgroundColor: state.formStatus.isValid? 'green': 'cyan'}} >Submit</button>
+    <>
+      <NumberInput
+        disabled={disabled}
+        name="userId"
+        required
+        label="userId"
+      />
+      <NumberInput
+        disabled={true}
+        name="id"
+        required
+        label="id"
+      />
+      <TextInput
+        disabled={disabled}
+        name="title"
+        required
+        label="Title"
+      />
+      <Checkbox
+        disabled={disabled}
+        name="completed"
+        label="Completed"
+      />
+    </>
   );
+}
+
+const EditButton = ({isEditing, setEditing}) => {
+  const toggleEditing = () => {
+    setEditing(!isEditing);
+  };
+  const text = isEditing? 'Canel': 'Edit';
+  return (
+    <button type="button" onClick={toggleEditing}>{text}</button>
+  );
+} 
+
+const Formlet = ({rowName, children, onSubmitSuccess}) => {
+  const {name: formName, state: formState} = useForm();
+  return (
+    <div>
+      <FormStateProvider initialState={{[formName]: formState}}>
+        <Form
+          name={formName}
+          onSubmit={(fieldValues)=> {
+            const rowValues = getStateValueByPath(fieldValues, rowName);
+            console.log('Call endpoint here to update row:', rowValues);
+            fetch(`https://jsonplaceholder.typicode.com/todos/${rowValues.id}`, {
+              method: 'PUT',
+              body: JSON.stringify(fieldValues),
+              headers: {
+                "Content-type": "application/json; charset=UTF-8"
+              }
+            })
+            .then(response => response.json())
+            .then(json => console.log('Server response', json));
+          }}
+          onSubmitSuccess={onSubmitSuccess}
+        >
+          {children}
+        </Form>
+      </FormStateProvider>
+    </div>
+  );  
 };
 
-const submitValues = (values) => {
-  alert(`You submitted: ${JSON.stringify(values, undefined, 2)}`);
-};
+const isValidSelector = state => state.formStatus.isValid;
+const SaveButton = () => (
+  <FormSpy selector={isValidSelector}>
+    {(isValid) => (
+      <button style={{backgroundColor: isValid? 'green': 'cyan'}} >Save</button>
+    )}
+  </FormSpy>
+);
 
-const clearValues = (form) => {
-  form.updateFields({});
-};
+const RowEditor = ({rowName}) => {
+  const [isActive, setActive] = useState(false);
+  const {dispatch} = useForm();
+  const handleSubmitSuccess = formApi => {
+    dispatch(updateFieldAction(rowName, getStateValueByPath(formApi.state.fieldValues, rowName)));
+    setActive(false);
+  };
+
+  if (isActive) {
+    return (
+      <div>
+        <EditButton isEditing={isActive} setEditing={setActive}/>
+        <Formlet rowName={rowName} onSubmitSuccess={handleSubmitSuccess}>
+          <Row/>
+          <div>
+            <SaveButton/>
+          </div>
+        </Formlet>
+      </div>
+    );    
+  }
+
+  return (
+    <div>
+      <EditButton isEditing={isActive} setEditing={setActive}/>
+      <Row disabled/>
+    </div>
+  );
+} 
 
 const RenderTodoList = ({fields}) => (
   <fieldset>
@@ -48,26 +147,7 @@ const RenderTodoList = ({fields}) => (
     </legend>
     {fields.map((todo, index) => (
       <Scope key={index} name={todo}>
-        <NumberInput
-          name="userId"
-          required
-          label="userId"
-        />
-        <NumberInput
-          name="id"
-          required
-          label="id"
-        />
-        <TextInput
-          name="title"
-          required
-          label="Title"
-        />
-        <Checkbox
-          name="completed"
-          label="Completed"
-        />
-
+        <RowEditor rowName={todo}/>
         <button type="button" title="Remove Task" onClick={() => fields.remove(index)}>-</button>
         <hr/>
       </Scope>
@@ -85,6 +165,7 @@ const Fetcher = () => {
     .then((data) => {
       data.json()
       .then(json => {
+        // {userId: 2, id: 21, title: "suscipit repellat esse quibusdam voluptatem incidunt", completed: false}
         if (isSubscribed) {
           dispatch (updateFieldsAction({todoList:json}));
         }
@@ -99,14 +180,14 @@ const MyForm = () => {
   return (
     <FormStateProvider>
       <Fetcher/>
-      <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues} className="my-form">
+      <FormContextProvider name="myForm">
         <FieldArray
           name="todoList"
+          arrayName="todoList"
           component={RenderTodoList}
         />
-        <Button/>
         <TheFormState />
-      </Form>
+      </FormContextProvider>
     </FormStateProvider>
   );
 };

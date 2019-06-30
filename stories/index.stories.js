@@ -16,6 +16,7 @@ import universalValidation from './form-examples/universal-validation';
 import reactNative from './form-examples/react-native';
 
 import apiForFormStateProvider from './api/form-state-provider';
+import apiForFormContextProvider from './api/form-context-provider';
 import apiForForm from './api/form';
 import apiForScope from './api/scope';
 import apiForField from './api/field';
@@ -43,6 +44,7 @@ storiesOf('Form Examples', module)
 
 storiesOf('Api', module)
 .add('FormStateProvider', apiForFormStateProvider)
+.add('FormContextProvider', apiForFormContextProvider)
 .add('Form', apiForForm)
 .add('Scope', apiForScope)
 .add('Field', apiForField)
