@@ -3,13 +3,11 @@ import readme from './index.md'
 import React, {useEffect, useState} from 'react';
 import {TextInput, NumberInput, Checkbox} from '../../ui-components';
 import {
-  initFormStateAction,
   getStateValueByPath,
-  setStateValueByPath,
-  formReducer,
   FormStateProvider,
   Form,
   FormContext,
+  FormSpy,
   Scope,
   FieldArray,
   useForm,
@@ -27,14 +25,6 @@ const TheFormState = () => {
   );
 };
 
-const submitValues = (values) => {
-  alert(`You submitted: ${JSON.stringify(values, undefined, 2)}`);
-};
-
-const clearValues = (form) => {
-  form.updateFields({});
-};
-
 const Row = ({disabled=false}) => {
   return (
     <>
@@ -45,7 +35,7 @@ const Row = ({disabled=false}) => {
         label="userId"
       />
       <NumberInput
-        disabled={disabled}
+        disabled={true}
         name="id"
         required
         label="id"
@@ -65,7 +55,7 @@ const Row = ({disabled=false}) => {
   );
 }
 
-const EditButton = ({isEditing, setEditing}) =>{
+const EditButton = ({isEditing, setEditing}) => {
   const toggleEditing = () => {
     setEditing(!isEditing);
   };
@@ -75,18 +65,26 @@ const EditButton = ({isEditing, setEditing}) =>{
   );
 } 
 
-const Formlet = ({arrayName, rowName, children, onSubmitSuccess}) => {
+const Formlet = ({rowName, children, onSubmitSuccess}) => {
   const {name: formName, state: formState} = useForm();
-  const initialValues = [getStateValueByPath(formState.fieldValues, rowName)];
-  const initialState = formReducer(undefined, initFormStateAction(formName,
-    {fieldValues: setStateValueByPath({}, arrayName, initialValues)}
-  ));
   return (
     <div>
-      <FormStateProvider initialState={initialState}>
+      <FormStateProvider initialState={{[formName]: formState}}>
         <Form
           name={formName}
-          onSubmit={(fieldValues)=>{console.log('Call endpoint here to update row:', fieldValues)}}
+          onSubmit={(fieldValues)=> {
+            const rowValues = getStateValueByPath(fieldValues, rowName);
+            console.log('Call endpoint here to update row:', rowValues);
+            fetch(`https://jsonplaceholder.typicode.com/todos/${rowValues.id}`, {
+              method: 'PUT',
+              body: JSON.stringify(fieldValues),
+              headers: {
+                "Content-type": "application/json; charset=UTF-8"
+              }
+            })
+            .then(response => response.json())
+            .then(json => console.log('Server response', json));
+          }}
           onSubmitSuccess={onSubmitSuccess}
         >
           {children}
@@ -96,7 +94,16 @@ const Formlet = ({arrayName, rowName, children, onSubmitSuccess}) => {
   );  
 };
 
-const RowEditor = ({arrayName, rowName}) => {
+const isValidSelector = state => state.formStatus.isValid;
+const SaveButton = () => (
+  <FormSpy selector={isValidSelector}>
+    {(isValid) => (
+      <button style={{backgroundColor: isValid? 'green': 'cyan'}} >Save</button>
+    )}
+  </FormSpy>
+);
+
+const RowEditor = ({rowName}) => {
   const [isActive, setActive] = useState(false);
   const {dispatch} = useForm();
   const handleSubmitSuccess = formApi => {
@@ -108,10 +115,10 @@ const RowEditor = ({arrayName, rowName}) => {
     return (
       <div>
         <EditButton isEditing={isActive} setEditing={setActive}/>
-        <Formlet arrayName={arrayName} rowName={rowName} onSubmitSuccess={handleSubmitSuccess}>
+        <Formlet rowName={rowName} onSubmitSuccess={handleSubmitSuccess}>
           <Row/>
           <div>
-            <button>save</button>
+            <SaveButton/>
           </div>
         </Formlet>
       </div>
@@ -126,14 +133,14 @@ const RowEditor = ({arrayName, rowName}) => {
   );
 } 
 
-const RenderTodoList = ({arrayName, fields}) => (
+const RenderTodoList = ({fields}) => (
   <fieldset>
     <legend>
       Todo List
     </legend>
     {fields.map((todo, index) => (
       <Scope key={index} name={todo}>
-        <RowEditor arrayName={arrayName} rowName={todo}/>
+        <RowEditor rowName={todo}/>
         <button type="button" title="Remove Task" onClick={() => fields.remove(index)}>-</button>
         <hr/>
       </Scope>
