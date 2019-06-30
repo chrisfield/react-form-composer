@@ -2,6 +2,7 @@ import React, { createContext, useContext, useRef, useEffect, useState} from 're
 import isPromise from "./is-promise";
 import { startSubmit, stopSubmit, updateFields, resetFieldsIsDone } from './actions';
 import useFormReducer from './use-form-reducer';
+import FormContext from './form-context';
 
 export const Context = createContext({});
 
@@ -66,7 +67,7 @@ export const Form = ({
       updateFields,
       dispatch,
       dispatchToParent,
-      state: getState()
+      state: formReducerRef.current[0]
     }
   };
 
@@ -77,7 +78,6 @@ export const Form = ({
         fieldsRef.current.splice(index, 1);
       }
     },
-    name,
     registerField: (field) => {
       fieldsRef.current.push(field);
     },
@@ -90,8 +90,6 @@ export const Form = ({
       }
     },
     getPublicFormApi,
-    getState: () => (formReducerRef.current[0]),
-    dispatch: (action) => {formReducerRef.current[1](action)},
     dispatchToParent: (action) => {
       console.log('dispatchToParent', action);
       formReducerRef.current[3](action)
@@ -186,12 +184,14 @@ export const Form = ({
     return <Component {...props} children={children} onSubmit={handleSubmit} elementRef={formRef}/>;
   }
 
+  const formApi = formApiRef.current;
   return (
-    <Provider 
-      formApi={formApiRef.current}
+    <FormContext
+      name={name}
+      formApi={formApi}
     >
       <FormReducerRef formReducerRef={formReducerRef} reset={validateAllFields}/>
       {initialized && getContent()}
-    </Provider>
+    </FormContext>
   );
 };

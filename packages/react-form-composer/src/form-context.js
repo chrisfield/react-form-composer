@@ -26,16 +26,19 @@ const FormReducerRef = ({formReducerRef}) => {
 const Form = ({
   name,
   children,
+  formApi = {},
 }) => {
 
   const formReducerRef = useRef([]);
   const formApiRef = useRef({
-    deregisterField: noop,
     name,
     registerField: noop,
+    deregisterField: noop,
     getState: () => (formReducerRef.current[0]),
     dispatch: (action) => {formReducerRef.current[1](action)}
   });
+
+  formApiRef.current = {...formApiRef.current, ...formApi};
 
   return (
     <Provider 
