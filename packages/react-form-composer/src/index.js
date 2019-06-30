@@ -9,6 +9,8 @@ export {
   initFormState as initFormStateAction,
   updateFields as updateFieldsAction
 } from "./actions";
+export {default as getStateValueByPath} from "./state-utils/get-field";
+export {default as setStateValueByPath} from "./state-utils/set-field";
 export { Scope, useScope } from "./scope";
 export {default as FormStateContext} from "./form-state-context";
 export {default as FormStateProvider} from "./form-state-provider";

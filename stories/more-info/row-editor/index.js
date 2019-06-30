@@ -4,6 +4,8 @@ import React, {useEffect, useState} from 'react';
 import {TextInput, NumberInput, Checkbox} from '../../ui-components';
 import {
   initFormStateAction,
+  getStateValueByPath,
+  setStateValueByPath,
   formReducer,
   FormStateProvider,
   Form,
@@ -22,13 +24,6 @@ const TheFormState = () => {
     <pre>
       <code>{JSON.stringify(state, null, 2)}</code>
     </pre>
-  );
-};
-
-const Button = () => {
-  const [state] = useFormReducer(useForm().name);
-  return (
-    <button style={{backgroundColor: state.formStatus.isValid? 'green': 'cyan'}} >Submit</button>
   );
 };
 
@@ -80,26 +75,19 @@ const EditButton = ({isEditing, setEditing}) =>{
   );
 } 
 
-const Formlet2 = ({name, children}) => {
-  const {name: formName, state: formState, dispatch} = useForm();
-  const initVals = [formState.fieldValues.todoList[0]];
-  console.log(formName, initVals);
+const Formlet = ({arrayName, rowName, children, onSubmitSuccess}) => {
+  const {name: formName, state: formState} = useForm();
+  const initialValues = [getStateValueByPath(formState.fieldValues, rowName)];
   const initialState = formReducer(undefined, initFormStateAction(formName,
-    {fieldValues: {todoList: initVals}}));
-  console.log('initialState', initialState);
+    {fieldValues: setStateValueByPath({}, arrayName, initialValues)}
+  ));
   return (
     <div>
       <FormStateProvider initialState={initialState}>
         <Form
           name={formName}
-          onSubmit={()=>{}}
-          onSubmitSuccess={formApi => {
-            console.log(formApi);
-            console.log(name, formApi.state.fieldValues.todoList);
-            dispatch(updateFieldAction('todoList[0]',
-              formApi.state.fieldValues.todoList[0])
-            )}
-          }
+          onSubmit={(fieldValues)=>{console.log('Call endpoint here to update row:', fieldValues)}}
+          onSubmitSuccess={onSubmitSuccess}
         >
           {children}
         </Form>
@@ -108,18 +96,24 @@ const Formlet2 = ({name, children}) => {
   );  
 };
 
-const RowEditor = (props) => {
+const RowEditor = ({arrayName, rowName}) => {
   const [isActive, setActive] = useState(false);
+  const {dispatch} = useForm();
+  const handleSubmitSuccess = formApi => {
+    dispatch(updateFieldAction(rowName, getStateValueByPath(formApi.state.fieldValues, rowName)));
+    setActive(false);
+  };
+
   if (isActive) {
     return (
       <div>
         <EditButton isEditing={isActive} setEditing={setActive}/>
-        <Formlet2 {...props}>
+        <Formlet arrayName={arrayName} rowName={rowName} onSubmitSuccess={handleSubmitSuccess}>
           <Row/>
           <div>
             <button>save</button>
           </div>
-        </Formlet2>
+        </Formlet>
       </div>
     );    
   }
@@ -132,14 +126,14 @@ const RowEditor = (props) => {
   );
 } 
 
-const RenderTodoList = ({fields}) => (
+const RenderTodoList = ({arrayName, fields}) => (
   <fieldset>
     <legend>
       Todo List
     </legend>
     {fields.map((todo, index) => (
       <Scope key={index} name={todo}>
-        <RowEditor name={todo}/>
+        <RowEditor arrayName={arrayName} rowName={todo}/>
         <button type="button" title="Remove Task" onClick={() => fields.remove(index)}>-</button>
         <hr/>
       </Scope>
@@ -175,9 +169,9 @@ const MyForm = () => {
       <FormContext name="myForm">
         <FieldArray
           name="todoList"
+          arrayName="todoList"
           component={RenderTodoList}
         />
-        <Button/>
         <TheFormState />
       </FormContext>
     </FormStateProvider>
