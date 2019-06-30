@@ -2,15 +2,17 @@ import { withDocs } from 'storybook-readme';
 import readme from './index.md'
 import React, {useEffect, useState} from 'react';
 import {TextInput, NumberInput, Checkbox} from '../../ui-components';
-import { 
+import {
+  initFormStateAction,
+  formReducer,
   FormStateProvider,
   Form,
   FormContext,
-  Formlet,
   Scope,
   FieldArray,
   useForm,
   useFormReducer,
+  updateFieldAction,
   updateFieldsAction
 } from '../../../packages/react-form-composer/src';
 
@@ -78,19 +80,46 @@ const EditButton = ({isEditing, setEditing}) =>{
   );
 } 
 
+const Formlet2 = ({name, children}) => {
+  const {name: formName, state: formState, dispatch} = useForm();
+  const initVals = [formState.fieldValues.todoList[0]];
+  console.log(formName, initVals);
+  const initialState = formReducer(undefined, initFormStateAction(formName,
+    {fieldValues: {todoList: initVals}}));
+  console.log('initialState', initialState);
+  return (
+    <div>
+      <FormStateProvider initialState={initialState}>
+        <Form
+          name={formName}
+          onSubmit={()=>{}}
+          onSubmitSuccess={formApi => {
+            console.log(formApi);
+            console.log(name, formApi.state.fieldValues.todoList);
+            dispatch(updateFieldAction('todoList[0]',
+              formApi.state.fieldValues.todoList[0])
+            )}
+          }
+        >
+          {children}
+        </Form>
+      </FormStateProvider>
+    </div>
+  );  
+};
+
 const RowEditor = (props) => {
   const [isActive, setActive] = useState(false);
-
   if (isActive) {
     return (
       <div>
         <EditButton isEditing={isActive} setEditing={setActive}/>
-        <Formlet {...props}>
+        <Formlet2 {...props}>
           <Row/>
           <div>
             <button>save</button>
           </div>
-        </Formlet>
+        </Formlet2>
       </div>
     );    
   }
