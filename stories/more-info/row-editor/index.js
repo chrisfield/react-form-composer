@@ -6,7 +6,7 @@ import {
   getStateValueByPath,
   FormStateProvider,
   Form,
-  FormContext,
+  FormContextProvider,
   FormSpy,
   Scope,
   FieldArray,
@@ -173,14 +173,14 @@ const MyForm = () => {
   return (
     <FormStateProvider>
       <Fetcher/>
-      <FormContext name="myForm">
+      <FormContextProvider name="myForm">
         <FieldArray
           name="todoList"
           arrayName="todoList"
           component={RenderTodoList}
         />
         <TheFormState />
-      </FormContext>
+      </FormContextProvider>
     </FormStateProvider>
   );
 };

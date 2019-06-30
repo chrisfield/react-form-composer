@@ -2,7 +2,7 @@ import React, { createContext, useContext, useRef, useEffect, useState} from 're
 import isPromise from "./is-promise";
 import { startSubmit, stopSubmit, updateFields, resetFieldsIsDone } from './actions';
 import useFormReducer from './use-form-reducer';
-import FormContext from './form-context';
+import FormContextProvider from './form-context-provider';
 
 export const Context = createContext({});
 
@@ -186,12 +186,12 @@ export const Form = ({
 
   const formApi = formApiRef.current;
   return (
-    <FormContext
+    <FormContextProvider
       name={name}
       formApi={formApi}
     >
       <FormReducerRef formReducerRef={formReducerRef} reset={validateAllFields}/>
       {initialized && getContent()}
-    </FormContext>
+    </FormContextProvider>
   );
 };

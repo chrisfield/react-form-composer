@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [2.3.0] - 2019-06-30
+### Added
+- I've spilt Form-Context-Provider out from Form. This allows Form-Context-Provider to be used as a kind of placeholder container for Fields that are not yet in a Form. See the  more-info/row-editor for for an example.
 
 ## [2.2.8] - 2019-06-28
 ### Fixed
