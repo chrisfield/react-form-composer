@@ -1,7 +1,7 @@
 # Row Editor
 The form below populates a series of rows with data fetched from https://jsonplaceholder.typicode.com/todos/?userId=2.
 
-It is still a WIP but it does include one-row-at-a-time updates with an edit/cancel functionality like I've seen on several Angular applications. To implement this the Rows are rendered in a FormContextProvider. Only when the user presses 'Edit' for a particular Row are the Rows' Fields are rendered in a Form. 
+It is still a WIP but it does include one-row-at-a-time updates with an edit/cancel functionality like I've seen on several Angular applications. To implement this the Rows are rendered in a FormContextProvider. Only when the user presses 'Edit' for a particular Row are the Rows' Fields rendered in a Form. 
 
 <!-- STORY -->
 ---

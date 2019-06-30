@@ -26,7 +26,6 @@ const FormReducerRef = ({formReducerRef, reset}) => {
   useEffect(() => {
     if (formReducer[0].formStatus.isResetFieldsDue) {
       formReducer[1](resetFieldsIsDone());
-      console.log('reset');
       reset();
     }
   });
@@ -90,10 +89,6 @@ export const Form = ({
       }
     },
     getPublicFormApi,
-    dispatchToParent: (action) => {
-      console.log('dispatchToParent', action);
-      formReducerRef.current[3](action)
-    }
   });
 
   const markAllFieldsAsTouched = (touched= true) => {
