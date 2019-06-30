@@ -13,8 +13,6 @@ export const Provider = ({ children, ...props }) => {
   );
 };
 
-export const Consumer = Context.Consumer;
-
 export const useForm = () => {
   const { formApi } = useContext(Context);
   return formApi;

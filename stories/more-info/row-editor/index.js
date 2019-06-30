@@ -5,6 +5,7 @@ import {TextInput, NumberInput, Checkbox} from '../../ui-components';
 import { 
   FormStateProvider,
   Form,
+  FormContext,
   Formlet,
   Scope,
   FieldArray,
@@ -142,14 +143,14 @@ const MyForm = () => {
   return (
     <FormStateProvider>
       <Fetcher/>
-      <Form name="myForm" component="div" onSubmit={submitValues} onSubmitSuccess={clearValues} className="my-form">
+      <FormContext name="myForm">
         <FieldArray
           name="todoList"
           component={RenderTodoList}
         />
         <Button/>
         <TheFormState />
-      </Form>
+      </FormContext>
     </FormStateProvider>
   );
 };

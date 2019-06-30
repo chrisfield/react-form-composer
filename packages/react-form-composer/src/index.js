@@ -4,6 +4,7 @@ export const useForm = () => {
   const { name } = useFormInternal();
   return {name};
 };
+export {default as FormContext} from "./form-context";
 export {default as Formlet} from "./formlet";
 export {
   initFormState as initFormStateAction,
