@@ -59,13 +59,12 @@ export const Form = ({
   });
 
   const getPublicFormApi = () => {
-    const { name, getField, updateFields, dispatch, getState, dispatchToParent} = formApiRef.current;
+    const { name, getField, updateFields, dispatch} = formApiRef.current;
     return {
       name,
       getField,
       updateFields,
       dispatch,
-      dispatchToParent,
       state: formReducerRef.current[0]
     }
   };
