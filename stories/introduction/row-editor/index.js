@@ -59,13 +59,13 @@ const Row = ({disabled=false, index}) => {
   );
 }
 
-const EditButton = ({isEditing, setEditing}) => {
-  const toggleEditing = () => {
-    setEditing(!isEditing);
+const ButtonWithCancel = ({text, isActive, setActive}) => {
+  const toggle = () => {
+    setActive(!isActive);
   };
-  const text = isEditing? 'Canel': 'Edit';
+  const buttonText = isActive? 'Canel': text;
   return (
-    <button type="button" onClick={toggleEditing}>{text}</button>
+    <button type="button" onClick={toggle}>{buttonText}</button>
   );
 } 
 
@@ -107,19 +107,40 @@ const SaveButton = () => (
   </FormSpy>
 );
 
+const DeleteButton = ({deleteRow, rowName}) => {
+  const [state] = useFormReducer(useForm().name);
+  const id = getStateValueByPath(state.fieldValues, `${rowName}.id`);
+  const handleDelete = () => {
+    fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+      method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(json => console.log('Server response', json));
+    console.log('Deleted todo with id', id);
+    deleteRow();
+  };
+  return <button onClick={handleDelete}>Confirm Delete</button>
+};
+
 const RowEditor = ({rowName, rowIndex, deleteRow}) => {
   const [isActive, setActive] = useState(false);
+  const [isDeleting, setDeleting] = useState(false);
   const {dispatch} = useForm();
   const handleSubmitSuccess = formApi => {
     dispatch(updateFieldAction(rowName, getStateValueByPath(formApi.state.fieldValues, rowName)));
     setActive(false);
   };
 
+  const handleDelete = () => {
+    deleteRow();
+    setDeleting(false);
+  };
+
   if (isActive) {
     return (
       <div>
         <Formlet rowName={rowName} onSubmitSuccess={handleSubmitSuccess}>
-          <EditButton isEditing={isActive} setEditing={setActive}/>
+          <ButtonWithCancel text="Edit" isActive={isActive} setActive={setActive}/>
           <SaveButton/>
           <Row index={rowIndex}/>
         </Formlet>
@@ -127,10 +148,20 @@ const RowEditor = ({rowName, rowIndex, deleteRow}) => {
     );    
   }
 
+  if (isDeleting) {
+    return (
+      <div>
+        <DeleteButton deleteRow={handleDelete} rowName={rowName}/>
+        <ButtonWithCancel text="Delete" isActive={isDeleting} setActive={setDeleting}/>
+        <Row index={rowIndex} disabled/>
+      </div>
+    );      
+  }
+
   return (
     <div>
-      <EditButton isEditing={isActive} setEditing={setActive}/>
-      <button type="button" title="Remove Task" onClick={deleteRow}>Delete</button>
+      <ButtonWithCancel text="Edit" isActive={isActive} setActive={setActive}/>
+      <ButtonWithCancel text="Delete" isActive={isDeleting} setActive={setDeleting}/>
       <Row index={rowIndex} disabled/>
     </div>
   );

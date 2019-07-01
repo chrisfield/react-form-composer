@@ -3,10 +3,21 @@ import {Field} from '../../packages/react-form-composer/src';
 
 const isChecked = target => target.checked;
 
-const CheckboxComponent = ({id, name, label, elementRef, value, handleChange}) => (
+const CheckboxComponent = ({
+  id,
+  name,
+  label,
+  elementRef,
+  value,
+  handleChange,
+  touched,
+  error,
+  handleBlur,
+  ...props
+}) => (
   <div>
     <label htmlFor={id || name}>{label}</label>
-    <input id={id || name} ref={elementRef} type="checkbox" checked={value} onChange={handleChange} />
+    <input {...props} id={id || name} ref={elementRef} type="checkbox" checked={value} onChange={handleChange} />
   </div>
 );
 
