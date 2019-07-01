@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [2.3.2] - 2019-07-1
+### Added
+- Remove unused variable in Form
+
 ## [2.3.1] - 2019-06-30
 ### Added
 - Remove an accidental console.log
