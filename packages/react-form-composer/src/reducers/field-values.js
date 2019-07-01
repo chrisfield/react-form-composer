@@ -11,7 +11,6 @@ const valuesReducer = (state = initialState, action) => {
     case actionTypes.UPDATE_FIELDS:
       return action.fieldValues;
     case actionTypes.UPDATE_FIELD:
-      console.log(action, state);
       return setField(state, action.field, action.value);
     case actionTypes.PUSH_TO_FIELD_ARRAY: {
       const originalArray = getField(state, action.fieldArray) || [];

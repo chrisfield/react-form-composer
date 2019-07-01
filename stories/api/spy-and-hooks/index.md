@@ -20,11 +20,13 @@ const Button = (props) => (
 ```
 
 ## useForm
-`useForm()` can be called by any children/decsendants of a `Form`. It returns an object with the following property: 
+`useForm()` can be called by any children/decsendants of `Form` or `FormContextProvider`. It returns an object with the following properties: 
 
 | Property Name   | Type     | Description                                                              |
 |-----------------|----------|--------------------------------------------------------------------------|
 | name            | String   | Name of the Form                                                        |
+| state           | Object   | The Form state                                                        |
+| dispatch        | function | Call this with an action to update the form state                                                        |
 
 
 ## useField
