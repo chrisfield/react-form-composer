@@ -13,6 +13,7 @@ export const TextInput = ({defaultValue="", required, validate, ...props}) => {
     {({
       label,
       name,
+      id,
       value,
       handleChange,
       handleBlur,
@@ -22,9 +23,10 @@ export const TextInput = ({defaultValue="", required, validate, ...props}) => {
       children,
       ...props}) => 
     (
-      <InputWrapper {...{name, label, touched, error}}>
+      <InputWrapper {...{name, id, label, touched, error}}>
         <input
-          id={name}
+          id={id || name}
+          name={name}
           ref={elementRef}
           value={value}
           onChange={handleChange}

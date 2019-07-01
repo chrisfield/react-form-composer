@@ -35,6 +35,7 @@ export const SingleSelect = ({required, validate, children, ...props}) => {
       {({
         label,
         name,
+        id,
         value,
         handleChange,
         handleBlur,
@@ -44,9 +45,10 @@ export const SingleSelect = ({required, validate, children, ...props}) => {
         ...otherProps
       }) => {
         return (
-          <InputWrapper {...{name, label, touched, error}}>
+          <InputWrapper {...{name, id, label, touched, error}}>
             <select
               name={name}
+              id = {id || name}
               ref={elementRef}
               value={value}
               onChange={handleChange}
@@ -69,6 +71,7 @@ export const MultiSelect = ({required, validate, children, ...props}) => {
       {({
         label,
         name,
+        id,
         value,
         handleChange,
         handleBlur,
@@ -78,9 +81,10 @@ export const MultiSelect = ({required, validate, children, ...props}) => {
         ...otherProps
       }) => {
         return (
-          <InputWrapper {...{name, label, touched, error}}>
+          <InputWrapper {...{name, id, label, touched, error}}>
             <select
               name={name}
+              id={id || name}
               ref={elementRef}
               value={value || []}
               multiple={true}

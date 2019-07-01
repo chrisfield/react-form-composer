@@ -5,6 +5,7 @@ import InputWrapper from './input-wrapper.jsx';
 const NumberInputComponent = ({
   label,
   name,
+  id,
   value,
   handleChange,
   handleBlur,
@@ -15,9 +16,10 @@ const NumberInputComponent = ({
   ...props}) => 
 {
   return (
-    <InputWrapper {...{name, label, touched, error}}>
+    <InputWrapper {...{name, id, label, touched, error}}>
       <input
-        id={name}
+        id={id || name}
+        name={name}
         ref={elementRef}
         value={value}
         onChange={handleChange}

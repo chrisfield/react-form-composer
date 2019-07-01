@@ -32,30 +32,34 @@ const TheFormState = () => {
   );
 };
 
-const Row = ({disabled=false}) => {
+const Row = ({disabled=false, index}) => {
   return (
     <>
       <NumberInput
         disabled={disabled}
         name="userId"
+        id={`userId${index}`}
         required
         label="userId"
       />
       <NumberInput
         disabled={true}
         name="id"
+        id={`id${index}`}
         required
         label="id"
       />
       <TextInput
         disabled={disabled}
         name="title"
+        id={`title${index}`}
         required
         label="Title"
       />
       <Checkbox
         disabled={disabled}
         name="completed"
+        id={`completed${index}`}
         label="Completed"
       />
     </>
@@ -110,7 +114,7 @@ const SaveButton = () => (
   </FormSpy>
 );
 
-const RowEditor = ({rowName}) => {
+const RowEditor = ({rowName, rowIndex, deleteRow}) => {
   const [isActive, setActive] = useState(false);
   const {dispatch} = useForm();
   const handleSubmitSuccess = formApi => {
@@ -121,12 +125,10 @@ const RowEditor = ({rowName}) => {
   if (isActive) {
     return (
       <div>
-        <EditButton isEditing={isActive} setEditing={setActive}/>
         <Formlet rowName={rowName} onSubmitSuccess={handleSubmitSuccess}>
-          <Row/>
-          <div>
-            <SaveButton/>
-          </div>
+          <EditButton isEditing={isActive} setEditing={setActive}/>
+          <SaveButton/>
+          <Row index={rowIndex}/>
         </Formlet>
       </div>
     );    
@@ -135,7 +137,8 @@ const RowEditor = ({rowName}) => {
   return (
     <div>
       <EditButton isEditing={isActive} setEditing={setActive}/>
-      <Row disabled/>
+      <button type="button" title="Remove Task" onClick={deleteRow}>Delete</button>
+      <Row index={rowIndex} disabled/>
     </div>
   );
 } 
@@ -147,8 +150,7 @@ const RenderTodoList = ({fields}) => (
     </legend>
     {fields.map((todo, index) => (
       <Scope key={index} name={todo}>
-        <RowEditor rowName={todo}/>
-        <button type="button" title="Remove Task" onClick={() => fields.remove(index)}>-</button>
+        <RowEditor rowName={todo} rowIndex={index} deleteRow={() => fields.remove(index)}/>
         <hr/>
       </Scope>
     ))}
