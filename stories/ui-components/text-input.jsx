@@ -3,25 +3,33 @@ import {Field} from '../../packages/react-form-composer/src';
 import InputWrapper from './input-wrapper.jsx';
 import {requiredStr, combineValidation} from './utils';
 
-export const TextInput = ({defaultValue="", required, validate, ...props}) => {
+export const TextInput = ({
+  defaultValue="",
+  required,
+  validate,
+  name,
+  id="",
+  placeholder,
+  label
+}) => {
   const combinedValidate = required ? combineValidation(requiredStr, validate): validate;
   return <Field
+    name={name}
     defaultValue={defaultValue}
     validate={combinedValidate}
-    {...props}
+    label={label}
   >
     {({
       label,
       name,
-      id="",
       value,
       handleChange,
       handleBlur,
       elementRef,
       touched,
       error,
-      children,
-      ...props}) => 
+      children
+    }) => 
     (
       <InputWrapper {...{name, id, label, touched, error}}>
         <input
@@ -31,7 +39,7 @@ export const TextInput = ({defaultValue="", required, validate, ...props}) => {
           value={value}
           onChange={handleChange}
           onBlur={handleBlur}
-          {...props}
+          placeholder={placeholder}
         />
         {children}
       </InputWrapper>

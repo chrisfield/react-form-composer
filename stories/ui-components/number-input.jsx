@@ -13,6 +13,7 @@ const NumberInputComponent = ({
   elementRef,
   touched,
   error,
+  placeholder,
   children
 }) => 
 {
@@ -22,6 +23,7 @@ const NumberInputComponent = ({
         id={id + name}
         name={name}
         disabled={disabled}
+        placeholder={placeholder}
         ref={elementRef}
         value={value}
         onChange={handleChange}
