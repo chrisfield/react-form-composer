@@ -10,20 +10,28 @@ const RadioButton = ({selected, value, id, name, ...props}) => (
     name={name}
     {...props}
   >
-    {props2 => {
-      const id2 = `${id || name}-${props2.radioValue}`;
+    {({
+      disabled,
+      label,
+      elementRef,
+      radioValue,
+      value,
+      handleChange,
+    }) => {
+      const id2 = `${id + name}-${radioValue}`;
       return (
         <div>
           <input
+            disabled={disabled}
             id={id2}
-            type="radio"
-            ref={props2.elementRef}
             name={name}
-            value={props2.radioValue}
-            checked={props2.radioValue===props2.value}
-            onChange={props2.handleChange}
+            type="radio"
+            ref={elementRef}
+            value={radioValue}
+            checked={radioValue===value}
+            onChange={handleChange}
           />
-          <label htmlFor={id2}>{props2.label}</label>
+          <label htmlFor={id2}>{label}</label>
         </div>
       );
     }}

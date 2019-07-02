@@ -45,11 +45,13 @@ const RenderHobbies = ({fields}) => (
       <Scope key={hobby} name={hobby}>
         <TextInput
           name="nameOfHobby"
+          id={index}
           required
           label="Hobby name"
         />
         <TextInput
           name={`notes`}
+          id={index}
           label="notes"
           size="60"
         />

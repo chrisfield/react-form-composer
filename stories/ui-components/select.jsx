@@ -34,6 +34,7 @@ export const SingleSelect = ({required, validate, children, ...props}) => {
     <Field defaultValue="" validate={combinedValidate} {...props}>
       {({
         label,
+        disabled,
         name,
         id,
         value,
@@ -41,19 +42,18 @@ export const SingleSelect = ({required, validate, children, ...props}) => {
         handleBlur,
         elementRef,
         touched,
-        error,
-        ...otherProps
+        error
       }) => {
         return (
           <InputWrapper {...{name, id, label, touched, error}}>
             <select
               name={name}
-              id = {id || name}
+              id = {id + name}
+              disabled={disabled}
               ref={elementRef}
               value={value}
               onChange={handleChange}
               onBlur={handleBlur}
-              {...otherProps}
             >
               {children}
             </select>
@@ -70,6 +70,7 @@ export const MultiSelect = ({required, validate, children, ...props}) => {
     <Field validate={combinedValidate} getTargetValue={getSelectedValues} {...props}>
       {({
         label,
+        disabled,
         name,
         id,
         value,
@@ -77,20 +78,19 @@ export const MultiSelect = ({required, validate, children, ...props}) => {
         handleBlur,
         elementRef,
         touched,
-        error,
-        ...otherProps
+        error
       }) => {
         return (
           <InputWrapper {...{name, id, label, touched, error}}>
             <select
               name={name}
-              id={id || name}
+              id={id + name}
+              disabled={disabled}
               ref={elementRef}
               value={value || []}
               multiple={true}
               onChange={handleChange}
               onBlur={handleBlur}
-              {...otherProps}
             >
               {children}
             </select>
