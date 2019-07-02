@@ -1,7 +1,9 @@
 # Row Editor
 The form below populates a series of rows with data fetched from https://jsonplaceholder.typicode.com/todos/?userId=2.
 
-It is still a WIP but it does include one-row-at-a-time updates with an edit/cancel functionality like I've seen on several Angular applications. To implement this the Rows are rendered in a FormContextProvider. Only when the user presses 'Edit' for a particular Row are that Rows' Fields rendered in a Form. 
+It provides a CRUD facility and includes one-row-at-a-time updates with an edit/cancel functionality like I've seen on several Angular applications. To implement this the Rows are rendered in a FormContextProvider. Only when the user presses 'Edit' for a particular Row are that Rows' Fields rendered in a Form.
+
+When I get chance I'll refactor it so much of the code would be reusable across a set of CRUD forms.
 
 <!-- STORY -->
 ---
@@ -43,7 +45,7 @@ const Row = ({disabled=false, index}) => {
         label="userId"
       />
       <NumberInput
-        disabled={true}
+        disabled={disabled}
         name="id"
         id={`id${index}`}
         required
@@ -66,36 +68,24 @@ const Row = ({disabled=false, index}) => {
   );
 }
 
-const EditButton = ({isEditing, setEditing}) => {
-  const toggleEditing = () => {
-    setEditing(!isEditing);
+const ButtonWithCancel = ({text, isActive, setActive}) => {
+  const toggle = () => {
+    setActive(!isActive);
   };
-  const text = isEditing? 'Canel': 'Edit';
+  const buttonText = isActive? 'Canel': text;
   return (
-    <button type="button" onClick={toggleEditing}>{text}</button>
+    <button type="button" onClick={toggle}>{buttonText}</button>
   );
 } 
 
-const Formlet = ({rowName, children, onSubmitSuccess}) => {
+const Formlet = ({children, onSubmit, onSubmitSuccess}) => {
   const {name: formName, state: formState} = useForm();
   return (
     <div>
       <FormStateProvider initialState={{[formName]: formState}}>
         <Form
           name={formName}
-          onSubmit={(fieldValues)=> {
-            const rowValues = getStateValueByPath(fieldValues, rowName);
-            console.log('Call endpoint here to update row:', rowValues);
-            fetch(`https://jsonplaceholder.typicode.com/todos/${rowValues.id}`, {
-              method: 'PUT',
-              body: JSON.stringify(fieldValues),
-              headers: {
-                "Content-type": "application/json; charset=UTF-8"
-              }
-            })
-            .then(response => response.json())
-            .then(json => console.log('Server response', json));
-          }}
+          onSubmit={onSubmit}
           onSubmitSuccess={onSubmitSuccess}
         >
           {children}
@@ -114,19 +104,55 @@ const SaveButton = () => (
   </FormSpy>
 );
 
+const DeleteButton = ({deleteRow, rowName}) => {
+  const [state] = useFormReducer(useForm().name);
+  const id = getStateValueByPath(state.fieldValues, `${rowName}.id`);
+  const handleDelete = () => {
+    fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+      method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(json => console.log('Server response', json));
+    console.log('Deleted todo with id', id);
+    deleteRow();
+  };
+  return <button onClick={handleDelete}>Confirm Delete</button>
+};
+
 const RowEditor = ({rowName, rowIndex, deleteRow}) => {
   const [isActive, setActive] = useState(false);
+  const [isDeleting, setDeleting] = useState(false);
   const {dispatch} = useForm();
+
+  const handleSubmit = (fieldValues)=> {
+    const rowValues = getStateValueByPath(fieldValues, rowName);
+    console.log('Call endpoint here to update row:', rowValues);
+    fetch(`https://jsonplaceholder.typicode.com/todos/${rowValues.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(fieldValues),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+    .then(response => response.json())
+    .then(json => console.log('Server response', json));
+  };
+
   const handleSubmitSuccess = formApi => {
     dispatch(updateFieldAction(rowName, getStateValueByPath(formApi.state.fieldValues, rowName)));
     setActive(false);
   };
 
+  const handleDelete = () => {
+    deleteRow();
+    setDeleting(false);
+  };
+
   if (isActive) {
     return (
       <div>
-        <Formlet rowName={rowName} onSubmitSuccess={handleSubmitSuccess}>
-          <EditButton isEditing={isActive} setEditing={setActive}/>
+        <Formlet rowName={rowName} onSubmit={handleSubmit} onSubmitSuccess={handleSubmitSuccess}>
+          <ButtonWithCancel text="Edit" isActive={isActive} setActive={setActive}/>
           <SaveButton/>
           <Row index={rowIndex}/>
         </Formlet>
@@ -134,14 +160,70 @@ const RowEditor = ({rowName, rowIndex, deleteRow}) => {
     );    
   }
 
+  if (isDeleting) {
+    return (
+      <div>
+        <DeleteButton deleteRow={handleDelete} rowName={rowName}/>
+        <ButtonWithCancel text="Delete" isActive={isDeleting} setActive={setDeleting}/>
+        <Row index={rowIndex} disabled/>
+      </div>
+    );      
+  }
+
   return (
     <div>
-      <EditButton isEditing={isActive} setEditing={setActive}/>
-      <button type="button" title="Remove Task" onClick={deleteRow}>Delete</button>
+      <ButtonWithCancel text="Edit" isActive={isActive} setActive={setActive}/>
+      <ButtonWithCancel text="Delete" isActive={isDeleting} setActive={setDeleting}/>
       <Row index={rowIndex} disabled/>
     </div>
   );
 } 
+
+const RowCreator = ({createRow}) => {
+  const rowName = 'NEW-ROW';
+  const [isActive, setActive] = useState(false);
+  const handleSubmitSuccess = formApi => {
+    setActive(false);
+  };
+
+  const handleSubmit = (fieldValues) => {
+    const values = getStateValueByPath(fieldValues, rowName)
+    fetch(`https://jsonplaceholder.typicode.com/todos`, {
+      method: 'POST',
+      body: JSON.stringify(values),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+    .then(response => response.json())
+    .then(json => {
+      console.log('Server response is', json);
+      createRow(json);
+    });
+  };
+
+  if (isActive) {
+    return (
+      <div>
+        <Formlet
+          rowName={rowName}
+          onSubmit={handleSubmit}
+          onSubmitSuccess={handleSubmitSuccess}
+        >
+          <ButtonWithCancel text="Create" isActive={isActive} setActive={setActive}/>
+          <SaveButton/>
+          <Scope name={rowName}>
+            <Row index={0}/>
+          </Scope>
+        </Formlet>
+      </div>
+    );
+  }
+
+  return (
+    <ButtonWithCancel text="Create" isActive={isActive} setActive={setActive}/>
+  );
+};
 
 const RenderTodoList = ({fields}) => (
   <fieldset>
@@ -154,7 +236,7 @@ const RenderTodoList = ({fields}) => (
         <hr/>
       </Scope>
     ))}
-    <button type="button" onClick={() => fields.push()}>Add Task</button>
+    <RowCreator createRow={values => fields.push(values)}/>
   </fieldset>
 );
 

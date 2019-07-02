@@ -10,7 +10,8 @@ export const TextInput = ({
   name,
   id="",
   placeholder,
-  label
+  label,
+  disabled
 }) => {
   const combinedValidate = required ? combineValidation(requiredStr, validate): validate;
   return <Field
@@ -37,6 +38,7 @@ export const TextInput = ({
           name={name}
           ref={elementRef}
           value={value}
+          disabled={disabled}
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder={placeholder}
