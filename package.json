@@ -25,6 +25,7 @@
     "@storybook/addons": "^5.0.11",
     "@storybook/react": "^5.0.11",
     "@storybook/storybook-deployer": "^2.8.1",
-    "babel-loader": "^8.0.5"
+    "babel-loader": "^8.0.5",
+    "isomorphic-unfetch": "^3.0.0"
   }
 }

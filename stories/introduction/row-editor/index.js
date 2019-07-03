@@ -1,3 +1,4 @@
+import 'isomorphic-unfetch';
 import { withDocs } from 'storybook-readme';
 import readme from './index.md'
 import React, {useEffect, useState} from 'react';
