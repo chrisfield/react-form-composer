@@ -8,6 +8,7 @@ import validation from './introduction/validation';
 import asyncSubmission from './introduction/async-submission';
 import dynamicFields from './introduction/dynamic-fields';
 import RowEditor from './introduction/row-editor';
+import RowEditor2 from './introduction/row-editor2';
 import optimization from './introduction/optimization';
 
 
@@ -35,6 +36,7 @@ storiesOf('Introduction', module)
 .add('Validation', validation)
 .add('Async Submission', asyncSubmission)
 .add('Row Editor', RowEditor)
+.add('Row Editor2', RowEditor2)
 .add('Optimization', optimization);
 
 storiesOf('Form Examples', module)

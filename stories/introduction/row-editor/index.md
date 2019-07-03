@@ -3,25 +3,24 @@ The form below populates a series of rows with data fetched from https://jsonpla
 
 It provides a CRUD facility and includes one-row-at-a-time updates with an edit/cancel functionality like I've seen on several Angular applications. To implement this the Rows are rendered in a FormContextProvider. Only when the user presses 'Edit' for a particular Row are that Rows' Fields rendered in a Form.
 
-When I get chance I'll refactor it so much of the code would be reusable across a set of CRUD forms.
+Take a look at the [code for data-components](https://github.com/chrisfield/react-form-composer/tree/master/stories/data-components) if you are interested in this.
 
 <!-- STORY -->
 ---
 #### Code
 ```jsx
-import React, {useEffect, useState} from 'react';
+import React from 'react';
+import FetchDispatcher from '../../data-components/fetch-dispatcher';
+import RowEditor from '../../data-components/row-editor';
+import RowCreator from '../../data-components/row-creator';
 import {TextInput, NumberInput, Checkbox} from '../../ui-components';
 import {
-  getStateValueByPath,
   FormStateProvider,
-  Form,
   FormContextProvider,
-  FormSpy,
   Scope,
   FieldArray,
   useForm,
   useFormReducer,
-  updateFieldAction,
   updateFieldsAction
 } from 'react-form-composer';
 
@@ -34,7 +33,8 @@ const TheFormState = () => {
   );
 };
 
-const Row = ({disabled=false, index}) => {
+
+const Todo = ({disabled=false, index}) => {
   return (
     <>
       <NumberInput
@@ -45,10 +45,9 @@ const Row = ({disabled=false, index}) => {
         label="userId"
       />
       <NumberInput
-        disabled={disabled}
+        disabled={true}
         name="id"
         id={`id${index}`}
-        required
         label="id"
       />
       <TextInput
@@ -68,206 +67,46 @@ const Row = ({disabled=false, index}) => {
   );
 }
 
-const ButtonWithCancel = ({text, isActive, setActive}) => {
-  const toggle = () => {
-    setActive(!isActive);
-  };
-  const buttonText = isActive? 'Canel': text;
-  return (
-    <button type="button" onClick={toggle}>{buttonText}</button>
-  );
-} 
-
-const Formlet = ({children, onSubmit, onSubmitSuccess}) => {
-  const {name: formName, state: formState} = useForm();
-  return (
-    <div>
-      <FormStateProvider initialState={{[formName]: formState}}>
-        <Form
-          name={formName}
-          onSubmit={onSubmit}
-          onSubmitSuccess={onSubmitSuccess}
-        >
-          {children}
-        </Form>
-      </FormStateProvider>
-    </div>
-  );  
-};
-
-const isValidSelector = state => state.formStatus.isValid;
-const SaveButton = () => (
-  <FormSpy selector={isValidSelector}>
-    {(isValid) => (
-      <button style={{backgroundColor: isValid? 'green': 'cyan'}} >Save</button>
-    )}
-  </FormSpy>
-);
-
-const DeleteButton = ({deleteRow, rowName}) => {
-  const [state] = useFormReducer(useForm().name);
-  const id = getStateValueByPath(state.fieldValues, `${rowName}.id`);
-  const handleDelete = () => {
-    fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
-      method: 'DELETE'
-    })
-    .then(response => response.json())
-    .then(json => console.log('Server response', json));
-    console.log('Deleted todo with id', id);
-    deleteRow();
-  };
-  return <button onClick={handleDelete}>Confirm Delete</button>
-};
-
-const RowEditor = ({rowName, rowIndex, deleteRow}) => {
-  const [isActive, setActive] = useState(false);
-  const [isDeleting, setDeleting] = useState(false);
-  const {dispatch} = useForm();
-
-  const handleSubmit = (fieldValues)=> {
-    const rowValues = getStateValueByPath(fieldValues, rowName);
-    console.log('Call endpoint here to update row:', rowValues);
-    fetch(`https://jsonplaceholder.typicode.com/todos/${rowValues.id}`, {
-      method: 'PUT',
-      body: JSON.stringify(fieldValues),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8"
-      }
-    })
-    .then(response => response.json())
-    .then(json => console.log('Server response', json));
-  };
-
-  const handleSubmitSuccess = formApi => {
-    dispatch(updateFieldAction(rowName, getStateValueByPath(formApi.state.fieldValues, rowName)));
-    setActive(false);
-  };
-
-  const handleDelete = () => {
-    deleteRow();
-    setDeleting(false);
-  };
-
-  if (isActive) {
-    return (
-      <div>
-        <Formlet rowName={rowName} onSubmit={handleSubmit} onSubmitSuccess={handleSubmitSuccess}>
-          <ButtonWithCancel text="Edit" isActive={isActive} setActive={setActive}/>
-          <SaveButton/>
-          <Row index={rowIndex}/>
-        </Formlet>
-      </div>
-    );    
-  }
-
-  if (isDeleting) {
-    return (
-      <div>
-        <DeleteButton deleteRow={handleDelete} rowName={rowName}/>
-        <ButtonWithCancel text="Delete" isActive={isDeleting} setActive={setDeleting}/>
-        <Row index={rowIndex} disabled/>
-      </div>
-    );      
-  }
-
-  return (
-    <div>
-      <ButtonWithCancel text="Edit" isActive={isActive} setActive={setActive}/>
-      <ButtonWithCancel text="Delete" isActive={isDeleting} setActive={setDeleting}/>
-      <Row index={rowIndex} disabled/>
-    </div>
-  );
-} 
-
-const RowCreator = ({createRow}) => {
-  const rowName = 'NEW-ROW';
-  const [isActive, setActive] = useState(false);
-  const handleSubmitSuccess = formApi => {
-    setActive(false);
-  };
-
-  const handleSubmit = (fieldValues) => {
-    const values = getStateValueByPath(fieldValues, rowName)
-    fetch(`https://jsonplaceholder.typicode.com/todos`, {
-      method: 'POST',
-      body: JSON.stringify(values),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8"
-      }
-    })
-    .then(response => response.json())
-    .then(json => {
-      console.log('Server response is', json);
-      createRow(json);
-    });
-  };
-
-  if (isActive) {
-    return (
-      <div>
-        <Formlet
-          rowName={rowName}
-          onSubmit={handleSubmit}
-          onSubmitSuccess={handleSubmitSuccess}
-        >
-          <ButtonWithCancel text="Create" isActive={isActive} setActive={setActive}/>
-          <SaveButton/>
-          <Scope name={rowName}>
-            <Row index={0}/>
-          </Scope>
-        </Formlet>
-      </div>
-    );
-  }
-
-  return (
-    <ButtonWithCancel text="Create" isActive={isActive} setActive={setActive}/>
-  );
-};
-
-const RenderTodoList = ({fields}) => (
-  <fieldset>
-    <legend>
-      Todo List
-    </legend>
-    {fields.map((todo, index) => (
+const TODOS_URL = 'https://jsonplaceholder.typicode.com/todos';
+const RenderTodoList = ({fields: todoList}) => (
+  <div>
+    <h2>
+      Todo list
+    </h2>
+    {todoList.map((todo, index) => (
       <Scope key={index} name={todo}>
-        <RowEditor rowName={todo} rowIndex={index} deleteRow={() => fields.remove(index)}/>
+        <RowEditor
+          name={todo}
+          component={Todo}
+          rowIndex={index}
+          deleteRow={() => todoList.remove(index)}
+          url={values=>`${TODOS_URL}/${values.id}`}
+        />
         <hr/>
       </Scope>
     ))}
-    <RowCreator createRow={values => fields.push(values)}/>
-  </fieldset>
+    <RowCreator
+      name="todo"
+      component={Todo}
+      createRow={values => todoList.push(values)}
+      url={TODOS_URL}
+    />
+  </div>
 );
 
-
-const Fetcher = () => {
-  const dispatch = useFormReducer('myForm')[1];
-  useEffect(() => {
-    let isSubscribed = true;
-    fetch('https://jsonplaceholder.typicode.com/todos/?userId=2')
-    .then((data) => {
-      data.json()
-      .then(json => {
-        // {userId: 2, id: 21, title: "suscipit repellat esse quibusdam voluptatem incidunt", completed: false}
-        if (isSubscribed) {
-          dispatch (updateFieldsAction({todoList:json}));
-        }
-      }) 
-    });
-    return () => {isSubscribed = false};
-  }, []);
-  return null;
-};
 
 const MyForm = () => {  
   return (
     <FormStateProvider>
-      <Fetcher/>
+      <FetchDispatcher
+        url={TODOS_URL}
+        dispatchSelector={values => (
+          updateFieldsAction({todoList:values})
+        )}
+      />
       <FormContextProvider name="myForm">
         <FieldArray
           name="todoList"
-          arrayName="todoList"
           component={RenderTodoList}
         />
         <TheFormState />
