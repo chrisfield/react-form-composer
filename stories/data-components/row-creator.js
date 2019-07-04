@@ -5,7 +5,14 @@ import Formlet from './formlet';
 import ButtonWithCancel from './button-with-cancel';
 import SaveButton from './save-button';
 
-const RowCreator = ({createRow, component: RowComponent, url, name: rowName}) => {
+const RowCreator = ({
+  createRow,
+  component: RowComponent,
+  url,
+  name: rowName,
+  onMount,
+  onUnmount
+}) => {
   const [isActive, setActive] = useState(false);
   const handleSubmitSuccess = () => {
     setActive(false);
@@ -31,6 +38,8 @@ const RowCreator = ({createRow, component: RowComponent, url, name: rowName}) =>
     return (
       <div>
         <Formlet
+          onMount={onMount}
+          onUnmount={onUnmount}
           onSubmit={handleSubmit}
           onSubmitSuccess={handleSubmitSuccess}
         >

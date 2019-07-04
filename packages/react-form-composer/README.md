@@ -41,8 +41,8 @@ export default MyForm;
 ```
 
 ## Features
-- Optimized for lightening fast rendering ([See live example](https://chrisfield.github.io/react-form-composer/?path=/story/introduction--optimization))  
-- Row at a time editing of multi-row data ([See live example](https://chrisfield.github.io/react-form-composer/?path=/story/introduction--row-editor))
+- Easy to write mult-row CRUD Forms connected to a rest api ([See live example](https://chrisfield.github.io/react-form-composer/?path=/story/introduction--row-editor))
+- Optimized for lightening fast rendering ([See live example](https://chrisfield.github.io/react-form-composer/?path=/story/introduction--optimization))
 - Small bundle size ([see bundlephobia](https://bundlephobia.com/result?p=react-form-composer))
 - React-native support ([See example](https://github.com/chrisfield/react-form-composer/tree/master/examples/with_react_native))
 - Perfect for server-rendering ([See example](https://github.com/chrisfield/react-form-composer/tree/master/examples/with-next))

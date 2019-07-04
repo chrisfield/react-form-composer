@@ -19,7 +19,8 @@ const Todo = ({disabled=false, index}) => {
   return (
     <>
       <NumberInput
-        disabled={disabled}
+        defaultValue={2}
+        disabled={true}
         name="userId"
         id={`userId${index}`}
         required
@@ -49,6 +50,7 @@ const Todo = ({disabled=false, index}) => {
 }
 
 const TODOS_URL = 'https://jsonplaceholder.typicode.com/todos';
+const focusOnFirstField = formApi => {formApi.getField('title').element.focus()};
 const RenderTodoList = ({fields: todoList}) => (
   <div>
     <h2>
@@ -62,6 +64,7 @@ const RenderTodoList = ({fields: todoList}) => (
           rowIndex={index}
           deleteRow={() => todoList.remove(index)}
           url={values=>`${TODOS_URL}/${values.id}`}
+          onMount={focusOnFirstField}
         />
         <hr/>
       </Scope>
@@ -71,6 +74,7 @@ const RenderTodoList = ({fields: todoList}) => (
       component={Todo}
       createRow={values => todoList.push(values)}
       url={TODOS_URL}
+      onMount={focusOnFirstField}
     />
   </div>
 );
@@ -80,7 +84,7 @@ const MyForm = () => {
   return (
     <FormStateProvider>
       <FetchDispatcher
-        url={TODOS_URL}
+        url={`${TODOS_URL}?userId=2`}
         dispatchSelector={values => (
           updateFieldsAction({todoList:values})
         )}

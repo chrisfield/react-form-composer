@@ -38,6 +38,8 @@ export const Form = ({
   initialValues,
   onSubmit=noop,
   onSubmitSuccess=noop,
+  onMount=noop,
+  onUnmount=noop,
   children,
   render,
   component = 'form',
@@ -49,6 +51,11 @@ export const Form = ({
   const formReducerRef = useRef([]);
   const [initialized, setInitialized] = useState(!initialValues);
   const formRef = useRef();
+
+  useEffect(() => {
+    onMount(getPublicFormApi());
+    return () => {onUnmount(getPublicFormApi())};
+  }, []);
 
   useEffect(() => {
     const dispatch = formReducerRef.current[1];

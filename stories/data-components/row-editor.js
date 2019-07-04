@@ -11,7 +11,9 @@ const RowEditor = ({
   component: RowComponent,
   rowIndex,
   url,
-  deleteRow
+  deleteRow,
+  onMount,
+  onUnmount
 }) => {
   const [isActive, setActive] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
@@ -44,7 +46,12 @@ const RowEditor = ({
   if (isActive) {
     return (
       <div>
-        <Formlet onSubmit={handleSubmit} onSubmitSuccess={handleSubmitSuccess}>
+        <Formlet
+          onSubmit={handleSubmit}
+          onSubmitSuccess={handleSubmitSuccess}
+          onMount={onMount}
+          onUnmount={onUnmount}
+        >
           <ButtonWithCancel text="Edit" isActive={isActive} setActive={setActive}/>
           <SaveButton/>
           <RowComponent index={rowIndex}/>

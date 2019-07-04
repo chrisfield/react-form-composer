@@ -133,6 +133,7 @@ const User = ({disabled=false, index}) => {
 }
 
 const USERS_URL = 'https://jsonplaceholder.typicode.com/users';
+const focusOnFirstField = formApi => {formApi.getField('name').element.focus()};
 const RenderUsers = ({fields: users}) => (
   <div>
     <h2>
@@ -146,6 +147,7 @@ const RenderUsers = ({fields: users}) => (
           rowIndex={index}
           deleteRow={() => users.remove(index)}
           url={values=>`${USERS_URL}/${values.id}`}
+          onMount={focusOnFirstField}
         />
         <hr/>
       </Scope>
@@ -155,6 +157,7 @@ const RenderUsers = ({fields: users}) => (
       component={User}
       createRow={values => users.push(values)}
       url={USERS_URL}
+      onMount={focusOnFirstField}
     />
   </div>
 );
