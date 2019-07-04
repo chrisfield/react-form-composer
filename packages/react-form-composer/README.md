@@ -8,9 +8,8 @@
 [![Build Status](https://travis-ci.com/chrisfield/react-form-composer.svg?branch=master)](https://travis-ci.com/chrisfield/react-form-composer)
 
 ## Introduction
-From the simplest login form to large multi-row CRUD applications react-form-composer provides an easy to use, none perscriptive and lightweight solution. It works well for web react-native and server-rendered applications. 
 
-React-form-composer is written with hooks, is optimized for lightening fast rendering and it gives you control over where to store form state.
+React-form-composer is a lightweight, simple, and developer friendly solution for creating forms in web, react-native and server-rendered applications. It is written with hooks, is optimized for lightening fast rendering and gives you control to choose or change where to store form state. It has a cut-down but powerful api - making it suitable for anything from one-off basic forms through to large multi-row CRUD applications.
 
 ## Getting Started
 

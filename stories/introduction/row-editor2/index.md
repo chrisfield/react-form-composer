@@ -1,9 +1,8 @@
 # Row Editor2
 This form populates a series of rows with data fetched from https://jsonplaceholder.typicode.com/users.
 
-It uses the same data-components as the last example.
+It uses the same [data-components](https://github.com/chrisfield/react-form-composer/tree/master/stories/data-components) as the last example.
 
-<!-- STORY -->
 ---
 #### Code
 ```jsx
@@ -19,7 +18,7 @@ import {
   Scope,
   FieldArray,
   updateFieldsAction
-} from '../../../packages/react-form-composer/src';
+} from 'react-form-composer';
 
 const User = ({disabled=false, index}) => {
   return (
@@ -139,6 +138,7 @@ const User = ({disabled=false, index}) => {
 }
 
 const USERS_URL = 'https://jsonplaceholder.typicode.com/users';
+const focusOnFirstField = formApi => {formApi.getField('name').element.focus()};
 const RenderUsers = ({fields: users}) => (
   <div>
     <h2>
@@ -152,6 +152,7 @@ const RenderUsers = ({fields: users}) => (
           rowIndex={index}
           deleteRow={() => users.remove(index)}
           url={values=>`${USERS_URL}/${values.id}`}
+          onMount={focusOnFirstField}
         />
         <hr/>
       </Scope>
@@ -161,6 +162,7 @@ const RenderUsers = ({fields: users}) => (
       component={User}
       createRow={values => users.push(values)}
       url={USERS_URL}
+      onMount={focusOnFirstField}
     />
   </div>
 );
@@ -195,3 +197,5 @@ const MyForm = () => {
 export default MyForm;
 ```
 ---
+
+<!-- STORY -->

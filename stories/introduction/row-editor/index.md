@@ -3,9 +3,6 @@ The form below populates a series of rows with data fetched from https://jsonpla
 
 It provides a CRUD facility and includes one-row-at-a-time updates with an edit/cancel functionality like I've seen on several Angular applications. To implement this the Rows are rendered in a FormContextProvider. Only when the user presses 'Edit' for a particular Row are that Rows' Fields rendered in a Form.
 
-Take a look at the [code for data-components](https://github.com/chrisfield/react-form-composer/tree/master/stories/data-components) if you are interested in this.
-
-<!-- STORY -->
 ---
 #### Code
 ```jsx
@@ -13,32 +10,22 @@ import React from 'react';
 import FetchDispatcher from '../../data-components/fetch-dispatcher';
 import RowEditor from '../../data-components/row-editor';
 import RowCreator from '../../data-components/row-creator';
+import FormStateSelector from '../../data-components/form-state-selector';
 import {TextInput, NumberInput, Checkbox} from '../../ui-components';
 import {
   FormStateProvider,
   FormContextProvider,
   Scope,
   FieldArray,
-  useForm,
-  useFormReducer,
   updateFieldsAction
 } from 'react-form-composer';
-
-const TheFormState = () => {
-  const [state] = useFormReducer(useForm().name);
-  return (
-    <pre>
-      <code>{JSON.stringify(state, null, 2)}</code>
-    </pre>
-  );
-};
-
 
 const Todo = ({disabled=false, index}) => {
   return (
     <>
       <NumberInput
-        disabled={disabled}
+        defaultValue={2}
+        disabled={true}
         name="userId"
         id={`userId${index}`}
         required
@@ -68,6 +55,7 @@ const Todo = ({disabled=false, index}) => {
 }
 
 const TODOS_URL = 'https://jsonplaceholder.typicode.com/todos';
+const focusOnFirstField = formApi => {formApi.getField('title').element.focus()};
 const RenderTodoList = ({fields: todoList}) => (
   <div>
     <h2>
@@ -81,6 +69,7 @@ const RenderTodoList = ({fields: todoList}) => (
           rowIndex={index}
           deleteRow={() => todoList.remove(index)}
           url={values=>`${TODOS_URL}/${values.id}`}
+          onMount={focusOnFirstField}
         />
         <hr/>
       </Scope>
@@ -90,6 +79,7 @@ const RenderTodoList = ({fields: todoList}) => (
       component={Todo}
       createRow={values => todoList.push(values)}
       url={TODOS_URL}
+      onMount={focusOnFirstField}
     />
   </div>
 );
@@ -99,7 +89,7 @@ const MyForm = () => {
   return (
     <FormStateProvider>
       <FetchDispatcher
-        url={TODOS_URL}
+        url={`${TODOS_URL}?userId=2`}
         dispatchSelector={values => (
           updateFieldsAction({todoList:values})
         )}
@@ -109,7 +99,7 @@ const MyForm = () => {
           name="todoList"
           component={RenderTodoList}
         />
-        <TheFormState />
+        <FormStateSelector path="fieldValues.todoList"/>
       </FormContextProvider>
     </FormStateProvider>
   );
@@ -118,3 +108,8 @@ const MyForm = () => {
 export default MyForm;
 
 ```
+You might also want to look at the [code for data-components](https://github.com/chrisfield/react-form-composer/tree/master/stories/data-components). 
+
+---
+
+<!-- STORY -->
