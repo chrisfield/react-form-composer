@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [2.4.4] - 2019-07-5
+### Fixed
+- Scroll to first error on submit is now smooth 
+### Added
+- onSubmitError prop to Form in case you want to replace the scroll to error behaviour
+
 ## [2.4.3] - 2019-07-5
 ### Fixed
 - Correct URL in README - no code change

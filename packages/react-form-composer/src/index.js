@@ -8,6 +8,7 @@ export {
   initFormState as initFormStateAction,
   updateFields as updateFieldsAction
 } from "./actions";
+export {default as focusOnFirstFieldWithError} from "./focus-on-first-field-with-error";
 export {default as getStateValueByPath} from "./state-utils/get-field";
 export {default as setStateValueByPath} from "./state-utils/set-field";
 export { Scope, useScope } from "./scope";

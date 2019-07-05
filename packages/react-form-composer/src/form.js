@@ -3,6 +3,7 @@ import isPromise from "./is-promise";
 import { startSubmit, stopSubmit, updateFields, resetFieldsIsDone } from './actions';
 import useFormReducer from './use-form-reducer';
 import FormContextProvider from './form-context-provider';
+import focusOnFirstFieldWithError from './focus-on-first-field-with-error';
 
 export const Context = createContext({});
 
@@ -38,6 +39,7 @@ export const Form = ({
   initialValues,
   onSubmit=noop,
   onSubmitSuccess=noop,
+  onSubmitError=focusOnFirstFieldWithError,
   onMount=noop,
   onUnmount=noop,
   children,
@@ -110,27 +112,12 @@ export const Form = ({
     });
   };
 
-  const focusOnFieldWithError = () => {
-    for (const field of fieldsRef.current) {
-      if (field.error && field.element) {
-        const element = field.element;
-        if (element.focus) {
-          element.focus();
-        }
-        if (element.scrollIntoView) {
-          element.scrollIntoView();
-        }
-        break;
-      }
-    }
-  };
-
   const handleSubmit = (event) => {
     markAllFieldsAsTouched();
     const [formState, dispatch] = formReducerRef.current;
     if (!formState.formStatus.isValid) {
       event.preventDefault();
-      focusOnFieldWithError();
+      onSubmitError(getPublicFormApi());
       return;
     }
     if (onSubmit === noop && formRef.current) {
@@ -146,7 +133,7 @@ export const Form = ({
     if (!isPromise(submitResult)) {
       dispatch(stopSubmit(submitResult));
       if (submitResult) { // must have returned a form error
-        focusOnFieldWithError();
+        onSubmitError(getPublicFormApi());
         return;
       }
       onSubmitSuccess(getPublicFormApi());
@@ -156,7 +143,7 @@ export const Form = ({
       (submitError) => {
         dispatch(stopSubmit(submitError));
         if (submitError) {
-          focusOnFieldWithError();
+          onSubmitError(getPublicFormApi());
           return;  
         }
         onSubmitSuccess(getPublicFormApi());
