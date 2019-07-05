@@ -42,7 +42,7 @@ export default MyForm;
 ```
 
 
-#### Create a CRUD/REST-api form ([See live example](http://localhost:6006/?path=/story/introduction--row-editor))
+#### Create a CRUD/REST-api form ([See live example](https://chrisfield.github.io/react-form-composer/?path=/story/introduction--row-editor))
 
 ```jsx
 import React from 'react';
