@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [2.4.6] - 2019-07-6
+### Fixed
+- No need to scroll to first error if it is already visible. 
 
 ## [2.4.5] - 2019-07-5
 ### Fixed

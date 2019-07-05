@@ -1,3 +1,13 @@
+function isElementInViewport (el) {
+  const rect = el.getBoundingClientRect();
+  return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
+}
+
 const focusOnFirstFieldWithError = (formApi) => {
   for (const field of formApi.getFields()) {
     const element = field.element;
@@ -13,9 +23,11 @@ const focusOnFirstFieldWithError = (formApi) => {
         }, 100);
       };    
       focusAfterScroll();
-      window.addEventListener('scroll', focusAfterScroll);
-      if (element.scrollIntoView) {
-        element.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'});
+      if (!isElementInViewport(element)) {
+        window.addEventListener('scroll', focusAfterScroll);
+        if (element.scrollIntoView) {
+          element.scrollIntoView({behavior: 'smooth', block: 'center', inline: 'nearest'});
+        }
       }
       break;
     }
