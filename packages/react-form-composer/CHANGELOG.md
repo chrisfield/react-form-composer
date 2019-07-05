@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+
+## [2.4.5] - 2019-07-5
+### Fixed
+- Bug in scroll to first error scrolling too long after the form error happens. 
+
 ## [2.4.4] - 2019-07-5
 ### Fixed
 - Scroll to first error on submit is now smooth 

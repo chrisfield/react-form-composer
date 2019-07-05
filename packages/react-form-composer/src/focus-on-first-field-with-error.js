@@ -6,6 +6,7 @@ const focusOnFirstFieldWithError = (formApi) => {
       const focusAfterScroll = e => {
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(function() {
+          window.removeEventListener('scroll', focusAfterScroll);
           if (element.focus) {
             element.focus();
           }
