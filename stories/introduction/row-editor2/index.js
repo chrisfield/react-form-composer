@@ -1,19 +1,9 @@
-import 'isomorphic-unfetch';
 import { withDocs } from 'storybook-readme';
 import readme from './index.md'
 import React from 'react';
-import FetchDispatcher from '../../data-components/fetch-dispatcher';
-import RowEditor from '../../data-components/row-editor';
-import RowCreator from '../../data-components/row-creator';
-import FormStateSelector from '../../data-components/form-state-selector';
+import RestApiCrudForm from '../../data-components/rest-api-crud-form';
 import {TextInput, NumberInput} from '../../ui-components';
-import {
-  FormStateProvider,
-  FormContextProvider,
-  Scope,
-  FieldArray,
-  updateFieldsAction
-} from '../../../packages/react-form-composer/src';
+import { Scope } from '../../../packages/react-form-composer/src';
 
 const User = ({disabled=false, index}) => {
   return (
@@ -133,60 +123,12 @@ const User = ({disabled=false, index}) => {
 }
 
 const USERS_URL = 'https://jsonplaceholder.typicode.com/users';
-const focusOnFirstField = formApi => {formApi.getField('name').element.focus()};
-const RenderUsers = ({fields: users}) => (
-  <div>
-    <h2>
-      Users
-    </h2>
-    {users.map((user, index) => (
-      <Scope key={index} name={user}>
-        <RowEditor
-          name={user}
-          component={User}
-          rowIndex={index}
-          deleteRow={() => users.remove(index)}
-          url={values=>`${USERS_URL}/${values.id}`}
-          onMount={focusOnFirstField}
-        />
-        <hr/>
-      </Scope>
-    ))}
-    <RowCreator
-      name="user"
-      component={User}
-      createRow={values => users.push(values)}
-      url={USERS_URL}
-      onMount={focusOnFirstField}
-    />
-  </div>
+const MyForm = () => (
+  <RestApiCrudForm
+    name="users"
+    resourceUrl={USERS_URL}
+    inputComponent={User}
+  />
 );
 
-
-const MyForm = () => {  
-  return (
-    <FormStateProvider>
-      <FetchDispatcher
-        url={USERS_URL}
-        dispatchSelector={values => (
-          updateFieldsAction({users:values})
-        )}
-      />
-      <FormContextProvider name="myForm">
-        <h4>Shortest Catchphrase:</h4>
-        <FormStateSelector path="fieldValues.users" transform={(users=[])=>(
-          users.reduce((prev, current)=>(
-            (prev.length && prev.length < current.company.catchPhrase.length) ? prev: current.company.catchPhrase
-          ), "")
-        )}/>
-        <FieldArray
-          name="users"
-          component={RenderUsers}
-        />
-        <FormStateSelector path="fieldValues.users"/>
-      </FormContextProvider>
-    </FormStateProvider>
-  );
-};
-
-export default withDocs(readme, () => <MyForm/>);
+export default withDocs(readme, MyForm);

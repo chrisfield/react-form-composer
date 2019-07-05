@@ -1,5 +1,5 @@
 # Row Editor
-The form below populates a series of rows with data fetched from https://jsonplaceholder.typicode.com/todos/?userId=2.
+The form below populates a series of rows with data fetched from https://jsonplaceholder.typicode.com/todos/?userId=3.
 
 It provides a CRUD facility and includes one-row-at-a-time updates with an edit/cancel functionality like I've seen on several Angular applications. To implement this the Rows are rendered in a FormContextProvider. Only when the user presses 'Edit' for a particular Row are that Rows' Fields rendered in a Form.
 
@@ -7,24 +7,15 @@ It provides a CRUD facility and includes one-row-at-a-time updates with an edit/
 #### Code
 ```jsx
 import React from 'react';
-import FetchDispatcher from '../../data-components/fetch-dispatcher';
-import RowEditor from '../../data-components/row-editor';
-import RowCreator from '../../data-components/row-creator';
-import FormStateSelector from '../../data-components/form-state-selector';
+import RestApiCrudForm from '../../data-components/rest-api-crud-form';
 import {TextInput, NumberInput, Checkbox} from '../../ui-components';
-import {
-  FormStateProvider,
-  FormContextProvider,
-  Scope,
-  FieldArray,
-  updateFieldsAction
-} from 'react-form-composer';
 
+const USER_ID=3;
 const Todo = ({disabled=false, index}) => {
   return (
     <>
       <NumberInput
-        defaultValue={2}
+        defaultValue={USER_ID}
         disabled={true}
         name="userId"
         id={`userId${index}`}
@@ -55,55 +46,14 @@ const Todo = ({disabled=false, index}) => {
 }
 
 const TODOS_URL = 'https://jsonplaceholder.typicode.com/todos';
-const focusOnFirstField = formApi => {formApi.getField('title').element.focus()};
-const RenderTodoList = ({fields: todoList}) => (
-  <div>
-    <h2>
-      Todo list
-    </h2>
-    {todoList.map((todo, index) => (
-      <Scope key={index} name={todo}>
-        <RowEditor
-          name={todo}
-          component={Todo}
-          rowIndex={index}
-          deleteRow={() => todoList.remove(index)}
-          url={values=>`${TODOS_URL}/${values.id}`}
-          onMount={focusOnFirstField}
-        />
-        <hr/>
-      </Scope>
-    ))}
-    <RowCreator
-      name="todo"
-      component={Todo}
-      createRow={values => todoList.push(values)}
-      url={TODOS_URL}
-      onMount={focusOnFirstField}
-    />
-  </div>
+const MyForm = () => (
+  <RestApiCrudForm
+    name="todoList"
+    resourceUrl={TODOS_URL}
+    urlForRead={`${TODOS_URL}?userId=${USER_ID}`}
+    inputComponent={Todo}
+  />
 );
-
-
-const MyForm = () => {  
-  return (
-    <FormStateProvider>
-      <FetchDispatcher
-        url={`${TODOS_URL}?userId=2`}
-        dispatchSelector={values => (
-          updateFieldsAction({todoList:values})
-        )}
-      />
-      <FormContextProvider name="myForm">
-        <FieldArray
-          name="todoList"
-          component={RenderTodoList}
-        />
-        <FormStateSelector path="fieldValues.todoList"/>
-      </FormContextProvider>
-    </FormStateProvider>
-  );
-};
 
 export default MyForm;
 

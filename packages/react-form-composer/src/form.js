@@ -70,6 +70,7 @@ export const Form = ({
     return {
       name,
       getField,
+      getFields: () => fieldsRef.current,
       updateFields,
       dispatch,
       state: formReducerRef.current[0]

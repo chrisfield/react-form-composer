@@ -9,7 +9,7 @@
 
 ## Introduction
 
-React-form-composer is a lightweight, simple, and developer friendly solution for creating forms in web, react-native and server-rendered applications. It is written with hooks, is optimized for lightening fast rendering and gives you control to choose or change where to store form state. It has a cut-down but powerful api - making it suitable for anything from one-off basic forms through to large multi-row CRUD applications.
+React-form-composer is an extendable, none-perscriptive, lightweight solution for creating forms in web, react-native and server-rendered applications. It is written with hooks, is optimized for lightening fast rendering and gives you control to choose or change where to store form state. The small but powerful api makes it suitable for anything from simple input forms through to large multi-row CRUD applications.
 
 ## Getting Started
 
@@ -39,6 +39,63 @@ function submitValues(values) {
 }
 
 export default MyForm;
+```
+
+
+#### Create a CRUD/REST-api form ([See live example](http://localhost:6006/?path=/story/introduction--row-editor))
+
+```jsx
+import React from 'react';
+import RestApiCrudForm from '../../data-components/rest-api-crud-form';
+import {TextInput, NumberInput, Checkbox} from '../../ui-components';
+
+const USER_ID=3;
+const Todo = ({disabled=false, index}) => {
+  return (
+    <>
+      <NumberInput
+        defaultValue={USER_ID}
+        disabled={true}
+        name="userId"
+        id={`userId${index}`}
+        required
+        label="userId"
+      />
+      <NumberInput
+        disabled={true}
+        name="id"
+        id={`id${index}`}
+        label="id"
+      />
+      <TextInput
+        disabled={disabled}
+        name="title"
+        id={`title${index}`}
+        required
+        label="Title"
+      />
+      <Checkbox
+        disabled={disabled}
+        name="completed"
+        id={`completed${index}`}
+        label="Completed"
+      />
+    </>
+  );
+}
+
+const TODOS_URL = 'https://jsonplaceholder.typicode.com/todos';
+const MyForm = () => (
+  <RestApiCrudForm
+    name="todoList"
+    resourceUrl={TODOS_URL}
+    urlForRead={`${TODOS_URL}?userId=${USER_ID}`}
+    inputComponent={Todo}
+  />
+);
+
+export default MyForm;
+
 ```
 
 ## Features

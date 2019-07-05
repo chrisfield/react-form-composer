@@ -31,6 +31,7 @@ The formApi object (passed to any onSuccess function) includes these props:
 |---------------|----------|----------------------------------------------------------------|
 | name          | String   | Name of the Form                                               |
 | getField      | Function | Call this with a fieldName to return the fieldApi              |
+| getFields     | Function | Call this return an array of the fields                        |
 | updateFields  | Function | Call this with the field values to reset the form field values |
 | dispatch      | Function | Call this with am action to update any form state              |
 | state         | Object   | The current Form state.                                        |
