@@ -43,27 +43,33 @@ const RowEditor = ({
     setDeleting(false);
   };
 
-  if (isActive) {
-    return (
-      <div>
-        <Formlet
-          onSubmit={handleSubmit}
-          onSubmitSuccess={handleSubmitSuccess}
-          onMount={onMount}
-          onUnmount={onUnmount}
-        >
-          <ButtonWithCancel text="Edit" isActive={isActive} setActive={setActive}/>
-          <SaveButton/>
-          <RowComponent index={rowIndex}/>
-        </Formlet>
-      </div>
-    );    
-  }
+  let content;
 
-  if (isDeleting) {
-    return (
+  if (isActive) {
+    content = (
+      <Formlet
+      onSubmit={handleSubmit}
+      onSubmitSuccess={handleSubmitSuccess}
+      onMount={onMount}
+      onUnmount={onUnmount}
+      >
+        <ButtonWithCancel text="Edit" isActive={isActive} setActive={setActive}/>
+        <SaveButton/>
+        <RowComponent index={rowIndex}/>
+      </Formlet>
+    );
+  } else if (isDeleting) {
+    content = (
       <div>
         <DeleteButton deleteRow={handleDelete} rowName={rowName} url={url}/>
+        <ButtonWithCancel text="Delete" isActive={isDeleting} setActive={setDeleting}/>
+        <RowComponent index={rowIndex} disabled/>
+      </div>
+    );      
+  } else {
+    content = (
+      <div>
+        <ButtonWithCancel text="Edit" isActive={isActive} setActive={setActive}/>
         <ButtonWithCancel text="Delete" isActive={isDeleting} setActive={setDeleting}/>
         <RowComponent index={rowIndex} disabled/>
       </div>
@@ -72,9 +78,8 @@ const RowEditor = ({
 
   return (
     <div>
-      <ButtonWithCancel text="Edit" isActive={isActive} setActive={setActive}/>
-      <ButtonWithCancel text="Delete" isActive={isDeleting} setActive={setDeleting}/>
-      <RowComponent index={rowIndex} disabled/>
+      Row: {(rowIndex + 1) + ''}
+      {content}
     </div>
   );
 }
