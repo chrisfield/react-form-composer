@@ -15,7 +15,7 @@ const RowEditor = ({
   onMount,
   onUnmount
 }) => {
-  const [isActive, setActive] = useState(false);
+  const [isEditing, setEditing] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
   const {dispatch} = useForm();
 
@@ -35,7 +35,7 @@ const RowEditor = ({
 
   const handleSubmitSuccess = formApi => {
     dispatch(updateFieldAction(rowName, getStateValueByPath(formApi.state.fieldValues, rowName)));
-    setActive(false);
+    setEditing(false);
   };
 
   const handleDelete = () => {
@@ -45,7 +45,7 @@ const RowEditor = ({
 
   let content;
 
-  if (isActive) {
+  if (isEditing) {
     content = (
       <Formlet
       onSubmit={handleSubmit}
@@ -53,7 +53,7 @@ const RowEditor = ({
       onMount={onMount}
       onUnmount={onUnmount}
       >
-        <ButtonWithCancel text="Edit" isActive={isActive} setActive={setActive}/>
+        <ButtonWithCancel text="Edit" isActive={true} setActive={setEditing}/>
         <SaveButton/>
         <RowComponent index={rowIndex}/>
       </Formlet>
@@ -69,8 +69,8 @@ const RowEditor = ({
   } else {
     content = (
       <div>
-        <ButtonWithCancel text="Edit" isActive={isActive} setActive={setActive}/>
-        <ButtonWithCancel text="Delete" isActive={isDeleting} setActive={setDeleting}/>
+        <ButtonWithCancel text="Edit" isActive={false} setActive={setEditing}/>
+        <ButtonWithCancel text="Delete" isActive={false} setActive={setDeleting}/>
         <RowComponent index={rowIndex} disabled/>
       </div>
     );      
