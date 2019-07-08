@@ -17,9 +17,9 @@ const focusOnFirstField = formApi => {
 };
 const RenderRows = ({fields, resourceUrl, inputComponent: InputComponent}) => (
   <>
-    <div style={containerStyles}>
+    <div className="row-items">
       {fields.map((field, index) => (
-        <div style={itemStyles}>
+        <div className="row-item">
           <div style={{padding: '5px'}}>
             <Scope key={index} name={field}>
               <RowEditor
@@ -44,27 +44,4 @@ const RenderRows = ({fields, resourceUrl, inputComponent: InputComponent}) => (
     />
   </>
 );
-
-const containerStyles = {
-  display: [
-    '-webkit-box',
-    '-webkit-flex',
-    '-ms-flexbox',
-    'flex'
-  ],
-  WebkitFlexWrap: 'wrap',
-  flexWrap: 'wrap',
-  borderWidth: '2px 0 0 2px',
-  borderColor: 'green',
-  borderStyle: 'solid',
-  justContent: 'space-between'
-};
-
-const itemStyles = {
-  borderWidth: '0 2px 2px 0',
-  borderColor: 'green',
-  borderStyle: 'solid',
-  WebkitFlex: '1',
-  flex: '1'
-};
 export default RenderRows;

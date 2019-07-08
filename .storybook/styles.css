@@ -1,0 +1,25 @@
+.row-items {
+  width: 100%;
+  display: -webkit-box; 
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex; 
+  display: flex;
+  border-width: 2px 0 0 2px;
+  border-color: green;
+  border-style: solid;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap; 
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+
+.row-item {
+  border-width: 0 2px 2px 0;
+  border-color:green;
+  border-style: solid;
+  -webkit-flex-grow: 1;
+  -webkit-flex-basis: 1;
+  flex-grow: 1;
+  flex-basis: 1; 
+}

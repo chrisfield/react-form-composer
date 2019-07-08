@@ -1,5 +1,6 @@
 import { configure , addDecorator, addParameters } from '@storybook/react';
 import { addReadme } from 'storybook-readme';
+import './styles.css';
 
 addDecorator(addReadme);
 addParameters({
