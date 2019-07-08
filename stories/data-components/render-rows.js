@@ -46,18 +46,25 @@ const RenderRows = ({fields, resourceUrl, inputComponent: InputComponent}) => (
 );
 
 const containerStyles = {
-  display: 'flex',
+  display: [
+    '-webkit-box',
+    '-webkit-flex',
+    '-ms-flexbox',
+    'flex'
+  ],
+  WebkitFlexWrap: 'wrap',
   flexWrap: 'wrap',
   borderWidth: '2px 0 0 2px',
-  borderColor: 'blue',
+  borderColor: 'green',
   borderStyle: 'solid',
   justContent: 'space-between'
 };
 
 const itemStyles = {
   borderWidth: '0 2px 2px 0',
-  borderColor: 'blue',
+  borderColor: 'green',
   borderStyle: 'solid',
+  WebkitFlex: '1',
   flex: '1'
 };
 export default RenderRows;
