@@ -76,12 +76,7 @@ const RowEditor = ({
     );      
   }
 
-  return (
-    <div>
-      Row: {(rowIndex + 1) + ''}
-      {content}
-    </div>
-  );
+  return content;
 }
 
 export default RowEditor;

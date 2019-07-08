@@ -4,6 +4,7 @@ import RowCreator from './row-creator';
 import {
   Scope
 } from '../../packages/react-form-composer/src';
+import { borderStyle } from 'polished';
 
 const focusOnFirstField = formApi => {
   const fields = formApi.getFields();
@@ -16,19 +17,24 @@ const focusOnFirstField = formApi => {
 };
 const RenderRows = ({fields, resourceUrl, inputComponent: InputComponent}) => (
   <>
-    {fields.map((field, index) => (
-      <Scope key={index} name={field}>
-        <RowEditor
-          name={field}
-          component={InputComponent}
-          rowIndex={index}
-          deleteRow={() => fields.remove(index)}
-          url={values=>`${resourceUrl}/${values.id}`}
-          onMount={focusOnFirstField}
-        />
-        <hr/>
-      </Scope>
-    ))}
+    <div style={containerStyles}>
+      {fields.map((field, index) => (
+        <div style={itemStyles}>
+          <div style={{padding: '5px'}}>
+            <Scope key={index} name={field}>
+              <RowEditor
+                name={field}
+                component={InputComponent}
+                rowIndex={index}
+                deleteRow={() => fields.remove(index)}
+                url={values=>`${resourceUrl}/${values.id}`}
+                onMount={focusOnFirstField}
+              />
+            </Scope>
+          </div>
+        </div>
+      ))}
+    </div>
     <RowCreator
       name="row"
       component={InputComponent}
@@ -39,4 +45,19 @@ const RenderRows = ({fields, resourceUrl, inputComponent: InputComponent}) => (
   </>
 );
 
+const containerStyles = {
+  display: 'flex',
+  flexWrap: 'wrap',
+  borderWidth: '2px 0 0 2px',
+  borderColor: 'blue',
+  borderStyle: 'solid',
+  justContent: 'space-between'
+};
+
+const itemStyles = {
+  borderWidth: '0 2px 2px 0',
+  borderColor: 'blue',
+  borderStyle: 'solid',
+  flex: '1'
+};
 export default RenderRows;

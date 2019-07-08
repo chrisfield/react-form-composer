@@ -7,7 +7,7 @@ const FormStateSelector = ({path, transform=data=>data}) => {
     <FormSpy selector={selector}>
       {(selectedState) => (
         <pre>
-          <code>{JSON.stringify(transform(selectedState), null, 2)}</code>
+          <code style={{fontSize: '60%'}}>{JSON.stringify(transform(selectedState), null, 2)}</code>
         </pre>
       )}
     </FormSpy>
