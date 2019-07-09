@@ -11,7 +11,9 @@ export const TextInput = ({
   id="",
   placeholder,
   label,
-  disabled
+  disabled,
+  type,
+  afterUpdate
 }) => {
   const combinedValidate = required ? combineValidation(requiredStr, validate): validate;
   return <Field
@@ -19,6 +21,8 @@ export const TextInput = ({
     defaultValue={defaultValue}
     validate={combinedValidate}
     label={label}
+    type={type}
+    afterUpdate={afterUpdate}
   >
     {({
       label,
@@ -29,7 +33,8 @@ export const TextInput = ({
       elementRef,
       touched,
       error,
-      children
+      children,
+      ...fieldProps
     }) => 
     (
       <InputWrapper {...{name, id, label, touched, error}}>
@@ -42,6 +47,7 @@ export const TextInput = ({
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder={placeholder}
+          {...fieldProps}
         />
         {children}
       </InputWrapper>
