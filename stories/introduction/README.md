@@ -142,9 +142,7 @@ export default MyForm;
 
 The `Form` components default behaviour is to render it's children in a form. The `onSubmit` and `onSubmitSuccess` props do what their names suggest.
 
-The example shows two of the ways that `Field` can be used to render an input:
-* firstName passes "input" to a prop called component
-* lastName provides a child render function
+The example shows how easy it is to use the built-in components to create controlled html form inputs.
 
 It also shows two alternative ways to 'manually' access parts of the form-state:
 * `TheFormState` custom component has been written with `useFormReducer`
@@ -158,4 +156,4 @@ It also shows two alternative ways to 'manually' access parts of the form-state:
 
 
 #### Next Steps
-The next section shows a form with a wider range of ui-components. Writing ui-components is fairly easy and will simplify your forms.
+The next section shows how to write your own ui-components.
