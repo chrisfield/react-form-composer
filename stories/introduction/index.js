@@ -21,7 +21,7 @@ const TheFormState = () => {
   const [state] = useFormReducer(useForm().name);
   return (
     <pre>
-      <code>{JSON.stringify(state, null, 2)}</code>
+      <code>{JSON.stringify(state.fieldValues, null, 2)}</code>
     </pre>
   );
 };
@@ -39,33 +39,34 @@ const lengthAtLeast5 = value => {
   return !value || value.length < 5 ? <div>Field must be at least five characters</div> : undefined;
 }
 
+const flexColumn = {
+  display: 'flex',
+  flexDirection: 'column',
+  marginTop: '10px',
+  maxWidth: '200px'
+}
+
 const MyForm = () => {
   return (
     <FormStateProvider>
       <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-          <div style={{ flex: 1, marginRight: '2rem' }}>
-            <div>
-              <label>Field One: <Text name="fieldOne" required validate={lengthAtLeast5}/></label>
-              <ValidationMessage name="fieldOne"/>
-            </div>
-            <div>
-              <label>Text Area: <TextArea name="fieldTwo"/></label>
-            </div>
-            <div>
-              <label>Age: <Text name="fieldThree" type="number"/></label>
-            </div>
-            <div>
-              <RadioGroup name="pet">
-                <div><label>Dog: <Radio value="dog" selected/></label></div>
-                <div><label>Cat: <Radio value="cat"/></label></div>
-              </RadioGroup>
-            </div>
-            <div>
-              <label>Authorize? <Checkbox name="authorize"/></label>
-            </div>
-            <div>
-              <Select label="Frequency" name="frequency" required>
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly'}}>
+          <div style={flexColumn}>
+            <label style={flexColumn}>
+              Field One (5+ chars):
+              <Text name="fieldOne" required validate={lengthAtLeast5}/>
+            </label>
+            <ValidationMessage name="fieldOne"/>
+            <label style={flexColumn}>Text Area: <TextArea name="fieldTwo"/></label>
+            <label style={flexColumn}>Age: <Text name="age" type="number"/></label>
+            <RadioGroup name="pet">
+              <div><label>Dog: <Radio value="dog" selected/></label></div>
+              <div><label>Cat: <Radio value="cat"/></label></div>
+            </RadioGroup>
+            <label>Authorize? <Checkbox name="authorize"/></label>
+            <label style={flexColumn}>
+              Frequency
+              <Select name="frequency" required>
                 <option value="" disabled>
                   Select One...
                 </option>
@@ -73,22 +74,22 @@ const MyForm = () => {
                 <option value="weekly">Weekly</option>
                 <option value="monthly">Monthly</option>
               </Select>
-            </div>
-            <div>
-              <Select label="Exercise" name="exercice" multiple>
+            </label>
+            <label style={flexColumn}>
+              Exercise
+              <Select name="exercice" multiple>
                 <option value="Walk">walk</option>
                 <option value="Run">run</option>
                 <option value="Cycle">cycle</option>
                 <option value="Swim">swim</option>
               </Select>
-            </div>
+            </label>
+            <br/>
             <Button/>
           </div>
           <div style={{
-            flex: 2,
-            flexDirection: 'column',
             display: 'flex',
-            minWidth: '300px'
+            maxWidth: '300px'
           }}>
             <TheFormState/> 
           </div>
