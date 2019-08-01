@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [2.5.1] - 2019-08-1
+### Fixed
+- Pass ref to built-in ui components: Radio Checkbox. 
+
+## [2.5.0] - 2019-08-1
+### Added
+- Built-in ui components: Text, TextArea, RadioGroup, Radio Checkbox, Select, ValidationMessage. 
+
 ## [2.4.6] - 2019-07-6
 ### Fixed
 - No need to scroll to first error if it is already visible. 

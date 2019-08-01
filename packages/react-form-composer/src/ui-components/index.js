@@ -60,12 +60,13 @@ export const Radio = ({value: radioValue, selected, ...props}) => (
     ignoreTargetValueUnless={isChecked}
     {...props}
   >
-    {({value, handleChange, ...props2})=> (
+    {({value, handleChange, elementRef, ...props2})=> (
       <input
         type="radio"
         value={radioValue}
         onChange={handleChange}
         checked={value === radioValue}
+        ref={elementRef}
         {...props2}
       />
     )}
@@ -78,11 +79,12 @@ export const Checkbox = ({selected, ...props}) => (
     getTargetValue={isChecked}
     {...props}
   >
-    {({value, handleChange, ...props2})=> (
+    {({value, handleChange, elementRef, ...props2})=> (
       <input
         type="checkbox"
         onChange={handleChange}
         checked={value}
+        ref={elementRef}
         {...props2}
       />
     )}
