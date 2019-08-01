@@ -40,7 +40,7 @@ import {
   Checkbox,
   Select,
   ValidationMessage
-} from '../../../packages/react-form-composer/src';
+} from 'react-form-composer';
 
 const TheFormState = () => {
   const [state] = useFormReducer(useForm().name);
