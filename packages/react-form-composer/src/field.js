@@ -32,7 +32,7 @@ const FieldComponent = ({render, children, component, ...props}) => {
       ...givenProps} = props;
     return React.createElement(
       component,
-      {onBlur: handleBlur, onChange: handleChange, ref: elementRef, ...givenProps}
+      {onBlur: handleBlur, onChange: handleChange, ref: elementRef, children, ...givenProps}
     );
   }
   const Component = component;

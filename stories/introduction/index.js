@@ -2,7 +2,20 @@ import { withDocs } from 'storybook-readme';
 import readme from './README.md'
 
 import React from 'react';
-import {FormStateProvider, Form, useForm, useFormReducer, Field, FormSpy} from '../../packages/react-form-composer/src';
+import {
+  FormStateProvider,
+  Form,
+  FormSpy,
+  useForm,
+  useFormReducer,
+  Text,
+  TextArea,
+  RadioGroup,
+  Radio,
+  Checkbox,
+  Select,
+  ValidationMessage
+} from '../../packages/react-form-composer/src';
 
 const TheFormState = () => {
   const [state] = useFormReducer(useForm().name);
@@ -14,39 +27,61 @@ const TheFormState = () => {
 };
 
 const isValidSelector = state => state.formStatus.isValid;
-
 const Button = (props) => (
   <FormSpy selector={isValidSelector}>
     {(isValid) => (
-      <button {...props} style={{backgroundColor: isValid? 'green': 'cyan'}} >Submit</button>
+        <button {...props} style={{backgroundColor: isValid? 'green': 'cyan'}} >Submit</button>
     )}
   </FormSpy>
 );
 
-const requiredStr = (value, _values, {label}) => {
-  return value && value.trim && value.trim().length > 0 ? undefined: `Please enter a value for ${label.toLowerCase()}`
-};
+const lengthAtLeast5 = value => {
+  return !value || value.length < 5 ? <div>Field must be at least five characters</div> : undefined;
+}
 
-const MyForm = () => {  
+const MyForm = () => {
   return (
     <FormStateProvider>
       <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           <div style={{ flex: 1, marginRight: '2rem' }}>
             <div>
-              <label>First name: <Field name="firstName" component="input"/></label>
+              <label>Field One: <Text name="fieldOne" required validate={lengthAtLeast5}/></label>
+              <ValidationMessage name="fieldOne"/>
             </div>
             <div>
-              <Field name="lastName" validate={requiredStr} label="Last Name:">
-                {({name, value, error, touched, handleChange, handleBlur, elementRef, label}) => (
-                  <div>
-                    <label htmlFor={name}>{label}</label>
-                    <input id={name} value={value} onChange={handleChange} onBlur={handleBlur} ref={elementRef}/>
-                    {touched && error && <p>{error}</p>}
-                  </div>
-                )}
-              </Field>
-            </div>            
+              <label>Text Area: <TextArea name="fieldTwo"/></label>
+            </div>
+            <div>
+              <label>Age: <Text name="fieldThree" type="number"/></label>
+            </div>
+            <div>
+              <RadioGroup name="pet">
+                <div><label>Dog: <Radio value="dog" selected/></label></div>
+                <div><label>Cat: <Radio value="cat"/></label></div>
+              </RadioGroup>
+            </div>
+            <div>
+              <label>Authorize? <Checkbox name="authorize"/></label>
+            </div>
+            <div>
+              <Select label="Frequency" name="frequency" required>
+                <option value="" disabled>
+                  Select One...
+                </option>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+              </Select>
+            </div>
+            <div>
+              <Select label="Exercise" name="exercice" multiple>
+                <option value="Walk">walk</option>
+                <option value="Run">run</option>
+                <option value="Cycle">cycle</option>
+                <option value="Swim">swim</option>
+              </Select>
+            </div>
             <Button/>
           </div>
           <div style={{

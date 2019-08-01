@@ -11,6 +11,8 @@
 
 React-form-composer is an extendable, none-perscriptive, lightweight solution for creating forms in web, react-native and server-rendered applications. It is written with hooks, is optimized for lightening fast rendering and gives you control to choose or change where to store form state. The small but powerful api makes it suitable for anything from simple input forms through to large multi-row CRUD applications.
 
+In Version 2.5 I added a set of ui-components: now it's even easier to get started.
+
 ## Getting Started
 
 ##### Install with npm or yarn
@@ -21,14 +23,83 @@ React-form-composer is an extendable, none-perscriptive, lightweight solution fo
 
 ```jsx
 import React from 'react';
-import {FormStateProvider, Form, Field} from 'react-form-composer';
+import {
+  FormStateProvider,
+  Form,
+  useForm,
+  useFormReducer,
+  Text,
+  TextArea,
+  RadioGroup,
+  Radio,
+  Checkbox,
+  Select,
+  ValidationMessage
+} from 'react-form-composer';
 
-const MyForm = () => {  
+const TheFormState = () => {
+  const [state] = useFormReducer(useForm().name);
+  return (
+    <pre>
+      <code>{JSON.stringify(state, null, 2)}</code>
+    </pre>
+  );
+};
+
+const Button = (props) => {
+  const [state] = useFormReducer(useForm().name);
+  return (
+    <button {...props} style={{backgroundColor: state.formStatus.isValid? 'green': 'cyan'}} >Submit</button>
+  );
+};
+
+const lengthAtLeast5 = value => {
+  return !value || value.length < 5 ? <div>Field must be at least five characters</div> : undefined;
+}
+
+const MyForm = () => {
   return (
     <FormStateProvider>
-      <Form name="myForm" onSubmit={submitValues}>
-        <label>First name: <Field name="firstName" component="input"/></label>
-        <button>Submit</button>
+      <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
+        <div>
+          <label>Field One: <Text name="fieldOne" required validate={lengthAtLeast5}/></label>
+          <ValidationMessage name="fieldOne"/>
+        </div>
+        <div>
+          <label>Text Area: <TextArea name="fieldTwo"/></label>
+        </div>
+        <div>
+          <label>Age: <Text name="fieldThree" type="number"/></label>
+        </div>
+        <div>
+          <RadioGroup name="pet">
+            <div><label>Dog: <Radio value="dog" selected/></label></div>
+            <div><label>Cat: <Radio value="cat"/></label></div>
+          </RadioGroup>
+        </div>
+        <div>
+          <label>Authorize? <Checkbox name="authorize"/></label>
+        </div>
+        <div>
+          <Select label="Frequency" name="frequency" required>
+            <option value="" disabled>
+              Select One...
+            </option>
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+          </Select>
+        </div>
+        <div>
+          <Select label="Exercise" name="exercice" multiple>
+            <option value="Walk">walk</option>
+            <option value="Run">run</option>
+            <option value="Cycle">cycle</option>
+            <option value="Swim">swim</option>
+          </Select>
+        </div>
+        <Button/>
+        <TheFormState/> 
       </Form>
     </FormStateProvider>
   );
@@ -36,6 +107,10 @@ const MyForm = () => {
 
 function submitValues(values) {
   window.alert(`You submitted:${JSON.stringify(values, null, 2)}`)
+}
+
+function clearValues(form) {
+  form.updateFields({});
 }
 
 export default MyForm;

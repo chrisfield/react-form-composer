@@ -1,11 +1,7 @@
 # Ui-Components
-Ui-components like `Checkbox`, `RadioButton`, `TextInput`, `NumberInput` etc make it quick and easy to write reliable, consistent forms.
+The Simple-Form showed that it's easy to create forms using the built-in ui-components provided. 
 
-Form frameworks typically come with these built-in. Many also include component specific code like `if (type === "checkbox") {/* do checkbox stuff */}`
-
-`react-form-composer` takes an alternative approach: it provides just the one ui-component - `Field` together with an api that aims to make it easy for you to define any other ones you want.
-
-This makes for a smaller, cleaner codebase, it leaves you in control over your own ui-components and, with example ui-components, it is still quick and easy to get started.
+All the built-in ui-components were written using a base ui-component called `Field`. You can use this same technique youself yourself to define any other ui-components you want.
 
 Take a look at some ui-components. It is easy to copy and adapt these to meet your exact requirements (the docs on `Field` api should help). You can download the [source code for these example ui-components](https://github.com/chrisfield/react-form-composer/tree/master/stories/ui-components) with:
 

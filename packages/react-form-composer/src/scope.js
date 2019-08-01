@@ -17,7 +17,7 @@ export const useScope = () => {
   return scopeProps;
 };
 
-export const Scope = ({name, children}) => {
+const Scope = ({name, children}) => {
   const { name: parentName = ''} = useScope();
   const dot = (parentName && name) ? '.': '';
   const fullScopeName = `${parentName}${dot}${name}`;
@@ -27,3 +27,5 @@ export const Scope = ({name, children}) => {
     </Provider>
   );
 };
+
+export default Scope;
