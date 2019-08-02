@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [2.5.4] - 2019-08-2
+### Fixed
+- Refactor ui-components to separate files.
+
 ## [2.5.3] - 2019-08-2
 ### Fixed
 - Improve docs.

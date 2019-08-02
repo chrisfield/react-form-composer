@@ -28,12 +28,9 @@ export const updateFieldAction = (field, value) => (
   {field, ...updateField(value)}
 );
 
-export {
-  Text,
-  TextArea,
-  Select,
-  Checkbox,
-  RadioGroup,
-  Radio,
-  ValidationMessage
-} from './ui-components';
+export { Text } from './ui-components/text';
+export { TextArea } from './ui-components/text-area';
+export { Select } from './ui-components/select';
+export { Checkbox } from './ui-components/checkbox';
+export { RadioGroup, Radio } from './ui-components/radio';
+export { ValidationMessage } from './ui-components/validation-message';
