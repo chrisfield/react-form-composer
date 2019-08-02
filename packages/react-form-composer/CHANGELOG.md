@@ -7,13 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
-## [2.5.4] - 2019-08-2
+## [2.5.3] - 2019-08-2
 ### Fixed
 - Improve docs.
 
 ## [2.5.2] - 2019-08-1
 ### Fixed
-- Update Text ui-component so when type='input' the state is converted to Number.
+- Update Text ui-component so when type='number' the state is converted to Number.
 
 ## [2.5.1] - 2019-08-1
 ### Fixed
