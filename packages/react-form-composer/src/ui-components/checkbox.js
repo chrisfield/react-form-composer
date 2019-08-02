@@ -3,7 +3,7 @@ import Field from '../field';
 
 const isChecked = target => target && target.checked;
 
-export const Checkbox = ({selected, ...props}) => (
+export const Checkbox = ({selected = false, ...props}) => (
   <Field
     defaultValue={selected}
     getTargetValue={isChecked}
