@@ -14,12 +14,12 @@ Redux-form-composer has been written with hooks. Check out the [Github repo](htt
 
 ## Try out this simple form
 The following components make it easy to get started:
-* Text,
-* TextArea,
-* RadioGroup,
-* Radio,
-* Checkbox,
-* Select,
+* Text
+* TextArea
+* RadioGroup
+* Radio
+* Checkbox
+* Select
 * ValidationMessage
 
 <!-- STORY -->

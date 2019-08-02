@@ -1,5 +1,11 @@
 # Ui-Components
-The Simple-Form showed that it's easy to create forms using the built-in ui-components provided. 
+The Simple-Form included each of the built-in ui-components. These components have been written using the react-form-composer api so looking at their code may help you to understand the api:
+* [Text](https://github.com/chrisfield/react-form-composer/blob/master/packages/react-form-composer/src/ui-components/text.js)
+* [TextArea](https://github.com/chrisfield/react-form-composer/blob/master/packages/react-form-composer/src/ui-components/text-area.js)
+* [RadioGroup and Radio](https://github.com/chrisfield/react-form-composer/blob/master/packages/react-form-composer/src/ui-components/radio.js)
+* [Checkbox](https://github.com/chrisfield/react-form-composer/blob/master/packages/react-form-composer/src/ui-components/checkbox.js)
+* [Select](https://github.com/chrisfield/react-form-composer/blob/master/packages/react-form-composer/src/ui-components/select.js)
+* [ValidationMessage](https://github.com/chrisfield/react-form-composer/blob/master/packages/react-form-composer/src/ui-components/validation-message.js)
 
 All the built-in ui-components were written using a base ui-component called `Field`. You can use this same technique youself yourself to define any other ui-components you want.
 
