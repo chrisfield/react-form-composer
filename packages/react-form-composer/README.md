@@ -11,7 +11,7 @@
 
 React-form-composer is an extendable, none-perscriptive, lightweight solution for creating forms in web, react-native and server-rendered applications. It is written with hooks, is optimized for lightening fast rendering and gives you control to choose or change where to store form state. The small but powerful api makes it suitable for anything from simple input forms through to large multi-row CRUD applications.
 
-In Version 2.5 I added a set of ui-components: now it's even easier to get started.
+In Version 2.5.0 I added a set of ui-components: now it's even easier to get started.
 
 ## Getting Started
 
@@ -131,6 +131,12 @@ function clearValues(form) {
 export default MyForm;
 ```
 
+## Going Further
+React-form-composer is written for developers. For example, the built-in ui-components (like `Text`, `Checkbox`) make no use of any special/private features - they are written using the public api provided by the `Field` component.
+
+Design choices like this is what makes react-form-composer none-perscriptive - you can easily write your own ui-components or add features in many other ways.
+
+To see this in practise take a look at the Form Examples like [react-native](https://github.com/chrisfield/react-form-composer/tree/master/examples/with_react_native) and [isomophic-validation](https://github.com/chrisfield/react-form-composer/tree/master/examples/universal-validation) or checkout the CRUD example mentioned below.
 
 #### Create a CRUD/REST-api form ([See live example](https://chrisfield.github.io/react-form-composer/?path=/story/introduction--row-editor))
 
@@ -203,7 +209,7 @@ export default MyForm;
 - Easy inter-field valiation ([See live example](https://chrisfield.github.io/react-form-composer/?path=/story/introduction--validation))
 
 ## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/chrisfield/react-form-composer/issues)
-I'm keen to get feedback please let me know about any issues [here](https://github.com/chrisfield/react-form-composer/issues/new)
+I'm keen to get feedback and to work collaboratively. Please let me know about any issues/ideas [here](https://github.com/chrisfield/react-form-composer/issues/new).
 
 
 ---
