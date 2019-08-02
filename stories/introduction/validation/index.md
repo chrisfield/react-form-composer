@@ -1,13 +1,23 @@
 # Validation
 The form below shows field, inter-field and submit validation. Usernames starting with "a" or "A" will trigger a submit error also the form checks the two passwords are equal.
+
+Note that [TextInput](https://github.com/chrisfield/react-form-composer/blob/master/stories/ui-components/text-input.jsx) is defined locally. It renders the label, the Text field and any ValidationMessage.
+
 <!-- STORY -->
 
 ---
 #### Code
 ```jsx
 import React from 'react';
-import {FormStateProvider, Form, useForm, useFormReducer, useField} from 'react-form-composer';
-import {TextInput} from '../../ui-components';
+import {
+  FormStateProvider,
+  Form,
+  useForm,
+  useFormReducer,
+  useField
+} from 'react-form-composer';
+
+import TextInput from '../../ui-components/text-input';
 
 const TheFormState = () => {
   const [state] = useFormReducer(useForm().name);
@@ -44,24 +54,35 @@ const MyForm = () => {
   return (
     <FormStateProvider>
       <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
-        <TextInput name="username" label="Username" required/>
-        <TextInput
-          name="password"
-          label="Password"
-          required
-          type="password"
-          afterUpdate={revalidatePassword2}
-        />
-        <TextInput 
-          name="password2"
-          label="Retype password"
-          required
-          type="password"
-          validate={sameAsPassword}
-        />
-        <MyErrorMessage/>
-        <Button/>
-        <TheFormState/> 
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          <div style={{ flex: 1, marginRight: '2rem' }}>
+            <div>
+              <TextInput name="username" label="Username" required/>
+              <TextInput
+                name="password"
+                required
+                type="password"
+                afterUpdate={revalidatePassword2}
+              />
+              <TextInput
+                name="password2"
+                required
+                type="password"
+                validate={sameAsPassword}
+              />
+            </div>
+            <MyErrorMessage/>
+            <Button/>
+          </div>
+          <div style={{
+            flex: 2,
+            flexDirection: 'column',
+            display: 'flex',
+            minWidth: '300px'
+          }}>
+            <TheFormState/> 
+          </div>
+        </div>
       </Form>
     </FormStateProvider>
   );

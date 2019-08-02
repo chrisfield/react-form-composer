@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [2.5.6] - 2019-08-2
+### Fixed
+- The ValidationMessage ui-component now looks from formErrors as well as fieldStatus errors.
+- Improve docs.
+
 ## [2.5.5] - 2019-08-2
 ### Fixed
 - Set default to false on ui-components/Checkbox.

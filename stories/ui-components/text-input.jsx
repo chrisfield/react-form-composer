@@ -1,58 +1,21 @@
 import React from 'react';
-import {Field} from '../../packages/react-form-composer/src';
-import InputWrapper from './input-wrapper.jsx';
-import {requiredStr, combineValidation} from './utils';
+import { Text, ValidationMessage } from '../../packages/react-form-composer/src';
+import {combineValidation} from './utils';
 
-export const TextInput = ({
-  defaultValue="",
-  required,
-  validate,
-  name,
-  id="",
-  placeholder,
-  label,
-  disabled,
-  type,
-  afterUpdate
-}) => {
-  const combinedValidate = required ? combineValidation(requiredStr, validate): validate;
-  return <Field
-    name={name}
-    defaultValue={defaultValue}
-    validate={combinedValidate}
-    label={label}
-    type={type}
-    afterUpdate={afterUpdate}
-  >
-    {({
-      label,
-      name,
-      value,
-      handleChange,
-      handleBlur,
-      elementRef,
-      touched,
-      error,
-      children,
-      ...fieldProps
-    }) => 
-    (
-      <InputWrapper {...{name, id, label, touched, error}}>
-        <input
-          id={id + name}
-          name={name}
-          ref={elementRef}
-          value={value}
-          disabled={disabled}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          placeholder={placeholder}
-          {...fieldProps}
-        />
-        {children}
-      </InputWrapper>
-    )}
-  </Field>
-}
+const requiredStr = label => (
+  (value) => (
+    value && value.trim && value.trim().length > 0 ? undefined: `Please enter a value for ${label.toLowerCase()}`
+  )
+);
+
+const TextInput = ({label, validate, ...props}) => (
+  <div>
+    <label>
+      {label || props.name}:
+      <Text validate={props.required ? combineValidation(requiredStr(label || props.name), validate): validate} {...props}/>
+    </label>
+    <ValidationMessage name={props.name}/>
+  </div>
+);
 
 export default TextInput;

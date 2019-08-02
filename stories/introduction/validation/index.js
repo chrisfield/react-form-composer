@@ -2,8 +2,15 @@ import { withDocs } from 'storybook-readme';
 import readme from './index.md'
 
 import React from 'react';
-import {FormStateProvider, Form, useForm, useFormReducer, useField} from '../../../packages/react-form-composer/src';
-import {TextInput} from '../../ui-components';
+import {
+  FormStateProvider,
+  Form,
+  useForm,
+  useFormReducer,
+  useField
+} from '../../../packages/react-form-composer/src';
+
+import TextInput from '../../ui-components/text-input';
 
 const TheFormState = () => {
   const [state] = useFormReducer(useForm().name);
@@ -46,14 +53,12 @@ const MyForm = () => {
               <TextInput name="username" label="Username" required/>
               <TextInput
                 name="password"
-                label="Password"
                 required
                 type="password"
                 afterUpdate={revalidatePassword2}
               />
-              <TextInput 
+              <TextInput
                 name="password2"
-                label="Retype password"
                 required
                 type="password"
                 validate={sameAsPassword}
