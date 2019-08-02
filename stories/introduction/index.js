@@ -36,7 +36,7 @@ const Button = (props) => (
 );
 
 const lengthAtLeast5 = value => {
-  return !value || value.length < 5 ? <div>Field must be at least five characters</div> : undefined;
+  return !value || value.length < 5 ? 'Field must be at least five characters' : undefined;
 }
 
 const flexColumn = {
@@ -56,7 +56,7 @@ const MyForm = () => {
               Field One (5+ chars):
               <Text name="fieldOne" required validate={lengthAtLeast5}/>
             </label>
-            <ValidationMessage name="fieldOne"/>
+            <ValidationMessage name="fieldOne" render={error => <p>{error}</p>}/>
             <label style={flexColumn}>Text Area: <TextArea name="fieldTwo"/></label>
             <label style={flexColumn}>Age: <Text name="age" type="number"/></label>
             <RadioGroup name="pet">

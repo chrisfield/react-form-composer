@@ -14,7 +14,9 @@ const TextInput = ({label, validate, ...props}) => (
       {label || props.name}:
       <Text validate={props.required ? combineValidation(requiredStr(label || props.name), validate): validate} {...props}/>
     </label>
-    <ValidationMessage name={props.name}/>
+    <ValidationMessage name={props.name}>
+      {errorMessage => <p>{errorMessage}</p> }
+    </ValidationMessage>
   </div>
 );
 
