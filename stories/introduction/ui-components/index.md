@@ -10,7 +10,15 @@ The built-in ui-components make it easy to get started when you want to write fo
 
 
 ## Example custom control: NumberInput
-The form below includes a custom `NumberInput` that acepts integers and shows the value formatted to the locale eg with commas separating in UK (1,000,000).
+The form below includes a custom `NumberInput` that accepts integers and shows the value formatted to the locale eg with commas separating in UK (1,000,000).
+
+Note: If you have ever tried formatting fields in React you will know that the curor position is often reset placing the cursor at the end of the entered text/digits. `NumberInput` includes code to retain the cursor position.
+
+The `NumberInput` also accepts a label property which it uses for the label and includes in the *'required'* error message.
+
+```
+<NumberInput name="age" required label="Age"/
+```
 
 <!-- STORY -->
 
