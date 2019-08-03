@@ -1,6 +1,6 @@
 {
   "name": "react-form-composer",
-  "version": "2.5.7",
+  "version": "2.5.8",
   "description": "Form state management for react, react-native and isomorphic apps.",
   "main": "lib/index.js",
   "repository": {
