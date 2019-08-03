@@ -7,7 +7,7 @@ This section shows one way to render parts of a form conditionally. When the Par
 ```jsx
 import React from 'react';
 import {FormStateProvider, Form, Scope, useForm, useFormReducer, FormSpy} from 'react-form-composer';
-import {TextInput, RadioButton} from '../../ui-components';
+import {TextInput, RadioButton} from '../../custom-ui-components';
 
 const TheFormState = () => {
   const [state] = useFormReducer(useForm().name);

@@ -1,7 +1,7 @@
 import { storiesOf } from '@storybook/react';
 
 import introduction from './introduction';
-import uiComponents from './introduction/ui-components';
+import writingUiComponents from './introduction/writing-ui-components';
 import scopes from './introduction/scopes';
 import arrayForm from './introduction/array-form';
 import validation from './introduction/validation';
@@ -29,7 +29,7 @@ import moreInfoFormRenderProps from './more-info/form-render-props';
 
 storiesOf('Introduction', module)
 .add('A Simple Form', introduction)
-.add('Writing UI Components', uiComponents)
+.add('Writing UI Components', writingUiComponents)
 .add('Adding Scopes', scopes)
 .add('Field Arrays', arrayForm)
 .add('Dynamic Fields', dynamicFields)

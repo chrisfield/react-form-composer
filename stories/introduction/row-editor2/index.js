@@ -2,7 +2,7 @@ import { withDocs } from 'storybook-readme';
 import readme from './index.md'
 import React from 'react';
 import RestApiCrudForm from '../../data-components/rest-api-crud-form';
-import {TextInput, NumberInput} from '../../ui-components';
+import {TextInput, NumberInput} from '../../custom-ui-components';
 import { Scope } from '../../../packages/react-form-composer/src';
 
 const User = ({disabled=false, index}) => {

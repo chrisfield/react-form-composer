@@ -1,7 +1,7 @@
 import { withDocs } from 'storybook-readme';
 import readme from './index.md'
 import React from 'react';
-import {TextInput} from '../../ui-components';
+import {TextInput} from '../../custom-ui-components';
 import { 
   FormStateProvider,
   Form,

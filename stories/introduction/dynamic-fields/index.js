@@ -3,7 +3,7 @@ import readme from './index.md'
 
 import React from 'react';
 import {FormStateProvider, Form, Scope, useForm, useFormReducer, FormSpy} from '../../../packages/react-form-composer/src';
-import {TextInput, RadioButton} from '../../ui-components';
+import {TextInput, RadioButton} from '../../custom-ui-components';
 
 const TheFormState = () => {
   const [state] = useFormReducer(useForm().name);

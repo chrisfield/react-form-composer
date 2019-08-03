@@ -3,7 +3,7 @@ import readme from './index.md'
 
 import React from 'react';
 import {FormStateProvider, Form, useForm, useFormReducer, useField} from '../../../packages/react-form-composer/src';
-import {TextInput} from '../../ui-components';
+import {TextInput} from '../../custom-ui-components';
 
 const TheFormState = () => {
   const [state] = useFormReducer(useForm().name);

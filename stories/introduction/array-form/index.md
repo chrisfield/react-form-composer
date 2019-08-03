@@ -8,7 +8,7 @@ The Form below renders:
 #### Code
 ```jsx
 import React from 'react';
-import {TextInput} from '../ui-components';
+import {TextInput} from '../../custom-ui-components';
 import { 
   FormStateProvider,
   Form,

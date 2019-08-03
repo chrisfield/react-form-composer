@@ -3,7 +3,7 @@ import readme from './index.md'
 
 import React from 'react';
 import {FormStateProvider, Form, Field, FieldArray, FormSpy, Scope, useFormReducer, useForm} from '../../../packages/react-form-composer/src';
-import {RenderCount} from '../../ui-components';
+import {RenderCount} from '../../custom-ui-components';
 
 const TheFormState = () => {
   const [state] = useFormReducer(useForm().name);

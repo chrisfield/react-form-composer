@@ -2,7 +2,7 @@ import { withDocs } from 'storybook-readme';
 import readme from './index.md'
 import React from 'react';
 import RestApiCrudForm from '../../data-components/rest-api-crud-form';
-import {TextInput, NumberInput, Checkbox} from '../../ui-components';
+import {TextInput, NumberInput, Checkbox} from '../../custom-ui-components';
 
 const USER_ID=3;
 const Todo = ({disabled=false, index}) => {

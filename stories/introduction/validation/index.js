@@ -10,7 +10,7 @@ import {
   useField
 } from '../../../packages/react-form-composer/src';
 
-import TextInput from '../../ui-components/text-input';
+import { TextInput } from '../../custom-ui-components';
 
 const TheFormState = () => {
   const [state] = useFormReducer(useForm().name);

@@ -10,7 +10,7 @@ The `Scope` component takes a prop called `name`. The name provided will automat
 import { withDocs } from 'storybook-readme';
 import readme from './index.md'
 import React from 'react';
-import {TextInput} from '../../ui-components';
+import {TextInput} from '../../custom-ui-components';
 import { 
   FormStateProvider,
   Form,

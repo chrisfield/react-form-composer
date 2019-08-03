@@ -4,8 +4,8 @@ import { ValidationMessage } from '../../../packages/react-form-composer/src';
 const LabelledField = ({label, field, name}) => (
   <div>
     <label>
-      {label}
-      {field}
+      <div>{label}</div>
+      <div>{field}</div>
     </label>
     <ValidationMessage
       name={name} 

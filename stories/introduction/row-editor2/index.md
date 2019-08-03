@@ -8,7 +8,7 @@ It uses the same [data-components](https://github.com/chrisfield/react-form-comp
 ```jsx
 import React from 'react';
 import RestApiCrudForm from '../../data-components/rest-api-crud-form';
-import {TextInput, NumberInput} from '../../ui-components';
+import {TextInput, NumberInput} from '../../custom-ui-components';
 import { Scope } from 'react-form-composer';
 
 const User = ({disabled=false, index}) => {
