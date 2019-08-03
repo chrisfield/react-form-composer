@@ -4,6 +4,7 @@ import readme from './index.md'
 import React from 'react';
 import {FormStateProvider, Form, useForm, useFormReducer} from '../../../packages/react-form-composer/src';
 import { NumberInput } from './number-input';
+import { SelectInput } from '../../ui-components';
 
 const TheFormState = () => {
   const [state] = useFormReducer(useForm().name);
@@ -27,6 +28,14 @@ const MyForm = () => {
       <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           <div style={{ flex: 1, marginRight: '2rem' }}>
+            <SelectInput name="frequency" label="How often do you eat noodles" required>
+              <option value="" disabled>
+                Select One...
+              </option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </SelectInput>
             <NumberInput name="age" required label="Age"/>
             <Button/>
           </div>
