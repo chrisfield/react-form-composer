@@ -13,7 +13,7 @@ export const Checkbox = ({selected = false, ...props}) => (
       <input
         type="checkbox"
         onChange={handleChange}
-        onChange={handleBlur}
+        onBlur={handleBlur}
         checked={value}
         ref={elementRef}
         {...props2}
