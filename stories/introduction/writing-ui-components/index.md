@@ -135,5 +135,5 @@ export default NumberInput;
 
 The functions for `formatFromStore` and `formatToStore` are fairly self explaintary. 
 
-Any function you pass as a `beforeUpdate` prop will be called with the field, the old value and the new value. Whatever your `beforeUpdate` function returns will be passed to any `afterUpdate` as the 2nd param (the 1st param being the field). In the code below I use `beforeUpdate` and `afterUpdate` to keep the cursor position.
+Any function you pass as a `beforeUpdate` prop will be called with the field, the old value and the new value. Whatever your `beforeUpdate` function returns will be passed to any `afterUpdate` as the 2nd param (the 1st param being the field).
 

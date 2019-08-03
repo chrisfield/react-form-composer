@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [2.5.10] - 2019-08-3
+### Fixed
+- Readme/docs no code changes.
+
 ## [2.5.9] - 2019-08-3
 ### Fixed
 - Checkbox ui-component
