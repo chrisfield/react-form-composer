@@ -9,10 +9,11 @@ export const Checkbox = ({selected = false, ...props}) => (
     getTargetValue={isChecked}
     {...props}
   >
-    {({value, handleChange, elementRef, ...props2})=> (
+    {({value, handleChange, handleBlur, elementRef, ...props2})=> (
       <input
         type="checkbox"
         onChange={handleChange}
+        onChange={handleBlur}
         checked={value}
         ref={elementRef}
         {...props2}

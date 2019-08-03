@@ -12,11 +12,12 @@ export const Radio = ({value: radioValue, selected, ...props}) => (
     ignoreTargetValueUnless={isChecked}
     {...props}
   >
-    {({value, handleChange, elementRef, ...props2})=> (
+    {({value, handleChange, handleBlur, elementRef, ...props2})=> (
       <input
         type="radio"
         value={radioValue}
         onChange={handleChange}
+        onBlur={handleBlur}
         checked={value === radioValue}
         ref={elementRef}
         {...props2}

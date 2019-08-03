@@ -27,5 +27,5 @@ const SingleSelect = props => (
 );
 
 const MultiSelect = props => (
-  <Field component="select" multiple getTargetValue={getSelectedValues} {...props}/>
+  <Field component="select" multiple getTargetValue={getSelectedValues} defaultValue={[]} {...props}/>
 );

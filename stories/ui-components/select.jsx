@@ -1,104 +1,18 @@
 import React from 'react';
-import {Field} from '../../packages/react-form-composer/src';
-import InputWrapper from './input-wrapper.jsx';
-import {requiredStr, combineValidation} from './utils';
+import { Select } from '../../packages/react-form-composer/src';
+import {combineValidation, requiredStrWithName, LabelledField} from './utils';
 
-const requiredArray = (value, _values, {label}) => {
-  return value && (value.length ? undefined: `Please enter a value for ${label.toLowerCase()}`)
-};
-
-const getSelectedValues = target => {
-  const options = target.options;
-  const result = [];
-  if (options) {
-    for (let index = 0; index < options.length; index++) {
-      const option = options[index];
-      if (option.selected) {
-        result.push(option.value);
-      }
+const SelectInput = ({label, validate, ...props}) => (
+  <LabelledField
+    name={props.name}
+    label={label || props.name}
+    field={
+      <Select
+        validate={props.required ? combineValidation(requiredStrWithName(label || props.name), validate): validate}
+        {...props}
+      />
     }
-  }
-  return result;
-};
+  />
+);
 
-export const Select = ({multiple, ...props}) => {
-  if (multiple) {
-    return <MultiSelect {...props}/>
-  }
-  return <SingleSelect {...props}/>
-}
-
-export const SingleSelect = ({required, validate, children, ...props}) => {
-  const combinedValidate = required ? combineValidation(requiredStr, validate): validate;
-  return (
-    <Field defaultValue="" validate={combinedValidate} {...props}>
-      {({
-        label,
-        disabled,
-        name,
-        id,
-        value,
-        handleChange,
-        handleBlur,
-        elementRef,
-        touched,
-        error
-      }) => {
-        return (
-          <InputWrapper {...{name, id, label, touched, error}}>
-            <select
-              name={name}
-              id = {id + name}
-              disabled={disabled}
-              ref={elementRef}
-              value={value}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            >
-              {children}
-            </select>
-          </InputWrapper>
-        );
-      }}
-    </Field>
-    );
-}
-
-export const MultiSelect = ({required, validate, children, ...props}) => {
-  const combinedValidate = required ? combineValidation(requiredArray, validate): validate;
-  return (
-    <Field validate={combinedValidate} getTargetValue={getSelectedValues} {...props}>
-      {({
-        label,
-        disabled,
-        name,
-        id,
-        value,
-        handleChange,
-        handleBlur,
-        elementRef,
-        touched,
-        error
-      }) => {
-        return (
-          <InputWrapper {...{name, id, label, touched, error}}>
-            <select
-              name={name}
-              id={id + name}
-              disabled={disabled}
-              ref={elementRef}
-              value={value || []}
-              multiple={true}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            >
-              {children}
-            </select>
-          </InputWrapper>
-        );
-      }}
-    </Field>
-  );
-}
-
-export default Select;
+export default SelectInput;

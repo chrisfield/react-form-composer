@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [2.5.8] - 2019-08-3
+### Fixed
+- Prevent console warning for Radio and Checkbox ui-components - was accidently passing handleBlur to the dom element
+- Prevent console warning on Select ui-component
+
 ## [2.5.7] - 2019-08-2
 ### Fixed
 - Update ValidationMessage to include render prop and function-as-child 
