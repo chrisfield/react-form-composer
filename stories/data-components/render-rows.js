@@ -19,7 +19,7 @@ const RenderRows = ({fields, resourceUrl, inputComponent: InputComponent}) => (
   <>
     <div className="row-items">
       {fields.map((field, index) => (
-        <div className="row-item">
+        <div key={index} className="row-item">
           <div style={{padding: '5px'}}>
             <Scope key={index} name={field}>
               <RowEditor
