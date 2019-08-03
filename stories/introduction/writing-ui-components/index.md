@@ -10,7 +10,7 @@ The built-in ui-components provided with react-form-composer are written using t
 * [ValidationMessage](https://github.com/chrisfield/react-form-composer/blob/master/packages/react-form-composer/src/ui-components/validation-message.js)
 
 The built-in ui-components may meet your requirements but it's easy to write custom ui-components and often doing this will simplify your forms and save repetition. There are two ways you could write custom components:
-* use the `Field` components say by copying and adapting the code from one of the build-in components.
+* use the `Field` component say by copying and adapting the code from one of the build-in components (they also use the `Field` component).
 * Embed a built-in component in your own component to change what it does and how it looks. 
 
 The second of these techniques is simpler and has the advantage that it reuses the code from the built-in ui component. The form below makes use of two custom components: `SelectInput` and `NumberInput`. These custom inputs add and alter the behaviour and presentation of the `Select` and `Text` built-in ui-components they contain.

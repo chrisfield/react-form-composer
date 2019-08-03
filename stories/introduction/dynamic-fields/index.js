@@ -46,8 +46,10 @@ const MyForm = () => {
             <TextInput name="firstName" label="First Name" required/>
             <Scope name="relationshipStatus">
               Are You Single?
-              <RadioButton selected value="SINGLE" label="Yes"/>
-              <RadioButton value="NOT-SINGLE" label="No"/>
+              <div style={{display: 'flex', justifyContent: 'space-around'}}>
+                <RadioButton selected value="SINGLE" label="Yes"/>
+                <RadioButton value="NOT-SINGLE" label="No"/>
+              </div>
             </Scope>
             <PartnerName label="Partner Name"/>
             <Button/>
