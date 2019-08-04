@@ -13,9 +13,15 @@ The built-in ui-components may meet your requirements but it's easy to write cus
 * use the `Field` component say by copying and adapting the code from one of the build-in components (they also use the `Field` component).
 * Embed a built-in component in your own component to change what it does and how it looks. 
 
-The second of these techniques is simpler and has the advantage that it reuses the code from the built-in ui component. The form below makes use of two custom components: `SelectInput` and `NumberInput`. These custom inputs add and alter the behaviour and presentation of the `Select` and `Text` built-in ui-components they contain.
+The second of these techniques is simpler and has the advantage that it reuses the code from the built-in ui component. The form below makes use of three custom components: `Slider`, `SelectInput` and `NumberInput`. These custom inputs add and alter the behaviour and presentation of the `Text` and `Select` built-in ui-components they contain.
 
 ```
+<div>
+  <label>
+    <div>Lucky number</div>
+    <Slider name="luckyNumber"/>
+  </label>
+</div>
 <SelectInput name="frequency" label="How often do you eat noodles" required>
   <option value="" disabled>
     Select One...
@@ -28,6 +34,27 @@ The second of these techniques is simpler and has the advantage that it reuses t
 ```
 <!-- STORY -->
 
+## Example custom control: Slider
+This custom `Slider` just renders the `Text` built-in ui-component adding in a few props.
+
+```
+import React from 'react';
+import {Text} from 'react-form-composer';
+
+const Slider = (props) => (
+  <Text
+    type="range"
+    min={0}
+    max={100}
+    step={5}
+    {...props}
+  />
+);
+
+export default Slider;
+```
+
+---
 ## Example custom control: SelectInput
 This custom written [`SelectInput`](https://github.com/chrisfield/react-form-composer/blob/master/stories/ui-components/select-input.jsx) simply provides a wrapper around the built-in `Select` ui-component. The wrapper renders a label, the built-in `Select` and any validation message.
 

@@ -2,7 +2,7 @@ import { withDocs } from 'storybook-readme';
 import readme from './index.md'
 
 import React from 'react';
-import {FormStateProvider, Form, useForm, useFormReducer} from '../../../packages/react-form-composer/src';
+import {FormStateProvider, Form, useForm, useFormReducer, Text} from '../../../packages/react-form-composer/src';
 import { SelectInput, NumberInput } from '../../custom-ui-components';
 
 const TheFormState = () => {
@@ -21,12 +21,28 @@ const Button = (props) => {
   );
 };
 
+const Slider = (props) => (
+  <Text
+    type="range"
+    min={0}
+    max={100}
+    step={5}
+    {...props}
+  />
+);
+
 const MyForm = () => {
   return (
     <FormStateProvider>
       <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           <div style={{ flex: 1, marginRight: '2rem' }}>
+            <div>
+              <label>
+                <div>Lucky number</div>
+                <Slider name="luckyNumber"/>
+              </label>
+            </div>
             <SelectInput name="frequency" label="How often do you eat noodles" required>
               <option value="" disabled>
                 Select One...
