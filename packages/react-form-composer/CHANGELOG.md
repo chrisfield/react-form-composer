@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [2.5.12] - 2019-08-4
+### Fixed
+- Update Checkbox and Radio ui-components so they no longer pass touched and error props to the dom input.
+
 ## [2.5.11] - 2019-08-4
 ### Fixed
 - The ValidationMessage ui-component now calls the useScope hook so it can do things like find validation messages in ArrayFields that add a Scope.
