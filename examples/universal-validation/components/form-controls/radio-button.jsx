@@ -1,25 +1,14 @@
 import React from 'react';
-import {Field} from 'react-form-composer';
+import { Radio } from 'react-form-composer';
+import { LabelledField } from './utils';
 
-const isChecked = target => target.checked;
-  
-const RadioButtonComponent = props => {
-  const id = `${props.name}-${props.radioValue}`;
-  return (
-    <div>
-      <input id={id} type="radio" ref={props.elementRef} name={props.name} value={props.radioValue} checked={props.radioValue===props.value} onChange={props.handleChange}/>
-      <label htmlFor={id}>{props.label}</label>
-    </div>
-  );
-};
-
-const RadioButton = props => (
-  <Field
-    component={RadioButtonComponent}
+const RadioButton = ({label, ...props}) => (
+  <LabelledField
     name={props.name}
-    radioValue={props.value}
-    ignoreTargetValueUnless={isChecked}
-    label={props.label}
+    label={label || props.value}
+    field={
+      <Radio {...props}/>
+    }
   />
 );
 

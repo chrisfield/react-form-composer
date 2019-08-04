@@ -6,10 +6,16 @@ import {updateFieldsAction as updateFieldsActionForRedux} from 'react-form-compo
 const ResetButton = () => {
   const dispatch = useFormReducer('myForm')[1];
   return (
-    <p onClick={()=>{
-        dispatch(updateFieldsAction({fieldOne:'new f1', rb2: 'R'}));
-      }}
-    >click here</p>
+    <div>
+      Click
+      <button onClick={()=>{
+          dispatch(updateFieldsAction({fieldOne:'new f1', rb2: 'R'}));
+        }}
+      >
+        Reset
+      </button>
+      to dispatch an updateFieldsAction.
+    </div>
   );
 }
 

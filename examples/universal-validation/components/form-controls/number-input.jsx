@@ -1,60 +1,11 @@
-import React, {useEffect, useRef} from 'react';
-import {Field, usePrevious} from 'react-form-composer';
-import InputWrapper from './input-wrapper.jsx';
-
-const NumberInputComponent = ({
-  label,
-  name,
-  value,
-  handleChange,
-  handleBlur,
-  elementRef,
-  touched,
-  error,
-  children,
-  ...props}) => 
-{
-  return (
-    <InputWrapper {...{name, label, touched, error}}>
-      <input
-        id={name}
-        name={name}
-        ref={elementRef}
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        {...props}
-      />
-      {children}
-    </InputWrapper>
-  );
-};
-
-const required = value => {
-  if (value === null || isNaN(value)) {
-    return 'required';
-  }
-  return undefined;
-};
-
-const number = str => {
-  const num = parseInt(str.replace(/[^\d.-]/g, ""), 10);
-  if (num === null) {
-    return undefined;
-  }
-  return num;
-};
-
-const addCommas = number => {
-  if (number === 0) {
-    return '0';
-  }
-  if (!number) {
-    return '';
-  }
-  return number.toLocaleString();
-};
-
+import React from 'react';
+import { Text } from 'react-form-composer';
+import {
+  strToNumber,
+  numberToStr,
+  combineValidation,
+  LabelledField
+} from './utils';
 
 export const getNextCursorPosition = ({element}, value, nextValue) => {
   let cursorPosition = element.selectionStart;
@@ -70,16 +21,22 @@ export const setCursorPosition = ({element}, cursorPosition) => {
   }  
 }
 
-const NumberInput = ({required, ...props}) => {
-  return <Field
-    component={NumberInputComponent}
-    validate={required? required: undefined}
-    formatFromStore={addCommas}
-    formatToStore={number}
-    beforeUpdate={getNextCursorPosition}
-    afterUpdate={setCursorPosition}
-    {...props}
+const NumberInput = ({label, validate, ...props}) => (
+  <LabelledField
+    name={props.name}
+    label={label || props.name}
+    field={
+      <Text
+        defaultValue={null}
+        formatFromStore={numberToStr}
+        formatToStore={strToNumber}
+        beforeUpdate={getNextCursorPosition}
+        afterUpdate={setCursorPosition}
+        validate={props.required ? combineValidation(requiredNumWithName(label || props.name), validate): validate}
+        {...props}
+      />
+    }
   />
-};
+);
 
 export default NumberInput;

@@ -1,17 +1,14 @@
 import React from 'react';
-import {Field} from 'react-form-composer';
+import {Checkbox} from 'react-form-composer';
+import {LabelledField} from './utils';
 
-const isChecked = target => target.checked;
-
-const CheckboxComponent = props => (
-  <div>
-    <label htmlFor={props.name}>{props.label}</label>
-    <input id={props.name} name={props.name} ref={props.elementRef} type="checkbox" checked={props.value} onChange={props.handleChange}/>  
-  </div>
+const CheckboxInput = ({label, ...props}) => (
+  <LabelledField
+    label={label || props.name}
+    field={
+      <Checkbox {...props} />
+    }
+  />
 );
 
-const Checkbox = props => (
-  <Field component={CheckboxComponent} getTargetValue={isChecked} {...props} />
-);
-
-export default Checkbox;
+export default CheckboxInput;

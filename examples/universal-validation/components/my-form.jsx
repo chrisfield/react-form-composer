@@ -15,11 +15,11 @@ import {
 import {
   upper,
   lower,
-  number,
-  addCommas,
+  strToNumber,
+  numberToStr,
   maxLength,
-  requiredStr,
-  requiredNum,
+  requiredStrWithName,
+  requiredNumberWithName
 } from './form-controls/utils';
 
 // validation
@@ -28,15 +28,12 @@ const greaterThanFieldOne = (value, values) => (
   values && value > values.fieldOne? undefined: 'Field two must be greated that field one'
 )
 
-const maxLength5 = maxLength(5);
-const requiredMaxLength5 = [requiredStr, maxLength5];
-
 const checkboxChecked = value => !!value;
 
 const definedFieldsForDataHandler = [
   {
     name: 'fieldOne',
-    validate: requiredMaxLength5
+    validate: [requiredStrWithName('field one'), maxLength(5)]
   },
   {
     name: 'fieldTwo',
@@ -51,15 +48,15 @@ const definedFieldsForDataHandler = [
   },
   {
     name: 'theNumber',
-    formatToStore: number,
-    formatFromStore: addCommas,
-    validate: requiredNum
+    formatToStore: strToNumber,
+    formatFromStore: numberToStr,
+    validate: requiredNumberWithName('the number')
   },
   {
     name: 'capitals',
     formatToStore: upper,
     formatFromStore: lower,
-    validate: requiredStr
+    validate: requiredStrWithName('capitals')
   },
   {
     name: 'rb2',
@@ -70,7 +67,7 @@ const definedFieldsForDataHandler = [
     fieldArray: [
       {
         name: 'name',
-        validate: requiredStr
+        validate: requiredStrWithName('name')
       },
       {
         name: 'description'
@@ -115,6 +112,13 @@ const ErrorMessage = ({name}) => {
   return error ? <p>{error}</p>: null;
 };
 
+const SubmitButton = (props) => {
+  const [state] = useFormReducer(useForm().name);
+  return (
+    <button {...props} style={{backgroundColor: state.formStatus.isValid? 'green': 'cyan'}} >Submit</button>
+  );
+};
+
 const MyForm = () => {
   return (
     <Form
@@ -142,7 +146,7 @@ const MyForm = () => {
         <NumberInput {...fieldDefinitions.theNumber}/>
         <TextInput
           {...fieldDefinitions.capitals}
-          label="Uppercase Field"       
+          label="Lowercase text saved as uppercase"       
         />
         <div>
           <fieldset>
@@ -159,7 +163,7 @@ const MyForm = () => {
         name="hobbies"
         component={RenderHobbies}
       />
-      <button>Submit</button>
+      <SubmitButton/>
       <TheFormState />
     </Form>
   );
