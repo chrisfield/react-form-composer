@@ -41,12 +41,15 @@ This custom `Slider` just renders the `Text` built-in ui-component adding in a f
 import React from 'react';
 import {Text} from 'react-form-composer';
 
+const stringToNumber = str => Number(str);
 const Slider = (props) => (
   <Text
     type="range"
     min={0}
     max={100}
     step={5}
+    defaultValue={25}
+    formatToStore={stringToNumber}
     {...props}
   />
 );

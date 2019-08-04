@@ -21,12 +21,16 @@ const Button = (props) => {
   );
 };
 
+const stringToNumber = str => Number(str);
+
 const Slider = (props) => (
   <Text
     type="range"
     min={0}
     max={100}
     step={5}
+    defaultValue={25}
+    formatToStore={stringToNumber}
     {...props}
   />
 );
