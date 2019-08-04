@@ -22,7 +22,6 @@ const Button = (props) => {
 };
 
 const stringToNumber = str => Number(str);
-
 const Slider = (props) => (
   <Text
     type="range"
