@@ -63,3 +63,42 @@ const TheFormState = () => {
 };
 ```
 Note that components that make use of useFormReducer will re-render for every state change. In many situations `FormSpy` can be used instead.
+
+
+## useScope
+Call `useScope()` from any component that might be the child/desendant of a `Scope`. It returns an object with one property called name - this is the name given to the `Scope`. You can optionally add a string parameter (for field-name) like `useScope('fieldOne')`. When you add a parameter it will be appended the scope with a dot.
+
+```
+import {useForm, useFormReducer, useScope, getField} from 'react-form-composer';
+
+const ErrorMessage = ({fieldName}) => {
+  const { name: formName } = useForm();
+  const [formState] = useFormReducer(formName);
+  const { name: fullFieldName } = useScope(fieldName);
+  const {error} = getField(formState.fieldStatus, fullFieldName);
+  return error
+};
+```
+
+With the code above 
+```
+  <Form name="booking">
+    <Scope name="holidayAddress">
+      <TextInput name="line1" required>
+      <ErrorMessage fieldName="line1">
+    </Scope>
+  </Form>
+```
+`ErrorMessage` would render any error found at `booking.fieldStatus.holidayAddress.line1.error`
+
+and
+
+```
+  <Form name="booking">
+    <div>
+      <TextInput name="line1" required>
+      <ErrorMessage fieldName="line1">
+    </div>
+  </Form>
+```
+would render any error found at `booking.fieldStatus.line1.error`

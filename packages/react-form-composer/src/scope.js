@@ -12,15 +12,14 @@ export const Provider = ({ children, ...props }) => {
 
 export const Consumer = Context.Consumer;
 
-export const useScope = () => {
+export const useScope = (name = '') => {
   const scopeProps = useContext(Context);
-  return scopeProps;
+  const dot = (scopeProps.name && name) ? '.': '';
+  return {name: `${scopeProps.name}${dot}${name}`};
 };
 
 const Scope = ({name, children}) => {
-  const { name: parentName = ''} = useScope();
-  const dot = (parentName && name) ? '.': '';
-  const fullScopeName = `${parentName}${dot}${name}`;
+  const { name: fullScopeName} = useScope(name);
   return (
     <Provider name={fullScopeName}>
       {children}

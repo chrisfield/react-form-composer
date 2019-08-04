@@ -8,11 +8,8 @@ import getField from './state-utils/get-field';
 const defaultStatus = {};
 const useField = (fieldName = '') => {
   const { name: formName } = useForm();
-  const { name: scopeName = ''} = useScope();
-  const dot = (scopeName && fieldName) ? '.': '';
-  const fullFieldName = `${scopeName}${dot}${fieldName}`;
   const [formState, formDispatch] = useFormReducer(formName);
-
+  const { name: fullFieldName } = useScope(fieldName);
   const value = getField(formState.fieldValues, fullFieldName);
   const status = getField(formState.fieldStatus, fullFieldName) || defaultStatus;
   const touched = status.touched;
