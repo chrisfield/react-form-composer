@@ -1,11 +1,15 @@
 import React from 'react';
+import { useScope } from '../scope';
 import FormSpy from  '../form-spy';
 import getStateValueByPath from '../state-utils/get-field';
 
 export const ValidationMessage = ({name, render, children}) => {
+  const { name: parentName = ''} = useScope();
+  const dot = (parentName && name) ? '.': '';
+  const fullScopeName = `${parentName}${dot}${name}`;
   const statusSelector = state => {
-    const { touched, error: fieldError } = getStateValueByPath(state, `fieldStatus.${name}`) || {};
-    const error = fieldError || getStateValueByPath(state, `formErrors.${name}`);
+    const { touched, error: fieldError } = getStateValueByPath(state, `fieldStatus.${fullScopeName}`) || {};
+    const error = fieldError || getStateValueByPath(state, `formErrors.${fullScopeName}`);
     return { touched, error };
   }
   return <FormSpy selector={statusSelector}>
