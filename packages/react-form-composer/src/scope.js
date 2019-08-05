@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react';
 
-export const Context = createContext({});
+export const Context = createContext({name: ''});
 
 export const Provider = ({ children, ...props }) => {
   return (
