@@ -11,9 +11,7 @@
 
 React-form-composer is an extendable, none-perscriptive, lightweight solution for creating forms in web, react-native and server-rendered applications. It is written with hooks, is optimized for lightening fast rendering and gives you control to choose or change where to store form state. The small but powerful api makes it suitable for anything from simple input forms through to large multi-row CRUD applications.
 
-The download size less than 7kB. The api is simular to ones provided by [Informed](https://www.npmjs.com/package/informed) or [Redux-Form](https://www.npmjs.com/package/react-form). By default it uses standard React state but it's easy to add Redux (can be useful if you migrate from redux-form).
-
-React-form-composer makes it easy to get and set state which, in turn, controls any field values on the form. Other features include: arrays of fields, field and form validation, formatting to and from the store, focus control (e.g. focus on first field with an error), access to a running error count and complete control to define custom inputs.
+The download size is less than 7kB and the api is simular to ones provided by [Informed](https://www.npmjs.com/package/informed) or [Redux-Form](https://www.npmjs.com/package/redux-form).
 
 From Version 2.5 a set of ui-components is included: now it's even easier to get started.
 
@@ -64,61 +62,47 @@ const lengthAtLeast5 = value => {
   return !value || value.length < 5 ? 'Field must be at least five characters' : undefined;
 }
 
-const flexColumn = {
-  display: 'flex',
-  flexDirection: 'column',
-  marginTop: '10px',
-  maxWidth: '200px'
-}
-
 const MyForm = () => {
   return (
     <FormStateProvider>
       <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly'}}>
-          <div style={flexColumn}>
-            <label style={flexColumn}>
-              Field One (5+ chars):
-              <Text name="fieldOne" required validate={lengthAtLeast5}/>
-            </label>
-            <ValidationMessage name="fieldOne" render={error => <p>{error}</p>}/>
-            <label style={flexColumn}>Text Area: <TextArea name="fieldTwo"/></label>
-            <label style={flexColumn}>Age: <Text name="age" type="number"/></label>
-            <RadioGroup name="pet">
-              <div><label>Dog: <Radio value="dog" selected/></label></div>
-              <div><label>Cat: <Radio value="cat"/></label></div>
-            </RadioGroup>
-            <label>Authorize? <Checkbox name="authorize"/></label>
-            <label style={flexColumn}>
-              Frequency
-              <Select name="frequency" required>
-                <option value="" disabled>
-                  Select One...
-                </option>
-                <option value="daily">Daily</option>
-                <option value="weekly">Weekly</option>
-                <option value="monthly">Monthly</option>
-              </Select>
-            </label>
-            <label style={flexColumn}>
-              Exercise
-              <Select name="exercice" multiple>
-                <option value="Walk">walk</option>
-                <option value="Run">run</option>
-                <option value="Cycle">cycle</option>
-                <option value="Swim">swim</option>
-              </Select>
-            </label>
-            <br/>
-            <Button/>
-          </div>
-          <div style={{
-            display: 'flex',
-            maxWidth: '300px'
-          }}>
-            <TheFormState/> 
-          </div>
+        <div>
+          <label>
+            Field One (5+ chars):
+            <Text name="fieldOne" required validate={lengthAtLeast5}/>
+          </label>
+          <ValidationMessage name="fieldOne" render={error => <p>{error}</p>}/>
+          <label>Text Area: <TextArea name="fieldTwo"/></label>
+          <label>Age: <Text name="age" type="number"/></label>
+          <RadioGroup name="pet">
+            <div><label>Dog: <Radio value="dog" selected/></label></div>
+            <div><label>Cat: <Radio value="cat"/></label></div>
+          </RadioGroup>
+          <label>Authorize? <Checkbox name="authorize"/></label>
+          <label>
+            Frequency
+            <Select name="frequency" required>
+              <option value="" disabled>
+                Select One...
+              </option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </Select>
+          </label>
+          <label>
+            Exercise
+            <Select name="exercice" multiple>
+              <option value="Walk">walk</option>
+              <option value="Run">run</option>
+              <option value="Cycle">cycle</option>
+              <option value="Swim">swim</option>
+            </Select>
+          </label>
+          <br/>
+          <Button/>
         </div>
+        <TheFormState/> 
       </Form>
     </FormStateProvider>
   );
