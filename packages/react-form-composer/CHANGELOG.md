@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [2.5.15] - 2019-08-9
+### Fixed
+- Readme, no code changes.
+
 ## [2.5.14] - 2019-08-5
 ### Fixed
 - Fix bug in Scope causing none-scoped fieldnames to be prefixed with undefined

@@ -11,7 +11,11 @@
 
 React-form-composer is an extendable, none-perscriptive, lightweight solution for creating forms in web, react-native and server-rendered applications. It is written with hooks, is optimized for lightening fast rendering and gives you control to choose or change where to store form state. The small but powerful api makes it suitable for anything from simple input forms through to large multi-row CRUD applications.
 
-In Version 2.5.0 I added a set of ui-components: now it's even easier to get started.
+The download size less than 7kB. The api is simular to ones provided by [Informed](https://www.npmjs.com/package/informed) or [Redux-Form](https://www.npmjs.com/package/react-form). By default it uses standard React state but it's easy to add Redux (can be useful if you migrate from redux-form).
+
+React-form-composer makes it easy to get and set state which, in turn, controls any field values on the form. Other features include: arrays of fields, field and form validation, formatting to and from the store, focus control (e.g. focus on first field with an error), access to a running error count and complete control to define custom inputs.
+
+From Version 2.5 a set of ui-components is included: now it's even easier to get started.
 
 ## Getting Started
 
