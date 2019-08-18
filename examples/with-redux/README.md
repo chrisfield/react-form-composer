@@ -20,6 +20,10 @@ yarn start
 ```
 
 ## The idea behind the example
-Redux-form-composer normally uses standard react state. This example shows how you can also use Redux by adding [react-form-composer-redux-provider](https://www.npmjs.com/package/redux-form-composer-redux-provider).
+Redux-form-composer normally uses standard react state. This example shows how you can use Redux to store form state simply by calling 
+
+```
+const FormStateProvider = reduxFormStateProvider(connect);
+```
 
 The relevant code is all in [index.js](src/index.js)
