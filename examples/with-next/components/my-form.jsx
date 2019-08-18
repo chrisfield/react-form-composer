@@ -34,6 +34,13 @@ const clearValues = (form) => {
   form.updateFields({});
 };
 
+const SubmitButton = (props) => {
+  const [state] = useFormReducer(useForm().name);
+  return (
+    <button {...props} style={{backgroundColor: state.formStatus.isValid? 'green': 'cyan'}} >Submit</button>
+  );
+};
+
 const MyForm = () => (
   <Form name="myForm"
     onSubmit={submitValues}
@@ -56,7 +63,7 @@ const MyForm = () => (
       name="hobbies"
       component={RenderHobbies}
     />
-    <button>Submit</button>
+    <SubmitButton/>
     <TheFormState />
   </Form>
 );

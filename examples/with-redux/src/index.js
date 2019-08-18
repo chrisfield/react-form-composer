@@ -1,9 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { createStore, combineReducers } from 'redux';
-import { Provider } from 'react-redux';
-import FormStateProvider from "react-form-composer-redux-provider";
-import { formReducer } from 'react-form-composer';
+import { Provider, connect } from 'react-redux';
+import { formReducer, reduxFormStateProvider } from 'react-form-composer';
 import MyForm from './my-form.jsx';
 
 const reducer = combineReducers({
@@ -16,6 +15,8 @@ const store = createStore(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
+const FormStateProvider = reduxFormStateProvider(connect);
+
 const FormContainer = () => {
   return (
     <Provider store={store}>
@@ -27,24 +28,3 @@ const FormContainer = () => {
 };
 
 ReactDOM.render(<FormContainer />, document.getElementById("app"));
-
-
-// The code below shows what this example woulkd be like without redux 
-/*
-import React from "react";
-import ReactDOM from "react-dom";
-import {FormStateProvider} from "react-form-composer";
-import MyForm from './my-form.jsx';
-
-const FormContainer = () => {
-  return (
-    <FormStateProvider>
-      <MyForm/>
-    </FormStateProvider>
-  );
-};
-
-ReactDOM.render(<FormContainer />, document.getElementById("app"));
-
-export default FormContainer;
-*/

@@ -10,9 +10,8 @@ Note: the universal-validation example happens to use redux so check it out if y
 import React from "react";
 import ReactDOM from "react-dom";
 import { createStore, combineReducers } from 'redux';
-import { Provider } from 'react-redux';
-import FormStateProvider from "react-form-composer-redux-provider";
-import { formReducer } from 'react-form-composer';
+import { Provider, connect } from 'react-redux';
+import { formReducer, reduxFormStateProvider } from 'react-form-composer';
 import MyForm from './my-form.jsx';
 
 const reducer = combineReducers({
@@ -24,6 +23,8 @@ const store = createStore(
   reducer, undefined,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
+
+const FormStateProvider = reduxFormStateProvider(connect);
 
 const FormContainer = () => {
   return (

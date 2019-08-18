@@ -13,9 +13,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "next": "^8.0.3",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "react-form-composer": "^2.5.12"
+    "next": "^9.0.3",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-form-composer": "^2.6.0"
   }
 }

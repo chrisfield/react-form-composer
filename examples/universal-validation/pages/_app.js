@@ -1,8 +1,10 @@
 import React from 'react';
 import App, {Container} from 'next/app';
 import withReduxStore from '../lib/with-redux-store';
-import { Provider } from 'react-redux';
-import FormStateProvider from 'react-form-composer-redux-provider';
+import { Provider, connect } from 'react-redux';
+import { reduxFormStateProvider } from 'react-form-composer';
+
+const FormStateProvider = reduxFormStateProvider(connect);
 
 class MyApp extends App {
   render () {

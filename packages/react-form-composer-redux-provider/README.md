@@ -1,9 +1,9 @@
 # react-form-composer-redux-provider
 
-[![NPM Version](https://img.shields.io/npm/v/react-form-composer-redux-provider.svg?style=flat)](https://www.npmjs.com/package/react-form-composer-redux-provider)
-[![NPM Downloads](https://img.shields.io/npm/dm/react-form-composer-redux-provider.svg?style=flat)](https://npmcharts.com/compare/react-form-composer-redux-provider?minimal=true)
+## ⚠️ ATTENTION ⚠️
+From version 2.6.0 [react-form-composer](https://www.npmjs.com/package/react-form-composer) includes its own reduxFormStateProvider function so you will not need to install/use this module. 
 
-Use this module to connect [react-form-composer](https://www.npmjs.com/package/react-form-composer) to redux.  
+Use this module to connect older versions of [react-form-composer](https://www.npmjs.com/package/react-form-composer) to redux.  
 
 
 ## Motivation

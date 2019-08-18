@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [2.6.0] - 2019-08-18
+### Added
+- You can pass react-redux.connect to redux-form-state-provider if you want Redux to hold the form state. This means you no longer need to use the separate redux-form-state-provider npm module. 
+
 ## [2.5.17] - 2019-08-11
 ### Fixed
 - Readme and package description. No code changes.

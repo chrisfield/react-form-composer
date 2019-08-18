@@ -1,5 +1,5 @@
 import React from 'react';
-import FormStateProvider from 'react-form-composer-redux-provider';
+// import FormStateProvider from 'react-form-composer-redux-provider';
 import {
   Form,
   FormSpy,
@@ -45,7 +45,7 @@ const flexColumn = {
 
 const MyForm = () => {
   return (
-    <FormStateProvider>
+    <div>
       <h1>Form With Redux</h1>
       <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly'}}>
@@ -93,7 +93,7 @@ const MyForm = () => {
           </div>
         </div>
       </Form>
-    </FormStateProvider>
+    </div>
   );
 };
 

@@ -188,7 +188,7 @@ export default MyForm;
 - Small bundle size ([see bundlephobia](https://bundlephobia.com/result?p=react-form-composer))
 - React-native support ([See example](https://github.com/chrisfield/react-form-composer/tree/master/examples/with_react_native))
 - Perfect for server-rendering ([See example](https://github.com/chrisfield/react-form-composer/tree/master/examples/with-next))
-- Easy to add (or remove) Redux. See [`react-form-composer-redux-provider`](https://www.npmjs.com/package/react-form-composer-redux-provider) ([See example](https://github.com/chrisfield/react-form-composer/tree/master/examples/with-redux))
+- Easy to add (or remove) Redux. ([See example](https://github.com/chrisfield/react-form-composer/tree/master/examples/with-redux))
 - Stores values as semantic types, eg number fields will store numbers
 - Format values, eg to put commas in numbers
 - Field-arrays for repeated rows with add/remove
