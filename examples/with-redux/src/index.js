@@ -7,7 +7,7 @@ import MyForm from './my-form.jsx';
 
 const reducer = combineReducers({
   // ...your other reducers here
-  form: formReducer // Pass formReducerNamespace prop to FormStateProvider if mount point is not "form"
+  formData: formReducer // Pass formReducerNamespace prop to FormStateProvider if mount point is not "form"
 });
 
 const store = createStore(
@@ -20,7 +20,7 @@ const FormStateProvider = reduxFormStateProvider(connect);
 const FormContainer = () => {
   return (
     <Provider store={store}>
-      <FormStateProvider>
+      <FormStateProvider formReducerNamespace="formData">
         <MyForm/>
       </FormStateProvider>
     </Provider>

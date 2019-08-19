@@ -1,0 +1,42 @@
+# reduxFormStateProvider
+A function that takes the `connect` function from `react-redux` and returns a `FormStrateProvider` connected to redux. The `FormStateProvider` can accept the following props:
+
+| Property Name        | Required | Description                                                                                                                                                                                                                                                                                                                                                                                           |
+|----------------------|----------|------------------------------------------------------------------------------------------------------------|
+| formReducerNamespace |          | String. The name of the reducer mount point used to store form state (default is 'form')                   |
+| children             |          | Normal JSX children. Often this will include `Form` components                                             |
+
+---
+
+``` jsx
+import React from "react";
+import ReactDOM from "react-dom";
+import { createStore, combineReducers } from 'redux';
+import { Provider, connect } from 'react-redux';
+import { formReducer, reduxFormStateProvider } from 'react-form-composer';
+import MyForm from './my-form.jsx';
+
+const reducer = combineReducers({
+  // ...your other reducers here
+  formData: formReducer // Pass formReducerNamespace prop to FormStateProvider if mount point is not "form"
+});
+
+const store = createStore(
+  reducer, undefined,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
+const FormStateProvider = reduxFormStateProvider(connect);
+
+const FormContainer = () => {
+  return (
+    <Provider store={store}>
+      <FormStateProvider formReducerNamespace="formData">
+        <MyForm/>
+      </FormStateProvider>
+    </Provider>
+  );
+};
+
+ReactDOM.render(<FormContainer />, document.getElementById("app"));
+```

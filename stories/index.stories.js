@@ -18,6 +18,7 @@ import universalValidation from './form-examples/universal-validation';
 import reactNative from './form-examples/react-native';
 
 import apiForFormStateProvider from './api/form-state-provider';
+import apiForReduxFormStateProvider from './api/redux-form-state-provider';
 import apiForFormContextProvider from './api/form-context-provider';
 import apiForForm from './api/form';
 import apiForScope from './api/scope';
@@ -47,6 +48,7 @@ storiesOf('Form Examples', module)
 
 storiesOf('Api', module)
 .add('FormStateProvider', apiForFormStateProvider)
+.add('reduxFormStateProvider', apiForReduxFormStateProvider)
 .add('FormContextProvider', apiForFormContextProvider)
 .add('Form', apiForForm)
 .add('Scope', apiForScope)
