@@ -1,29 +1,19 @@
 import React, { createContext, useContext } from 'react';
 
-export const Context = createContext({name: ''});
-
-export const Provider = ({ children, ...props }) => {
-  return (
-    <Context.Provider value={props}>
-      {children}
-    </Context.Provider>
-  );
-};
-
-export const Consumer = Context.Consumer;
+export const ScopeContext = createContext('');
 
 export const useScope = (name = '') => {
-  const scopeProps = useContext(Context);
-  const dot = (scopeProps.name && name) ? '.': '';
-  return {name: `${scopeProps.name}${dot}${name}`};
+  const parentName = useContext(ScopeContext);
+  const dot = (parentName && name) ? '.': '';
+  return `${parentName}${dot}${name}`;
 };
 
 const Scope = ({name, children}) => {
-  const { name: fullScopeName} = useScope(name);
+  const fullScopeName = useScope(name);
   return (
-    <Provider name={fullScopeName}>
+    <ScopeContext.Provider value={fullScopeName}>
       {children}
-    </Provider>
+    </ScopeContext.Provider>
   );
 };
 

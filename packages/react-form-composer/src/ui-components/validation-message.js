@@ -4,7 +4,7 @@ import FormSpy from  '../form-spy';
 import getStateValueByPath from '../state-utils/get-field';
 
 export const ValidationMessage = ({name, render, children}) => {
-  const { name: fullScopeName } = useScope(name);
+  const fullScopeName = useScope(name);
   const statusSelector = state => {
     const { touched, error: fieldError } = getStateValueByPath(state, `fieldStatus.${fullScopeName}`) || {};
     const error = fieldError || getStateValueByPath(state, `formErrors.${fullScopeName}`);

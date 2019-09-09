@@ -2,17 +2,15 @@ import { withDocs } from 'storybook-readme';
 import readme from './index.md'
 import React from 'react';
 import {TextInput} from '../../custom-ui-components';
-import { 
-  FormStateProvider,
+import {
   Form,
   Scope,
   FieldArray,
-  useForm,
-  useFormReducer
+  useForm
 } from '../../../packages/react-form-composer/src';
 
 const TheFormState = () => {
-  const [state] = useFormReducer(useForm().name);
+  const {state} = useForm();
   return (
     <pre>
       <code>{JSON.stringify(state, null, 2)}</code>
@@ -21,7 +19,7 @@ const TheFormState = () => {
 };
 
 const Button = () => {
-  const [state] = useFormReducer(useForm().name);
+  const {state} = useForm();
   return (
     <button style={{backgroundColor: state.formStatus.isValid? 'green': 'cyan'}} >Submit</button>
   );
@@ -84,20 +82,18 @@ const RenderShoppingList = ({fields}) => (
 
 const MyForm = () => {  
   return (
-    <FormStateProvider>
-      <Form name="myForm" initialValues={{hobbies:[{}]}} onSubmit={submitValues} onSubmitSuccess={clearValues} className="my-form">
-        <FieldArray
-          name="hobbies"
-          component={RenderHobbies}
-        />
-        <FieldArray
-          name="shoppingList"
-          component={RenderShoppingList}
-        />
-        <Button/>
-        <TheFormState />
-      </Form>
-    </FormStateProvider>
+    <Form name="myForm" initialValues={{hobbies:[{}]}} onSubmit={submitValues} onSubmitSuccess={clearValues} className="my-form">
+      <FieldArray
+        name="hobbies"
+        component={RenderHobbies}
+      />
+      <FieldArray
+        name="shoppingList"
+        component={RenderShoppingList}
+      />
+      <Button/>
+      <TheFormState />
+    </Form>
   );
 };
 

@@ -9,11 +9,11 @@
 
 ## Introduction
 
-React-form-composer provides validation and state management for react, react-native and isomorphic forms. It has a download size of less than 7kB, is written with hooks, is optimized for lightening fast rendering and gives you control to choose or change where to store form state.
+React-form-composer provides validation and state management for react, react-native and isomorphic forms. It has a download size of less than 6kB, is written with hooks and is optimized for fast rendering.
 
 The small but powerful api is simular to ones provided by [Informed](https://www.npmjs.com/package/informed) or [Redux-Form](https://www.npmjs.com/package/redux-form) and it makes it suitable for anything from simple input forms through to large multi-row CRUD applications.
 
-From Version 2.5 a set of ui-components is included: now it's even easier to get started.
+From Version 2.5 a set of ui-components is included. Version 3.0 has been simplified - now it is easier to get started.
 
 ## Getting Started
 
@@ -26,11 +26,9 @@ From Version 2.5 a set of ui-components is included: now it's even easier to get
 ```jsx
 import React from 'react';
 import {
-  FormStateProvider,
   Form,
   FormSpy,
   useForm,
-  useFormReducer,
   Text,
   TextArea,
   RadioGroup,
@@ -38,10 +36,10 @@ import {
   Checkbox,
   Select,
   ValidationMessage
-} from 'react-form-composer';
+} from '../../packages/react-form-composer/src';
 
 const TheFormState = () => {
-  const [state] = useFormReducer(useForm().name);
+  const {state} = useForm();
   return (
     <pre>
       <code>{JSON.stringify(state.fieldValues, null, 2)}</code>
@@ -62,49 +60,51 @@ const lengthAtLeast5 = value => {
   return !value || value.length < 5 ? 'Field must be at least five characters' : undefined;
 }
 
+const flexColumn = {
+  display: 'flex',
+  flexDirection: 'column',
+  marginTop: '10px',
+  maxWidth: '200px'
+}
+
 const MyForm = () => {
   return (
-    <FormStateProvider>
-      <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
-        <div>
-          <label>
-            Field One (5+ chars):
-            <Text name="fieldOne" required validate={lengthAtLeast5}/>
-          </label>
-          <ValidationMessage name="fieldOne" render={error => <p>{error}</p>}/>
-          <label>Text Area: <TextArea name="fieldTwo"/></label>
-          <label>Age: <Text name="age" type="number"/></label>
-          <RadioGroup name="pet">
-            <div><label>Dog: <Radio value="dog" selected/></label></div>
-            <div><label>Cat: <Radio value="cat"/></label></div>
-          </RadioGroup>
-          <label>Authorize? <Checkbox name="authorize"/></label>
-          <label>
-            Frequency
-            <Select name="frequency" required>
-              <option value="" disabled>
-                Select One...
-              </option>
-              <option value="daily">Daily</option>
-              <option value="weekly">Weekly</option>
-              <option value="monthly">Monthly</option>
-            </Select>
-          </label>
-          <label>
-            Exercise
-            <Select name="exercice" multiple>
-              <option value="Walk">walk</option>
-              <option value="Run">run</option>
-              <option value="Cycle">cycle</option>
-              <option value="Swim">swim</option>
-            </Select>
-          </label>
-          <br/>
-          <Button/>
-        </div>
-        <TheFormState/> 
-      </Form>
-    </FormStateProvider>
+    <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
+      <label>
+        Field One (5+ chars):
+        <Text name="fieldOne" required validate={lengthAtLeast5}/>
+      </label>
+      <ValidationMessage name="fieldOne" render={error => <p>{error}</p>}/>
+      <label>Text Area: <TextArea name="fieldTwo"/></label>
+      <label>Age: <Text name="age" type="number"/></label>
+      <RadioGroup name="pet">
+        <div><label>Dog: <Radio value="dog" selected/></label></div>
+        <div><label>Cat: <Radio value="cat"/></label></div>
+      </RadioGroup>
+      <label>Authorize? <Checkbox name="authorize"/></label>
+      <label>
+        Frequency
+        <Select name="frequency" required>
+          <option value="" disabled>
+            Select One...
+          </option>
+          <option value="daily">Daily</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+        </Select>
+      </label>
+      <label>
+        Exercise
+        <Select name="exercice" multiple>
+          <option value="Walk">walk</option>
+          <option value="Run">run</option>
+          <option value="Cycle">cycle</option>
+          <option value="Swim">swim</option>
+        </Select>
+      </label>
+      <Button/>
+      <TheFormState/>
+    </Form>
   );
 };
 
@@ -124,7 +124,7 @@ React-form-composer is written for developers. For example, the built-in ui-comp
 
 Design choices like this is what makes react-form-composer none-perscriptive - you can easily write your own ui-components or add features in many other ways.
 
-To see this in practise take a look at the Form Examples like [react-native](https://github.com/chrisfield/react-form-composer/tree/master/examples/with_react_native) and [isomophic-validation](https://github.com/chrisfield/react-form-composer/tree/master/examples/universal-validation) or checkout the CRUD example mentioned below.
+To see this in practise take a look the CRUD example:
 
 #### Create a CRUD/REST-api form ([See live example](https://chrisfield.github.io/react-form-composer/?path=/story/introduction--row-editor))
 
@@ -184,11 +184,10 @@ export default MyForm;
 
 ## Features
 - Easy to write mult-row CRUD Forms connected to a rest api ([See live example](https://chrisfield.github.io/react-form-composer/?path=/story/introduction--row-editor))
-- Optimized for lightening fast rendering ([See live example](https://chrisfield.github.io/react-form-composer/?path=/story/introduction--optimization))
+- Optimized for efficient rendering ([See live example](https://chrisfield.github.io/react-form-composer/?path=/story/introduction--optimization))
 - Small bundle size ([see bundlephobia](https://bundlephobia.com/result?p=react-form-composer))
-- React-native support ([See example](https://github.com/chrisfield/react-form-composer/tree/master/examples/with_react_native))
-- Perfect for server-rendering ([See example](https://github.com/chrisfield/react-form-composer/tree/master/examples/with-next))
-- Easy to add (or remove) Redux. ([See example](https://github.com/chrisfield/react-form-composer/tree/master/examples/with-redux))
+- React-native support 
+- Perfect for server-rendering
 - Stores values as semantic types, eg number fields will store numbers
 - Format values, eg to put commas in numbers
 - Field-arrays for repeated rows with add/remove

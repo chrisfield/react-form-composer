@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [3.0.0] - 2019-09-10
+### Changed
+- Major simplification and reduction in download size
+- Removed `FormContextProvider` - Forms now hold their own state
+- Removed `useFormReducer` - you can now get state and dispatch from `useForm`
+- Added spy prop to Field
+- Dropped option to use Redux to store the form state
+
 ## [2.6.0] - 2019-08-18
 ### Added
 - You can pass react-redux.connect to redux-form-state-provider if you want Redux to hold the form state. This means you no longer need to use the separate redux-form-state-provider npm module. 

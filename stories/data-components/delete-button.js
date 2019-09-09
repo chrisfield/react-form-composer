@@ -1,9 +1,9 @@
 import 'isomorphic-unfetch';
 import React from 'react';
-import { getStateValueByPath, useForm, useFormReducer } from '../../packages/react-form-composer/src';
+import { getStateValueByPath, useForm } from '../../packages/react-form-composer/src';
 
 const DeleteButton = ({deleteRow, rowName, url}) => {
-  const [state] = useFormReducer(useForm().name);
+  const {state} = useForm();
   const rowValues = getStateValueByPath(state.fieldValues, rowName);
   const handleDelete = () => {
     console.log('Call endpoint here to delete row:', rowValues);

@@ -13,9 +13,8 @@ export const actionTypes = {
 };
 
 export const initFormState = (
-  form,
   {formStatus= {}, fieldStatus= {}, fieldValues= {}, formErrors= {}}= {},
-) => ({type: actionTypes.INIT_FORM_STATE, form, formStatus, fieldStatus, fieldValues, formErrors});
+) => ({type: actionTypes.INIT_FORM_STATE, formStatus, fieldStatus, fieldValues, formErrors});
 
 export const resetFieldsIsDone = () => (
   {type: actionTypes.RESET_FIELDS_IS_DONE}

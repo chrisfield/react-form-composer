@@ -11,15 +11,6 @@ import RowEditor from './introduction/row-editor';
 import RowEditor2 from './introduction/row-editor2';
 import optimization from './introduction/optimization';
 
-
-import withRedux from './form-examples/with-redux';
-import nextServerRendering from './form-examples/next-server-rendering';
-import universalValidation from './form-examples/universal-validation';
-import reactNative from './form-examples/react-native';
-
-import apiForFormStateProvider from './api/form-state-provider';
-import apiForReduxFormStateProvider from './api/redux-form-state-provider';
-import apiForFormContextProvider from './api/form-context-provider';
 import apiForForm from './api/form';
 import apiForScope from './api/scope';
 import apiForField from './api/field';
@@ -40,16 +31,7 @@ storiesOf('Introduction', module)
 .add('Row Editor2', RowEditor2)
 .add('Optimization', optimization);
 
-storiesOf('Form Examples', module)
-.add('With Redux', withRedux)
-.add('Next Server Rendering', nextServerRendering)
-.add('Universal Validation', universalValidation)
-.add('React Native', reactNative);
-
 storiesOf('Api', module)
-.add('FormStateProvider', apiForFormStateProvider)
-.add('reduxFormStateProvider', apiForReduxFormStateProvider)
-.add('FormContextProvider', apiForFormContextProvider)
 .add('Form', apiForForm)
 .add('Scope', apiForScope)
 .add('Field', apiForField)

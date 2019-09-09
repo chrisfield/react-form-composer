@@ -6,18 +6,14 @@ import formStatusAndFieldStatus from "./form-status-and-field-status";
 export const initialState = {};
 
 const reducer = (state = initialState, action) => {
-  if (action && actionTypes[action.type] && action.form) {
-    const formState = state[action.form] || {};
-    const {formStatus, fieldStatus} = formStatusAndFieldStatus(formState.formStatus, formState.fieldStatus, action);
+  if (action && actionTypes[action.type]) {
+    const {formStatus, fieldStatus} = formStatusAndFieldStatus(state.formStatus, state.fieldStatus, action);
     formStatus.isValid = formStatus.errorCount === 0;
     return {
-      ...state,
-      [action.form]: {
-        fieldStatus,
-        fieldValues: fieldValues(formState.fieldValues, action),
-        formErrors: formErrors(formState.formErrors, action),
-        formStatus,
-      },
+      fieldStatus,
+      fieldValues: fieldValues(state.fieldValues, action),
+      formErrors: formErrors(state.formErrors, action),
+      formStatus
     };
   }
   return state;

@@ -9,7 +9,9 @@ function isElementInViewport (el) {
 }
 
 const focusOnFirstFieldWithError = (formApi) => {
-  for (const field of formApi.getFields()) {
+  const fields = formApi.getFields();
+  for (let i = 0; i < fields.length; i++) {
+    const field = fields[i];
     const element = field.element;
     if (field.error && element) {
       let scrollTimeout;

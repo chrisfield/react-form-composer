@@ -1,6 +1,9 @@
-import React, { useEffect, useRef, memo } from 'react';
-import {deregisterField, updateField, setFieldError, setFieldTouched } from './actions';
-import { useForm } from './form';
+import React, {memo, useRef, useEffect}  from 'react';
+import {
+  updateField as updateFieldAction,
+  setFieldTouched as setFieldTouchedAction,
+  setFieldError as setFieldErrorAction
+} from './actions';
 import useField from './use-field';
 
 function usePrevious(value) {
@@ -15,76 +18,118 @@ function twoInvalidNumbers(x, y) {
   return typeof x === "number" && isNaN(x) && isNaN(y);
 }
 
-const FieldComponent = ({render, children, component, ...props}) => {
+function Field({
+  afterUpdate,
+  beforeUpdate,
+  component,
+  formatFromStore,
+  formatToStore,
+  getTargetValue,
+  ignoreTargetValueUnless,
+  name,
+  spy,
+  ...rest
+}) {
+
+  const {value, spyValue, dispatch, error, touched, customProps, formApi} = useField(name, spy);
+
+  const {state: _state, ...formApiWithoutState} = formApi;
+
+  const formApiWithoutStateRef = useRef(formApiWithoutState);
+
+  return <FieldMemo
+    {...{
+      afterUpdate,
+      beforeUpdate,
+      formatFromStore,
+      formatToStore,
+      ignoreTargetValueUnless,
+      getTargetValue,
+      component
+    }}
+    name={name}
+    value={value}
+    error={error}
+    touched={touched}
+    dispatch={dispatch}
+    customProps={customProps}
+    spyValue={spyValue}
+    formApiWithoutState={formApiWithoutStateRef.current}
+    {...rest}
+  />
+}
+
+function noop(){};
+
+Field.defaultProps = {
+  afterUpdate: noop,
+  beforeUpdate: noop,
+  component: 'input',
+  formatFromStore: (value = "") => value,
+  formatToStore: (value) => value,
+  getTargetValue: (target, value) => {
+    if (target) {
+      return target.value;
+    } else {
+      return value;
+    }
+  }
+};
+
+const FieldComponent = ({render, children, component: Component, ...props}) => {
   if (render) {
     return render(props);
   }
   if (typeof children === 'function') {
     return children(props);
   }
-  if (typeof component === "string") {
-    const {
-      handleBlur,
-      handleChange,
-      touched,
-      error,
-      elementRef,
-      ...givenProps} = props;
-    return React.createElement(
-      component,
-      {onBlur: handleBlur, onChange: handleChange, ref: elementRef, children, ...givenProps}
-    );
+  if (typeof Component === "object") {
+    return <Component {...props}/>;
   }
-  const Component = component;
-  return <Component {...props}/>;
-}
-
-const Field = ({name, ...props}) => {
-  const connectionProps = useField(name);
-  return (
-    <FieldBase
-      name={name}
-      {...props}
-      {...connectionProps}
-    />
+  const {
+    handleBlur,
+    handleChange,
+    touched,
+    error,
+    elementRef,
+    ...givenProps} = props;
+  return React.createElement(
+    Component,
+    {onBlur: handleBlur, onChange: handleChange, ref: elementRef, children, ...givenProps}
   );
-};
-
-const getBestValue = (value, defaultValue, formatFromStore, formatToStore) => {
-  if (value !== undefined) {
-    return value;
-  }
-  if (defaultValue !== defaultValue) {
-    return defaultValue;
-  }
-  return formatToStore(formatFromStore(undefined));
 }
 
-const FieldBase = memo(({
+const FieldMemo = memo(({
   name,
-  afterUpdate,
-  beforeUpdate,
-  formatFromStore,
-  formatToStore,
-  getTargetValue,
-  ignoreTargetValueUnless,
-  validate,
-  dispatch,
   defaultValue,
-  value = value === undefined? defaultValue : value,
+  value = defaultValue,
   error,
   touched,
+  dispatch,
   customProps,
-  ...props
+  optimizedProps,
+  validate,
+  spyValue,
+  formatToStore,
+  formatFromStore,
+  getTargetValue,
+  ignoreTargetValueUnless,
+  beforeUpdate,
+  afterUpdate,
+  component,
+  formApiWithoutState,
+  ...rest
 }) => {
-  const formApi = useForm();
+  const {registerField, deregisterField, ...formApi} = formApiWithoutState;
   const elementRef = useRef();
+  const isMountedRef = useRef(false);
+  const previous = usePrevious({value, customProps});
+
   const fieldInterfaceRef = useRef({
     name,
-    getForm: formApi.getPublicFormApi,
     getField: formApi.getField,
-    setTouched: touched => dispatch(setFieldTouched(touched)),
-    setValue: value => dispatch(updateField(value)),
+    setTouched: touched => dispatch(setFieldTouchedAction(touched)),
+    setValue: value => dispatch(updateFieldAction(value)),
   });
   Object.assign(fieldInterfaceRef.current, {
     validate: () => {validateValue(value)},
@@ -96,18 +141,15 @@ const FieldBase = memo(({
   useEffect(() => {
     fieldInterfaceRef.current.element = elementRef.current;
   });
-
+  
   useEffect(() => {
-    formApi.registerField(fieldInterfaceRef.current);
+    const fieldInterface = fieldInterfaceRef.current;
+    registerField(fieldInterface);
     return () => {
-      dispatch(deregisterField());
-      formApi.deregisterField(fieldInterfaceRef.current);
+      deregisterField(fieldInterface);
     }
   }, []);
 
-
-  const isMountedRef = useRef(false);
-  const previous = usePrevious({value, customProps});
   useEffect(() => {
     if (!isMountedRef.current) {
       isMountedRef.current = true;
@@ -128,7 +170,7 @@ const FieldBase = memo(({
 
     if ((value !== previous.value && !twoInvalidNumbers(value, previous.value))
       || customProps !== previous.customProps) {
-      afterUpdate(fieldInterfaceRef.current, customProps);
+      afterUpdate(fieldInterfaceRef.current, spyValue, customProps);
     }
   });
   
@@ -139,23 +181,23 @@ const FieldBase = memo(({
       formatFromStore(value),
       formatFromStore(nextValueToStore)
     );
-    dispatch(updateField(nextValueToStore, nextCustomProps));
+    dispatch(updateFieldAction(nextValueToStore, nextCustomProps));
   };
 
-  const validateValue = (valueToValidate = getBestValue(valueToValidate, defaultValue, formatFromStore, formatToStore)) => {
+  const validateValue = val => {
+    const valueToValidate = (val === undefined) ? defaultValue: val;
     if (!ignoreTargetValueUnless || ignoreTargetValueUnless(elementRef.current)) {
       let validateError;
       if (validate) {
-        const fieldValues = formApi.getState().fieldValues;
         if (Array.isArray(validate)) {
           for (let i = 0; i < validate.length && !validateError; i++) {
-            validateError = validate[i](valueToValidate, fieldValues, {...fieldInterfaceRef.current, ...props});
+            validateError = validate[i](valueToValidate, spyValue, fieldInterfaceRef.current);
           }
         } else {
-          validateError = validate(valueToValidate, fieldValues, {...fieldInterfaceRef.current, ...props});
+          validateError = validate(valueToValidate, spyValue, fieldInterfaceRef.current);
         }
       }
-      dispatch(setFieldError(validateError, valueToValidate));
+      dispatch(setFieldErrorAction(validateError, valueToValidate));
     }
   };
 
@@ -164,37 +206,24 @@ const FieldBase = memo(({
       if (error) {
         event.preventDefault();
       }
-      dispatch(setFieldTouched(true));
+      dispatch(setFieldTouchedAction(true));
     }
   };
-
   return (
-    <FieldComponent
-      elementRef={elementRef}
-      handleChange={handleChange}
-      handleBlur={showAnyErrors}
-      name={name}
-      value={formatFromStore(value)}
-      touched={touched}
-      error={error}
-      {...props}
-    />
+    <div>
+      <FieldComponent
+        elementRef={elementRef}
+        handleChange={handleChange}
+        handleBlur={showAnyErrors}
+        name={name}
+        value={formatFromStore(value)}
+        touched={touched}
+        error={error}
+        component={component}
+        {...rest}
+      />
+    </div>
   );
 });
-
-const noop = () => (undefined);
-Field.defaultProps = {
-  afterUpdate: noop,
-  beforeUpdate: noop,
-  formatFromStore: (value = "") => value,
-  formatToStore: (value) => value,
-  getTargetValue: (target, value) => {
-    if (target) {
-      return target.value;
-    } else {
-      return value;
-    }
-  }
-};
 
 export default Field;

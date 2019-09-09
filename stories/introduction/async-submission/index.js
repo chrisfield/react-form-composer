@@ -2,11 +2,11 @@ import { withDocs } from 'storybook-readme';
 import readme from './index.md'
 
 import React from 'react';
-import {FormStateProvider, Form, useForm, useFormReducer, useField} from '../../../packages/react-form-composer/src';
+import {Form, useForm, useField} from '../../../packages/react-form-composer/src';
 import {TextInput} from '../../custom-ui-components';
 
 const TheFormState = () => {
-  const [state] = useFormReducer(useForm().name);
+  const {state} = useForm();
   return (
     <pre>
       <code>{JSON.stringify(state, null, 2)}</code>
@@ -15,14 +15,14 @@ const TheFormState = () => {
 };
 
 const Button = (props) => {
-  const [state] = useFormReducer(useForm().name);
+  const {state} = useForm();
   return (
     <button {...props} style={{backgroundColor: state.formStatus.isValid? 'green': 'cyan'}} >Submit</button>
   );
 };
 
-function sameAsPassword(value, values) {
-  if (value !== values.password) {
+function sameAsPassword(value, password) {
+  if (value !== password) {
     return "Sorry, the two passwords must match, please reenter."
   }
 }
@@ -38,41 +38,40 @@ const MyErrorMessage = () => {
 
 const MyForm = () => {
   return (
-    <FormStateProvider>
-      <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-          <div style={{ flex: 1, marginRight: '2rem' }}>
-            <div>
-              <TextInput name="username" label="Username" required/>
-              <TextInput
-                name="password"
-                label="Password"
-                required
-                type="password"
-                afterUpdate={revalidatePassword2}
-              />
-              <TextInput 
-                name="password2"
-                label="Retype password"
-                required
-                type="password"
-                validate={sameAsPassword}
-              />
-            </div>
-            <MyErrorMessage/>
-            <Button/>
+    <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <div style={{ flex: 1, marginRight: '2rem' }}>
+          <div>
+            <TextInput name="username" label="Username" required/>
+            <TextInput
+              name="password"
+              label="Password"
+              required
+              type="password"
+              afterUpdate={revalidatePassword2}
+            />
+            <TextInput 
+              name="password2"
+              label="Retype password"
+              required
+              type="password"
+              spy="password"
+              validate={sameAsPassword}
+            />
           </div>
-          <div style={{
-            flex: 2,
-            flexDirection: 'column',
-            display: 'flex',
-            minWidth: '300px'
-          }}>
-            <TheFormState/> 
-          </div>
+          <MyErrorMessage/>
+          <Button/>
         </div>
-      </Form>
-    </FormStateProvider>
+        <div style={{
+          flex: 2,
+          flexDirection: 'column',
+          display: 'flex',
+          minWidth: '300px'
+        }}>
+          <TheFormState/> 
+        </div>
+      </div>
+    </Form>
   );
 };
 

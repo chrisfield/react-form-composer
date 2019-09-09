@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-import useFormReducer from './use-form-reducer';
 import { useForm } from './form';
 
 const FormSpyBase = memo(({state, children}) => {
@@ -7,8 +6,9 @@ const FormSpyBase = memo(({state, children}) => {
 });
 
 const FormSpy = ({selector, children}) => {
-  const [state] = useFormReducer(useForm().name, selector);
-  return <FormSpyBase children={children} state={state}/>
+  const {state} = useForm();
+  const selectedState = selector(state);
+  return <FormSpyBase children={children} state={selectedState}/>
 }
 
 export default FormSpy;

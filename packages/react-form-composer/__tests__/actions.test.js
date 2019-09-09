@@ -3,10 +3,8 @@ import { actionTypes as types } from '../src/actions'
 
 describe('actions', () => {
   it('should create an action: initFormState', () => {
-    const form = 'myTestForm'
     const expectedAction = {
       type: types.INIT_FORM_STATE,
-      form,
       formStatus:{},
       fieldStatus:{},
       fieldValues:{},
@@ -14,14 +12,13 @@ describe('actions', () => {
     }
     const expectedAction2 = {
       type: types.INIT_FORM_STATE,
-      form,
       formStatus:{},
       fieldStatus:{},
       fieldValues:{f1: 'One'},
       formErrors:{}
     }
-    expect(actions.initFormState(form)).toEqual(expectedAction)
-    expect(actions.initFormState(form, {fieldValues: {f1: 'One'}})).toEqual(expectedAction2)
+    expect(actions.initFormState()).toEqual(expectedAction)
+    expect(actions.initFormState({fieldValues: {f1: 'One'}})).toEqual(expectedAction2)
   })
 
   it('should create an action: updateField', () => {

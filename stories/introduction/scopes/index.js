@@ -2,16 +2,14 @@ import { withDocs } from 'storybook-readme';
 import readme from './index.md'
 import React from 'react';
 import {TextInput} from '../../custom-ui-components';
-import { 
-  FormStateProvider,
+import {
   Form,
   Scope,
-  useForm,
-  useFormReducer
+  useForm
 } from '../../../packages/react-form-composer/src';
 
 const TheFormState = () => {
-  const [state] = useFormReducer(useForm().name);
+  const {state} = useForm();
   return (
     <pre>
       <code>{JSON.stringify(state, null, 2)}</code>
@@ -20,7 +18,7 @@ const TheFormState = () => {
 };
 
 const Button = () => {
-  const [state] = useFormReducer(useForm().name);
+  const {state} = useForm();
   return (
     <button style={{backgroundColor: state.formStatus.isValid? 'green': 'cyan'}} >Submit</button>
   );
@@ -46,36 +44,34 @@ const Address = () => (
 
 const MyForm = () => {  
   return (
-    <FormStateProvider>
-      <Form name="myForm" initialValues={{fullName: 'Mr J Smith'}} onSubmit={submitValues} onSubmitSuccess={clearValues} className="my-form">
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-          <div style={{ flex: 1, marginRight: '2rem' }}>
-            <TextInput name="fullName" label="Full Name" required/>
-            <Scope name="addresses">
-              <label>Addresses:</label><br/>
-              <Scope name="Home">
-                <label>Home:</label><br/>
-                <Address/>
-              </Scope>
-              <br/>
-              <Scope name="work">
-                <label>Work:</label><br/>
-                <Address/>
-              </Scope>
+    <Form name="myForm" initialValues={{fullName: 'Mr J Smith'}} onSubmit={submitValues} onSubmitSuccess={clearValues} className="my-form">
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <div style={{ flex: 1, marginRight: '2rem' }}>
+          <TextInput name="fullName" label="Full Name" required/>
+          <Scope name="addresses">
+            <label>Addresses:</label><br/>
+            <Scope name="Home">
+              <label>Home:</label><br/>
+              <Address/>
             </Scope>
-            <Button/>
-          </div>
-          <div style={{
-            flex: 2,
-            flexDirection: 'column',
-            display: 'flex',
-            minWidth: '300px'
-          }}>
-            <TheFormState/> 
-          </div>
+            <br/>
+            <Scope name="work">
+              <label>Work:</label><br/>
+              <Address/>
+            </Scope>
+          </Scope>
+          <Button/>
         </div>
-      </Form>
-    </FormStateProvider>
+        <div style={{
+          flex: 2,
+          flexDirection: 'column',
+          display: 'flex',
+          minWidth: '300px'
+        }}>
+          <TheFormState/> 
+        </div>
+      </div>
+    </Form>
   );
 };
 

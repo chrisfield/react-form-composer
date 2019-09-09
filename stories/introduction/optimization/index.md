@@ -7,11 +7,11 @@ With Field and FormSpy only the components that need updating re-render as the f
 #### Code
 ```jsx
 import React from 'react';
-import {FormStateProvider, Form, Field, FieldArray, FormSpy, Scope, useFormReducer, useForm} from 'react-form-composer';
-import {RenderCount} from '../../ui-components';
+import {Form, Field, FieldArray, FormSpy, Scope, useForm} from 'react-form-composer';
+import {RenderCount} from '../../custom-ui-components';
 
 const TheFormState = () => {
-  const [state] = useFormReducer(useForm().name);
+  const {state} = useForm();
   return (
     <RenderCount name="TheFormState">
       <pre>
@@ -105,30 +105,28 @@ const RadioButton = ({selected, value, ...props}) => (
 
 const MyForm = () => {
   return (
-    <FormStateProvider>
-      <Form name="myForm" initialValues={{shoppingList:['Bread']}} onSubmit={submitValues} onSubmitSuccess={clearValues}>
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-          <div style={{ flex: 1, marginRight: '2rem' }}>
-            <RenderCount name="Whole form">
-              <TextInput defaultValue="Bob" name="firstName" label="First Name" validate={requiredStr}/>
-              <TextInput name="middleName" label="Middle Name"/>
-              <TextInput name="lastName" label="Last Name" validate={requiredStr}/>
-              <Scope name="relationshipStatus">
-                  Are You Single?
-                  <RadioButton selected value="SINGLE" label="Yes"/>
-                  <RadioButton value="NOT-SINGLE" label="No"/>
-                </Scope>
-                <PartnerName label="Partner Name"/>          
-              <FieldArray name="shoppingList" component={RenderShoppingList}/>
-              <Button/>
-            </RenderCount>
-          </div>
-          <div style={{flex: 2, flexDirection: 'column', display: 'flex', minWidth: '300px'}}>
-            <TheFormState/> 
-          </div>
+    <Form name="myForm" initialValues={{shoppingList:['Bread']}} onSubmit={submitValues} onSubmitSuccess={clearValues}>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <div style={{ flex: 1, marginRight: '2rem' }}>
+          <RenderCount name="Whole form">
+            <TextInput defaultValue="Bob" name="firstName" label="First Name" validate={requiredStr}/>
+            <TextInput name="middleName" label="Middle Name"/>
+            <TextInput name="lastName" label="Last Name" validate={requiredStr}/>
+            <Scope name="relationshipStatus">
+                Are You Single?
+                <RadioButton selected value="SINGLE" label="Yes"/>
+                <RadioButton value="NOT-SINGLE" label="No"/>
+              </Scope>
+              <PartnerName label="Partner Name"/>          
+            <FieldArray name="shoppingList" component={RenderShoppingList}/>
+            <Button/>
+          </RenderCount>
         </div>
-      </Form>
-    </FormStateProvider>
+        <div style={{flex: 2, flexDirection: 'column', display: 'flex', minWidth: '300px'}}>
+          <TheFormState/> 
+        </div>
+      </div>
+    </Form>
   );
 };
 

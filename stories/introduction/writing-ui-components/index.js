@@ -2,11 +2,11 @@ import { withDocs } from 'storybook-readme';
 import readme from './index.md'
 
 import React from 'react';
-import {FormStateProvider, Form, useForm, useFormReducer, Text} from '../../../packages/react-form-composer/src';
+import { Form, useForm, Text} from '../../../packages/react-form-composer/src';
 import { SelectInput, NumberInput } from '../../custom-ui-components';
 
 const TheFormState = () => {
-  const [state] = useFormReducer(useForm().name);
+  const {state} = useForm();
   return (
     <pre>
       <code>{JSON.stringify(state, null, 2)}</code>
@@ -15,7 +15,7 @@ const TheFormState = () => {
 };
 
 const Button = (props) => {
-  const [state] = useFormReducer(useForm().name);
+  const {state} = useForm();
   return (
     <button {...props} style={{backgroundColor: state.formStatus.isValid? 'green': 'cyan'}} >Submit</button>
   );
@@ -36,38 +36,36 @@ const Slider = (props) => (
 
 const MyForm = () => {
   return (
-    <FormStateProvider>
-      <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-          <div style={{ flex: 1, marginRight: '2rem' }}>
-            <div>
-              <label>
-                <div>Lucky number</div>
-                <Slider name="luckyNumber"/>
-              </label>
-            </div>
-            <SelectInput name="frequency" label="How often do you eat noodles" required>
-              <option value="" disabled>
-                Select One...
-              </option>
-              <option value="daily">Daily</option>
-              <option value="weekly">Weekly</option>
-              <option value="monthly">Monthly</option>
-            </SelectInput>
-            <NumberInput name="age" required label="Age"/>
-            <Button/>
+    <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <div style={{ flex: 1, marginRight: '2rem' }}>
+          <div>
+            <label>
+              <div>Lucky number</div>
+              <Slider name="luckyNumber"/>
+            </label>
           </div>
-          <div style={{
-            flex: 2,
-            flexDirection: 'column',
-            display: 'flex',
-            minWidth: '300px'
-          }}>
-            <TheFormState/> 
-          </div>
+          <SelectInput name="frequency" label="How often do you eat noodles" required>
+            <option value="" disabled>
+              Select One...
+            </option>
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+          </SelectInput>
+          <NumberInput name="age" required label="Age"/>
+          <Button/>
         </div>
-      </Form>
-    </FormStateProvider>
+        <div style={{
+          flex: 2,
+          flexDirection: 'column',
+          display: 'flex',
+          minWidth: '300px'
+        }}>
+          <TheFormState/> 
+        </div>
+      </div>
+    </Form>
   );
 };
 

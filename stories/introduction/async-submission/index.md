@@ -1,5 +1,5 @@
 # Async Submission
-The form below submits asyncronously. It uses sleep to simulate the latency of waiting for a server response. To see a submit for real check out the universal-validation form example.
+The form below submits asyncronously. It uses sleep to simulate the latency of waiting for a server response.
 
 Like the last form this one has field, inter-field and submit validation. Usernames starting with "a" or "A" will trigger a submit error also the form checks the two passwords are equal.
 <!-- STORY -->
@@ -8,11 +8,11 @@ Like the last form this one has field, inter-field and submit validation. Userna
 #### Code
 ```jsx
 import React from 'react';
-import {FormStateProvider, Form, useForm, useFormReducer, useField} from 'react-form-composer';
+import {Form, useForm, useField} from 'react-form-composer';
 import {TextInput} from '../../custom-ui-components';
 
 const TheFormState = () => {
-  const [state] = useFormReducer(useForm().name);
+  const {state} = useForm();
   return (
     <pre>
       <code>{JSON.stringify(state, null, 2)}</code>
@@ -21,14 +21,14 @@ const TheFormState = () => {
 };
 
 const Button = (props) => {
-  const [state] = useFormReducer(useForm().name);
+  const {state} = useForm();
   return (
     <button {...props} style={{backgroundColor: state.formStatus.isValid? 'green': 'cyan'}} >Submit</button>
   );
 };
 
-function sameAsPassword(value, values) {
-  if (value !== values.password) {
+function sameAsPassword(value, password) {
+  if (value !== password) {
     return "Sorry, the two passwords must match, please reenter."
   }
 }
@@ -44,28 +44,40 @@ const MyErrorMessage = () => {
 
 const MyForm = () => {
   return (
-    <FormStateProvider>
-      <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
-        <TextInput name="username" label="Username" required/>
-        <TextInput
-          name="password"
-          label="Password"
-          required
-          type="password"
-          afterUpdate={revalidatePassword2}
-        />
-        <TextInput 
-          name="password2"
-          label="Retype password"
-          required
-          type="password"
-          validate={sameAsPassword}
-        />
-        <MyErrorMessage/>
-        <Button/>
-        <TheFormState/> 
-      </Form>
-    </FormStateProvider>
+    <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <div style={{ flex: 1, marginRight: '2rem' }}>
+          <div>
+            <TextInput name="username" label="Username" required/>
+            <TextInput
+              name="password"
+              label="Password"
+              required
+              type="password"
+              afterUpdate={revalidatePassword2}
+            />
+            <TextInput 
+              name="password2"
+              label="Retype password"
+              required
+              type="password"
+              spy="password"
+              validate={sameAsPassword}
+            />
+          </div>
+          <MyErrorMessage/>
+          <Button/>
+        </div>
+        <div style={{
+          flex: 2,
+          flexDirection: 'column',
+          display: 'flex',
+          minWidth: '300px'
+        }}>
+          <TheFormState/> 
+        </div>
+      </div>
+    </Form>
   );
 };
 

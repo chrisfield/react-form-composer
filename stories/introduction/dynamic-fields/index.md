@@ -6,11 +6,20 @@ This section shows one way to render parts of a form conditionally. When the Par
 #### Code
 ```jsx
 import React from 'react';
-import {FormStateProvider, Form, Scope, useForm, useFormReducer, FormSpy} from 'react-form-composer';
-import {TextInput, RadioButton} from '../../custom-ui-components';
+import {
+  Form,
+  Scope,
+  useForm,
+  FormSpy,
+  Text,
+  Radio,
+  ValidationMessage
+} from 'react-form-composer';
+
+import { requiredStrWithName } from '../../custom-ui-components/utils';
 
 const TheFormState = () => {
-  const [state] = useFormReducer(useForm().name);
+  const {state} = useForm();
   return (
     <pre>
       <code>{JSON.stringify(state, null, 2)}</code>
@@ -19,11 +28,17 @@ const TheFormState = () => {
 };
 
 const Button = (props) => {
-  const [state] = useFormReducer(useForm().name);
+  const {state} = useForm();
   return (
     <button {...props} style={{backgroundColor: state.formStatus.isValid? 'green': 'cyan'}} >Submit</button>
   );
 };
+
+const required = name => (
+  (value) => (
+    value && value.trim && value.trim().length > 0 ? undefined: `Please enter a value for ${name.toLowerCase()}`
+  )
+);
 
 const relationshipStatusSelector = state=>state.fieldValues.relationshipStatus;
 
@@ -33,7 +48,10 @@ const PartnerName = (props) => {
       {relationshipStatus => {
         if (relationshipStatus === "NOT-SINGLE") {
           return (
-            <TextInput name="partnerName" required {...props}/>
+            <div>
+              <Text name="partnerName" validate={requiredStrWithName('partner')} {...props}/>
+              <ValidationMessage name="partnerName"/>
+            </div>
           );
         }
       }}
@@ -43,32 +61,33 @@ const PartnerName = (props) => {
 
 const MyForm = () => {
   return (
-    <FormStateProvider>
-      <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-          <div style={{ flex: 1, marginRight: '2rem' }}>
-            <TextInput name="firstName" label="First Name" required/>
-            <Scope name="relationshipStatus">
-              Are You Single?
-              <div style={{display: 'flex', justifyContent: 'space-around'}}>
-                <RadioButton selected value="SINGLE" label="Yes"/>
-                <RadioButton value="NOT-SINGLE" label="No"/>
-              </div>
-            </Scope>
-            <PartnerName label="Partner Name"/>
-            <Button/>
+    <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <div style={{ flex: 1, marginRight: '2rem' }}>
+          <div>
+            <Text name="firstName" label="First Name" validate={required('first name')}/>
+            <ValidationMessage name="firstName"/>
           </div>
-          <div style={{
-            flex: 2,
-            flexDirection: 'column',
-            display: 'flex',
-            minWidth: '300px'
-          }}>
-            <TheFormState/> 
-          </div>
+          <Scope name="relationshipStatus">
+            Are You Single?
+            <div style={{display: 'flex', justifyContent: 'space-around'}}>
+              <Radio selected value="SINGLE" label="Yes"/>
+              <Radio value="NOT-SINGLE" label="No"/>
+            </div>
+          </Scope>
+          <PartnerName label="Partner Name"/>
+          <Button/>
         </div>
-      </Form>
-    </FormStateProvider>
+        <div style={{
+          flex: 2,
+          flexDirection: 'column',
+          display: 'flex',
+          minWidth: '300px'
+        }}>
+          <TheFormState/> 
+        </div>
+      </div>
+    </Form>
   );
 };
 

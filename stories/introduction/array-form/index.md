@@ -9,18 +9,15 @@ The Form below renders:
 ```jsx
 import React from 'react';
 import {TextInput} from '../../custom-ui-components';
-import { 
-  FormStateProvider,
+import {
   Form,
   Scope,
-  Field,
   FieldArray,
-  useForm,
-  useFormReducer
+  useForm
 } from 'react-form-composer';
 
 const TheFormState = () => {
-  const [state] = useFormReducer(useForm().name);
+  const {state} = useForm();
   return (
     <pre>
       <code>{JSON.stringify(state, null, 2)}</code>
@@ -29,7 +26,7 @@ const TheFormState = () => {
 };
 
 const Button = () => {
-  const [state] = useFormReducer(useForm().name);
+  const {state} = useForm();
   return (
     <button style={{backgroundColor: state.formStatus.isValid? 'green': 'cyan'}} >Submit</button>
   );
@@ -52,12 +49,13 @@ const RenderHobbies = ({fields}) => (
       <Scope key={hobby} name={hobby}>
         <TextInput
           name="nameOfHobby"
+          id={index}
           required
           label="Hobby name"
         />
         <TextInput
           name={`notes`}
-          required
+          id={index}
           label="notes"
           size="60"
         />
@@ -69,18 +67,40 @@ const RenderHobbies = ({fields}) => (
   </fieldset>
 );
 
+const RenderShoppingList = ({fields}) => (
+  <fieldset>
+    <legend className="example-form_title">
+      Shopping List
+    </legend>
+    {fields.map((item, index) => (
+      <div key={index}>
+        <TextInput
+          name={item}
+          required
+          label="Item"
+        />
+        <button type="button" title="Remove Item" onClick={() => fields.remove(index)}>-</button>
+        <hr/>
+      </div>
+    ))}
+    <button type="button" onClick={() => fields.push()}>Add Item</button>
+  </fieldset>
+);
+
 const MyForm = () => {  
   return (
-    <FormStateProvider>
-      <Form name="myForm" initialValues={{hobbies:[{}]}} onSubmit={submitValues} onSubmitSuccess={clearValues} className="my-form">
-        <FieldArray
-          name="hobbies"
-          component={RenderHobbies}
-        />
-        <Button/>
-        <TheFormState />
-      </Form>
-    </FormStateProvider>
+    <Form name="myForm" initialValues={{hobbies:[{}]}} onSubmit={submitValues} onSubmitSuccess={clearValues} className="my-form">
+      <FieldArray
+        name="hobbies"
+        component={RenderHobbies}
+      />
+      <FieldArray
+        name="shoppingList"
+        component={RenderShoppingList}
+      />
+      <Button/>
+      <TheFormState />
+    </Form>
   );
 };
 

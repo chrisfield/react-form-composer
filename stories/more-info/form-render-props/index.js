@@ -2,11 +2,11 @@ import { withDocs } from 'storybook-readme';
 import readme from './index.md'
 
 import React from 'react';
-import {FormStateProvider, Form, useForm, useFormReducer} from '../../../packages/react-form-composer/src';
+import {Form, useForm} from '../../../packages/react-form-composer/src';
 import {TextInput, NumberInput, Checkbox, RadioButton} from '../../custom-ui-components';
 
 const TheFormState = () => {
-  const [state] = useFormReducer(useForm().name);
+  const {state} = useForm();
   return (
     <pre>
       <code>{JSON.stringify(state, null, 2)}</code>
@@ -15,7 +15,7 @@ const TheFormState = () => {
 };
 
 const Button = (props) => {
-  const [state] = useFormReducer(useForm().name);
+  const {state} = useForm();
   return (
     <button {...props} style={{backgroundColor: state.formStatus.isValid? 'green': 'cyan'}} >Submit</button>
   );
@@ -23,35 +23,33 @@ const Button = (props) => {
 
 const MyForm = () => {  
   return (
-    <FormStateProvider>
-      <Form name="myForm" initialValues={{rb2: 'G'}} onSubmit={submitValues} onSubmitSuccess={clearValues}>
-        {({handleSubmit}) => (
-          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            <div style={{ flex: 1, marginRight: '2rem' }}>
-              <div>
-                <TextInput name="fieldOne" label="Field One" required/>
-                <NumberInput name="age" label="Age"/>
-                <Checkbox name="isAgreed" label="Do you agree?"/>
-              </div>
-              <div>
-                <RadioButton name="rb2" label="Red" value="R" />
-                <RadioButton name="rb2" label="Green" value="G" />
-                <RadioButton name="rb2" label="Blue" value="B" />
-              </div>
-              <Button onClick={handleSubmit}/>
+    <Form name="myForm" initialValues={{rb2: 'G'}} onSubmit={submitValues} onSubmitSuccess={clearValues}>
+      {({handleSubmit}) => (
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          <div style={{ flex: 1, marginRight: '2rem' }}>
+            <div>
+              <TextInput name="fieldOne" label="Field One" required/>
+              <NumberInput name="age" label="Age"/>
+              <Checkbox name="isAgreed" label="Do you agree?"/>
             </div>
-            <div style={{
-              flex: 2,
-              flexDirection: 'column',
-              display: 'flex',
-              minWidth: '300px'
-            }}>
-              <TheFormState/> 
+            <div>
+              <RadioButton name="rb2" label="Red" value="R" />
+              <RadioButton name="rb2" label="Green" value="G" />
+              <RadioButton name="rb2" label="Blue" value="B" />
             </div>
+            <Button onClick={handleSubmit}/>
           </div>
-        )}
-      </Form>
-    </FormStateProvider>
+          <div style={{
+            flex: 2,
+            flexDirection: 'column',
+            display: 'flex',
+            minWidth: '300px'
+          }}>
+            <TheFormState/> 
+          </div>
+        </div>
+      )}
+    </Form>
   );
 };
 

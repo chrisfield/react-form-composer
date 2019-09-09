@@ -1,10 +1,8 @@
 import React, {useEffect} from 'react';
-import {
-  useFormReducer
-} from '../../packages/react-form-composer/src';
+import { useForm } from '../../packages/react-form-composer/src';
 
-const FetchDispatcher = ({url, dispatchSelector, formName}) => {
-  const dispatch = useFormReducer(formName)[1];
+const FetchDispatcher = ({url, dispatchSelector}) => {
+  const {dispatch} = useForm();
   useEffect(() => {
     let isSubscribed = true;
     fetch(url)

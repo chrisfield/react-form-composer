@@ -1,7 +1,9 @@
 # Row Editor
 The form below populates a series of rows with data fetched from https://jsonplaceholder.typicode.com/todos/?userId=3.
 
-It provides a CRUD facility and includes one-row-at-a-time updates with an edit/cancel functionality like I've seen on several Angular applications. To implement this the Rows are rendered in a FormContextProvider. Only when the user presses 'Edit' for a particular Row are that Rows' Fields rendered in a Form.
+It provides a CRUD facility and includes one-row-at-a-time updates with an edit/cancel functionality like I've seen on several Angular applications. To implement this the Rows are rendered in a div. Only when the user presses 'Edit' for a particular Row are that Rows' Fields rendered in a form.
+
+You might also want to look at the [code for data-components](https://github.com/chrisfield/react-form-composer/tree/master/stories/data-components).
 
 ---
 #### Code
@@ -46,7 +48,7 @@ const Todo = ({disabled=false, index}) => {
 }
 
 const TODOS_URL = 'https://jsonplaceholder.typicode.com/todos';
-const MyForm = () => (
+const Form = () => (
   <RestApiCrudForm
     name="todoList"
     resourceUrl={TODOS_URL}
@@ -58,8 +60,4 @@ const MyForm = () => (
 export default MyForm;
 
 ```
-You might also want to look at the [code for data-components](https://github.com/chrisfield/react-form-composer/tree/master/stories/data-components). 
-
----
-
 <!-- STORY -->

@@ -3,8 +3,7 @@ import FetchDispatcher from './fetch-dispatcher';
 import FormStateSelector from './form-state-selector';
 import RenderRows from './render-rows';
 import {
-  FormStateProvider,
-  FormContextProvider,
+  Form,
   FieldArray,
   updateFieldsAction
 } from '../../packages/react-form-composer/src'
@@ -16,24 +15,23 @@ const RestApiCrudForm = ({
   inputComponent
 }) => {
   return (
-    <FormStateProvider>
+    <Form component="div">
       <FetchDispatcher
         url={urlForRead}
         formName="restApiCrudForm"
-        dispatchSelector={values => (
-          updateFieldsAction({[name]:values})
-        )}
+        dispatchSelector={values => {
+          console.log({[name]: values});
+          return updateFieldsAction({[name]: values});
+        }}
       />
-      <FormContextProvider name="restApiCrudForm">
-        <FieldArray
-          name={name}
-          component={RenderRows}
-          inputComponent={inputComponent}
-          resourceUrl={resourceUrl}
-        />
-        <FormStateSelector path={`fieldValues.${name}`}/>
-      </FormContextProvider>
-    </FormStateProvider>
+      <FieldArray
+        name={name}
+        component={RenderRows}
+        inputComponent={inputComponent}
+        resourceUrl={resourceUrl}
+      />
+      <FormStateSelector path={`fieldValues.${name}`}/>
+    </Form>
   );
 };
 

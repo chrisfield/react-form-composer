@@ -38,7 +38,7 @@ export const getNextCursorPosition = ({element}, value, nextValue) => {
   return cursorPosition;
 }
 
-export const setCursorPosition = ({element}, cursorPosition) => {
+export const setCursorPosition = ({element}, _ ,cursorPosition) => {
   if (cursorPosition !== undefined && element.setSelectionRange) {
     element.setSelectionRange(cursorPosition, cursorPosition);
   }  
