@@ -2,7 +2,8 @@ import { withDocs } from 'storybook-readme';
 import readme from './index.md'
 
 import React from 'react';
-import {Form, Scope, useForm, FormSpy, Text, Radio, ValidationMessage} from '../../../packages/react-form-composer/src';
+import {Form, Scope, useForm, FormSpy, ValidationMessage} from '../../../packages/react-form-composer/src';
+import {TextInput as Text, RadioButton as Radio} from '../../custom-ui-components';
 import { requiredStrWithName } from '../../custom-ui-components/utils';
 
 const TheFormState = () => {

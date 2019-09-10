@@ -6,16 +6,8 @@ This section shows one way to render parts of a form conditionally. When the Par
 #### Code
 ```jsx
 import React from 'react';
-import {
-  Form,
-  Scope,
-  useForm,
-  FormSpy,
-  Text,
-  Radio,
-  ValidationMessage
-} from 'react-form-composer';
-
+import {Form, Scope, useForm, FormSpy, ValidationMessage} from 'react-form-composer';
+import {TextInput as Text, RadioButton as Radio} from '../../custom-ui-components';
 import { requiredStrWithName } from '../../custom-ui-components/utils';
 
 const TheFormState = () => {
