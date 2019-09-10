@@ -2,7 +2,8 @@ import React, {memo, useRef, useEffect}  from 'react';
 import {
   updateField as updateFieldAction,
   setFieldTouched as setFieldTouchedAction,
-  setFieldError as setFieldErrorAction
+  setFieldError as setFieldErrorAction,
+  deregisterField as deregisterFieldAction
 } from './actions';
 import useField from './use-field';
 
@@ -146,6 +147,7 @@ const FieldMemo = memo(({
     const fieldInterface = fieldInterfaceRef.current;
     registerField(fieldInterface);
     return () => {
+      dispatch(deregisterFieldAction());
       deregisterField(fieldInterface);
     }
   }, []);

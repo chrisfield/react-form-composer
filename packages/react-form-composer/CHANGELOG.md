@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [3.0.1] - 2019-09-10
+### Fixed
+- deregister fields so the errors are decrement when a dynamic field unmounts
+
 ## [3.0.0] - 2019-09-10
 ### Changed
 - Major simplification and reduction in download size
