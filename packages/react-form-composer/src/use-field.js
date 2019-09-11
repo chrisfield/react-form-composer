@@ -21,6 +21,8 @@ const useField = (fieldName = '', spy) => {
   let spyValue;
   if (typeof spy === 'string') {
     spyValue = getField(state.fieldValues, spy);
+  } else if (typeof spy === 'function') {
+    spyValue = spy(state);
   }
     
   return {value, spyValue, touched, error, dispatch: dispatchRef.current, customProps, formApi};
