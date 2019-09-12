@@ -36,7 +36,7 @@ import {
   Checkbox,
   Select,
   ValidationMessage
-} from '../../packages/react-form-composer/src';
+} from 'react-form-composer';
 
 const TheFormState = () => {
   const {state} = useForm();
@@ -51,7 +51,7 @@ const isValidSelector = state => state.formStatus.isValid;
 const Button = (props) => (
   <FormSpy selector={isValidSelector}>
     {(isValid) => (
-        <button {...props} style={{backgroundColor: isValid? 'green': 'cyan'}} >Submit</button>
+      <button {...props} style={{backgroundColor: isValid? 'green': 'cyan'}} >Submit</button>
     )}
   </FormSpy>
 );
@@ -69,7 +69,7 @@ const flexColumn = {
 
 const MyForm = () => {
   return (
-    <Form name="myForm" onSubmit={submitValues} onSubmitSuccess={clearValues}>
+    <Form onSubmit={submitValues} onSubmitSuccess={clearValues}>
       <label>
         Field One (5+ chars):
         <Text name="fieldOne" required validate={lengthAtLeast5}/>

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 No unreleased changes for you to be aware of.
 
+## [3.1.1] - 2019-09-12
+### Fixed
+- Improve docs/readme - no code changes
+
 ## [3.1.0] - 2019-09-11
 ### Added
 - Reinstate mount and unmount for Form. The Field spy prop can now be a function or string.
