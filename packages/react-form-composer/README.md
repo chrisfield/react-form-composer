@@ -9,7 +9,7 @@
 
 ## Introduction
 
-React-form-composer provides validation and state management for react, react-native and isomorphic forms. It has a download size of less than 6kB, is written with hooks and is optimized for fast rendering.
+React-form-composer provides validation and state management for react, react-native and isomorphic forms. It has a download size of less than 7kB, is written with hooks and is optimized for fast rendering.
 
 The small but powerful api is simular to ones provided by [Informed](https://www.npmjs.com/package/informed) or [Redux-Form](https://www.npmjs.com/package/redux-form) and it makes it suitable for anything from simple input forms through to large multi-row CRUD applications.
 
