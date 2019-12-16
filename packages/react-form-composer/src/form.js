@@ -52,6 +52,7 @@ function Form({
       fieldsRef.current.push(field);
     },
     updateFields: fieldValues => {dispatch(updateFields(fieldValues))},
+    getFields: () => fieldsRef.current,
     getField: fieldName => {
       for (let i = 0; i < fieldsRef.current.length; i++) {
         if (fieldsRef.current[i].name === fieldName) {
