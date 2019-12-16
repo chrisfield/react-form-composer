@@ -4,7 +4,6 @@ import RowCreator from './row-creator';
 import {
   Scope
 } from '../../packages/react-form-composer/src';
-import { borderStyle } from 'polished';
 
 const focusOnFirstField = formApi => {
   const fields = formApi.getFields();
